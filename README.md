@@ -2,7 +2,7 @@
 
 ## My sappy story
 
-I discovered [Advent of Code](adventofcode.com) in December 2023 while I was working at [Topaz Labs](topazlabs.com). A few of the engineers got to talking about the problems and the advent calendar and I found I quite enjoyed working on them! Currently I am the Director of Engineering at Topaz and while I get to write code fairly regularly, many days are focused on meetings and interviews and I don't always get the coding stimulation I love that got me into programming in the first place when I was a kid. I quickly found Advent was a great way for me to enjoy coding again in my free time by allowing me to focus on some finite problems for an hour or two when I can and just enjoy that, without being too big a commitment.
+I discovered [Advent of Code](https://adventofcode.com) in December 2023 while I was working at [Topaz Labs](https://topazlabs.com). A few of the engineers got to talking about the problems and the advent calendar and I found I quite enjoyed working on them! Currently I am the Director of Engineering at Topaz and while I get to write code fairly regularly, many days are focused on meetings and interviews and I don't always get the coding stimulation I love that got me into programming in the first place when I was a kid. I quickly found Advent was a great way for me to enjoy coding again in my free time by allowing me to focus on some finite problems for an hour or two when I can and just enjoy that, without being too big a commitment.
 
 I've been able to share the joy of Advent with some coding friends and I hope you can find some too! Or if you are here for inspiration, I hope my solutions are helpful to you! 
 
