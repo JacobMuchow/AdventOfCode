@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::fs::read_to_string;
+use crate::shared::io::read_lines_from_file;
 use regex::Regex;
 
 enum Direction {
@@ -31,16 +31,8 @@ impl Direction {
 
 use Direction::*;
 
-fn read_lines(path: &str) -> Vec<String> {
-    read_to_string(path)
-        .unwrap()
-        .lines()
-        .map(String::from)
-        .collect()
-}
-
 pub fn run() {
-    let lines = read_lines("src/days/_01/input.txt");
+    let lines = read_lines_from_file("src/days/_01/input.txt");
     let line = lines.get(0).unwrap();
 
     // Parse directions
