@@ -1,6 +1,4 @@
-  810  679   10
-  783  255  616
-  545  626  626
-   84  910  149
-  607  425  901
-  556  616  883
+aaaaa-bbb-z-y-x-123[abxyz]
+a-b-c-d-e-f-g-h-987[abcde]
+not-a-real-room-404[oarel]
+totally-real-room-200[decoy]
