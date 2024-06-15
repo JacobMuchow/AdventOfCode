@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fmt, fs::read_to_string};
+use std::{collections::HashMap, fs::read_to_string};
 use regex::Regex;
 
 enum Direction {
