@@ -53,6 +53,8 @@ pub fn run() {
     let mut x = 0_i32;
     let mut y = 0_i32;
     let mut facing = North;
+
+    // Track all visited blocks by X,Y
     let mut visited: HashMap<String, bool> = HashMap::new();
     visited.insert(String::from("0,0"), true);
 
@@ -67,6 +69,9 @@ pub fn run() {
             panic!("Unexpected dir: '{}'", dir);
         }
 
+        // The trick here is we need to go 1 block at a time because based on the
+        // example given, we need to check for any path line that crosses over,
+        // not just at the intersections (stopping points).
         for _ in 0..dist {
             // Move forward
             match facing {
