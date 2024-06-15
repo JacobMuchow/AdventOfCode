@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{collections::HashMap, fmt, fs::read_to_string};
 use regex::Regex;
 
 enum Direction {
@@ -38,7 +38,7 @@ fn read_lines(path: &str) -> Vec<String> {
 }
 
 pub fn run() {
-    let lines = read_lines("src/days/_01/test.txt");
+    let lines = read_lines("src/days/_01/input.txt");
     let line = lines.get(0).unwrap();
 
     // Parse directions
@@ -50,12 +50,14 @@ pub fn run() {
     });
 
     // Initialize position & direction
-    let mut x = 0;
-    let mut y = 0;
+    let mut x = 0_i32;
+    let mut y = 0_i32;
     let mut facing = North;
+    let mut visited: HashMap<String, bool> = HashMap::new();
+    visited.insert(String::from("0,0"), true);
 
     // Handle all directions
-    for (dir, dist) in directions {
+    'outer: for (dir, dist) in directions {
         // Turn to new direction.
         if dir == "R" {
             facing = facing.right();
@@ -65,12 +67,20 @@ pub fn run() {
             panic!("Unexpected dir: '{}'", dir);
         }
 
-        // Move forward
-        match facing {
-            North => y += dist,
-            South => y -= dist,
-            East => x += dist,
-            West => x -= dist,
+        for _ in 0..dist {
+            // Move forward
+            match facing {
+                North => y += 1,
+                South => y -= 1,
+                East => x += 1,
+                West => x -= 1,
+            }
+    
+            let key = format!("{},{}", x, y);
+            if visited.contains_key(key.as_str()) {
+                break 'outer;
+            }
+            visited.insert(key, true);
         }
     }
 
