@@ -1,5 +1,5 @@
 mod days;
 
 fn main() {
-    days::run("src/test.txt");
+    days::_01::run("src/test.txt");
 }
