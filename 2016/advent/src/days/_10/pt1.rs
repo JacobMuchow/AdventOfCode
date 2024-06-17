@@ -2,44 +2,12 @@
 
 use std::collections::HashMap;
 use regex::Regex;
+
 use crate::shared::io::read_lines_from_file;
+use crate::days::_10::models::*;
 
-#[derive(Debug)]
-enum Target {
-    Bot(u32),
-    OutputBin(u32)
-}
-
-#[derive(Debug)]
-struct Bot {
-    id: u32,
-    chips: Vec<u32>,
-    gives: Option<(Target, Target)>
-}
-
-impl Bot {
-    fn new(id: u32) -> Bot {
-        return Bot {
-            id,
-            chips: Vec::new(),
-            gives: None
-        };
-    }
-}
-
-#[derive(Debug)]
-struct OutputBin {
-    id: u32,
-    chips: Vec<u32>
-}
-
-impl OutputBin {
-    fn new(id: u32) -> OutputBin {
-        return OutputBin {
-            id,
-            chips: Vec::new()
-        }
-    }
+fn get_or_create_bot<'a>(bots: &'a mut HashMap<u32, Bot>, bot_id: u32) -> &'a mut Bot {
+    bots.entry(bot_id).or_insert_with(|| Bot::new(bot_id))
 }
 
 pub fn run() {
@@ -64,11 +32,7 @@ pub fn run() {
             let bot_id: u32 = caps.get(2).unwrap().as_str().parse().unwrap();
             let chip_num: u32 = caps.get(1).unwrap().as_str().parse().unwrap();
 
-            if !bots.contains_key(&bot_id) {
-                bots.insert(bot_id, Bot::new(bot_id));
-            }
-            let bot = bots.get_mut(&bot_id).unwrap();
-
+            let bot = get_or_create_bot(&mut bots, bot_id);
             bot.chips.push(chip_num);
             continue;
         }
@@ -81,10 +45,7 @@ pub fn run() {
             let high_type    = caps.get(4).unwrap().as_str();
             let high_id: u32 = caps.get(5).unwrap().as_str().parse().unwrap();
             
-            if !bots.contains_key(&bot_id) {
-                bots.insert(bot_id, Bot::new(bot_id));
-            }
-            let bot = bots.get_mut(&bot_id).unwrap();
+            let bot = get_or_create_bot(&mut bots, bot_id);
 
             let low_target: Target = if low_type == "bot" { Target::Bot(low_id) } else { Target::OutputBin(low_id) };
             let high_target = if high_type == "bot" { Target::Bot(high_id) } else { Target::OutputBin(high_id) };
