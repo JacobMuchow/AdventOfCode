@@ -1,4 +1,4 @@
-// #![allow(dead_code)]
+#![allow(dead_code)]
 
 use crate::shared::io::read_lines_from_file;
 
