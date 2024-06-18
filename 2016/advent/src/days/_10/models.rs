@@ -1,4 +1,5 @@
 #[derive(Debug)]
+#[derive(Clone)]
 pub enum Target {
     Bot(u32),
     OutputBin(u32)
