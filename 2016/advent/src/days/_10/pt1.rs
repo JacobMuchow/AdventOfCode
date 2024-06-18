@@ -47,8 +47,7 @@ pub fn run() {
 
     let lines = read_lines_from_file("src/days/_10/input.txt");
     for line in lines {
-        println!("{}", line);
-
+        // Parse value initialization line.
         let re = Regex::new(r"^value ([0-9]+) goes to bot ([0-9]+)").unwrap();
         if let Some(caps) = re.captures(&line) {
             let bot_id: u32 = caps.get(2).unwrap().as_str().parse().unwrap();
@@ -59,6 +58,7 @@ pub fn run() {
             continue;
         }
 
+        // Parse gives instructions line.
         let re = Regex::new(r"^bot ([0-9]+) gives low to (bot|output) ([0-9]+) and high to (bot|output) ([0-9]+)").unwrap();
         if let Some(caps) = re.captures(&line) {
             let bot_id: u32  = caps.get(1).unwrap().as_str().parse().unwrap();
@@ -89,20 +89,17 @@ pub fn run() {
     for bot in bots.values() {
         if bot.chips.len() > 2 {
             println!("Bot {} has {} chips. This is unexpected!", bot.id, bot.chips.len());
-        } else if (bot.chips.len() == 2) {
+        } else if bot.chips.len() == 2 {
             queue.push_back(bot.id);
         }
     }
 
-    println!("Queue start:");
-    for item in &queue {
-        println!("Bot {}", item);
-    }
-    println!("");
-
     while !queue.is_empty() {
         let bot_id = queue.pop_front().unwrap();
 
+        // I created the get_or_create() functions to try to make the code simpler, but it involves
+        // to use them again later I need the "bot" we grab here to only live for a certain scope. 
+        // So we will extract the values we need to these variables then proceed.
         let low_val: u32;
         let high_val: u32;
         let low_target: Target;
@@ -127,6 +124,7 @@ pub fn run() {
             high_target = gives.1;
         }
 
+        // Send low value to corresponding target.
         match low_target {
             Target::Bot(id) => {
                 let bot = get_or_create_bot(&mut bots, id);
@@ -138,6 +136,7 @@ pub fn run() {
             Target::OutputBin(id) => get_or_create_output_bin(&mut output_bins, id).chips.push(low_val),
         }
 
+        // Send high value to corresponding target.
         match high_target {
             Target::Bot(id) =>  {
                 let bot = get_or_create_bot(&mut bots, id);
