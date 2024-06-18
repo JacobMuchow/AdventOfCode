@@ -2,5 +2,5 @@ mod days;
 mod shared;
 
 fn main() {
-    days::_10::pt1::run();
+    days::_10::pt2::run();
 }
