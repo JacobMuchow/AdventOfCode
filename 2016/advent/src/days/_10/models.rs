@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 #[derive(Debug)]
 #[derive(Clone)]
 pub enum Target {
