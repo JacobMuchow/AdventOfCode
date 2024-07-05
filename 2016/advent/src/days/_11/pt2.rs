@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{collections::{BTreeSet, HashMap, VecDeque}, fmt::format};
+use std::collections::{BTreeSet, HashMap, VecDeque};
 
 use map_macro::btree_set;
 
@@ -81,25 +81,10 @@ fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_i
 }
 
 /*
-    This works, but it's fairly slow (~7s on my mac in release mode).
-    I suspet a DFS solution would work better, perhaps with some optimizations prioritizing
-    queued states which have more items close to the top floor.
+    Got pt2 working after adding an optimization to pt1 about how next steps
+    are selected from some dequeued state.. this completes not but still takes 28s :grimace:
 */
 pub fn run() {
-    // let floors: Vec::<BTreeSet::<Item>> = vec![
-    //     btree_set! { Item::Microchip(Element::Hydrogen), Item::Microchip(Element::Lithium) },
-    //     btree_set! { Item::Generator(Element::Hydrogen) },
-    //     btree_set! { Item::Generator(Element::Lithium) },
-    //     btree_set! {}
-    // ];
-    // let num_items: usize = 4;
-    // let floors: Vec::<BTreeSet::<Item>> = vec![
-    //     btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium) },
-    //     btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },
-    //     btree_set! { Item::Generator(Element::Promethium), Item::Microchip(Element::Promethium), Item::Generator(Element::Ruthenium), Item::Microchip(Element::Ruthenium) },
-    //     btree_set! {}
-    // ];
-    // let num_items: usize = 10;  // too lazy to count this
     let floors: Vec::<BTreeSet::<Item>> = vec![
         btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium), Item::Generator(Element::Elerium), Item::Microchip(Element::Elerium), Item::Generator(Element::Dilithium), Item::Microchip(Element::Dilithium) },
         btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },

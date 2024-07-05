@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{collections::{BTreeSet, HashMap, VecDeque}, fmt::format};
+use std::collections::{BTreeSet, HashMap, VecDeque};
 
 use map_macro::btree_set;
 
