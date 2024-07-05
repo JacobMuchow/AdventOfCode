@@ -35,6 +35,7 @@ pub fn run() {
     print_grid(&grid);
     
     for line in lines {
+
         // "rect WxH" instruction
         let re = Regex::new(r"rect ([0-9]+)x([0-9]+)").unwrap();
         if let Some(caps) = re.captures(&line) {
