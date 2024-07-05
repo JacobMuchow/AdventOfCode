@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::collections::{BTreeSet, HashMap, VecDeque};
+use std::{collections::{BTreeSet, HashMap, VecDeque}, fmt::format};
 
 use map_macro::btree_set;
 
@@ -14,11 +14,61 @@ fn key_for_state(state: &GameState) -> String {
     for floor in &state.floors {
         key += "F|";
 
+        let mut count_pairs = 0;
+        let mut count_gen = 0;
+        let mut count_chip = 0;
+
         for item in floor.iter() {
             match item {
-                Item::Generator(el) => key += &format!("G({})", el.name()),
-                Item::Microchip(el) => key += &format!("M({})", el.name()),
-            };
+                Item::Microchip(el) => {
+                    // Check generators on the floor to see if the chip has a pair
+                    let mut has_pair = false;
+                    for item2 in floor {
+                        match item2 {
+                            Item::Generator(el2) => {
+                                // If a genereator with matching element is found,
+                                // this chip is safe and we can continue checking items.
+                                if el == el2 {
+                                    has_pair = true;
+                                    break;
+                                }
+                            },
+                            _ => continue
+                        }
+                    }
+
+                    if has_pair {
+                        count_pairs += 2;
+                    } else {
+                        count_chip += 1;
+                    }
+                },
+                Item::Generator(el) => {
+                    // Check generators on the floor to see if the chip has a pair
+                    let mut has_pair = false;
+                    for item2 in floor {
+                        match item2 {
+                            Item::Microchip(el2) => {
+                                // If a genereator with matching element is found,
+                                // this chip is safe and we can continue checking items.
+                                if el == el2 {
+                                    has_pair = true;
+                                    break;
+                                }
+                            },
+                            _ => continue
+                        }
+                    }
+
+                    if has_pair {
+                        count_pairs += 2;
+                    } else {
+                        count_gen += 1;
+                    }
+                },
+            }
+
+            key += &format!("P{}G{}C{}", count_pairs, count_gen, count_chip);
         }
     }
 
