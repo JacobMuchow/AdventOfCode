@@ -110,7 +110,8 @@ pub fn run() {
         for item in cur_floor {
             // We will enqueue some different states to try... first we will remove item from cur floor.
             let mut state = state.clone();
-            state.floors.get_mut(state.cur_floor).unwrap().remove(item);
+            let cur_floor = state.floors.get_mut(state.cur_floor).unwrap();
+            cur_floor.remove(item);
 
             // Queue move up
             if state.cur_floor < num_floors-1 {
@@ -131,6 +132,24 @@ pub fn run() {
             }
 
             // Now we will try moving pairs (TODO)
+            for item2 in cur_floor.iter() {
+                // Any two items can move together unless it's a Chip/Gen combo with different elements
+                let is_safe = match item {
+                    Item::Generator(el) => match item2 {
+                        Item::Generator(_) => true,
+                        Item::Microchip(el2) => el == el2
+                    },
+                    Item::Microchip(el) => match item2 {
+                        Item::Generator(el2) => el == el2,
+                        Item::Microchip(_) => true
+                    }
+                };
+
+                if is_safe { 
+                    let mut new_state = state.clone();
+                    new_state.floors.get_mut(state.cur_floor).unwrap().remove(&item2.clone());
+                }
+            }
         }
     }
 
