@@ -3,10 +3,14 @@
 use std::collections::HashMap;
 
 use map_macro::hash_map;
-use regex::Regex;
 
 use crate::shared::io::read_lines_from_file;
 
+/**
+ * The first time I wrote this, I used regex to parse the instructions...
+ * this took some 800s. After doing a basic split, the runtime is 141ms...
+ * Let that be a lesson about when and when not to use regex :laughing:
+ */
 pub fn run() {
     let lines = read_lines_from_file("src/days/_12/input.txt");
 
@@ -18,19 +22,15 @@ pub fn run() {
     };
 
     let mut line_num: usize = 0;
-    let mut i = 0;
 
     while i < 40 && line_num < lines.len() {
-        // i += 1;
         let line = lines.get(line_num).unwrap();
-        // println!("{:?}", registers);
-        // println!("l{}: {}\n", line_num, line);
+        let parts: Vec<&str> = line.split(" ").collect();
 
         // Crop reg -> reg
-        let re = Regex::new(r"cpy ([+-]?[a-d0-9]+) ([a-d])").unwrap();
-        if let Some(caps) = re.captures(line) {
-            let from = caps.get(1).unwrap().as_str();
-            let to = caps.get(2).unwrap().as_str();
+        if parts[0] == "cpy" {
+            let from = parts[1];
+            let to = parts[2];
 
             if let Some(val) = registers.get(from) {
                 registers.insert(to, *val);
@@ -43,9 +43,8 @@ pub fn run() {
         }
 
         // Inc reg
-        let re = Regex::new(r"inc ([a-d])").unwrap();
-        if let Some(caps) = re.captures(line) {
-            let reg = caps.get(1).unwrap().as_str();
+        if parts[0] == "inc" {
+            let reg = parts[1];
 
             registers.insert(reg, registers[reg]+1);
             line_num += 1;
@@ -53,9 +52,8 @@ pub fn run() {
         }
 
         // Dec reg
-        let re = Regex::new(r"dec ([a-d])").unwrap();
-        if let Some(caps) = re.captures(line) {
-            let reg = caps.get(1).unwrap().as_str();
+        if parts[0] == "dec" {
+            let reg = parts[1];
 
             registers.insert(reg, registers[reg]-1);
             line_num += 1;
@@ -63,18 +61,15 @@ pub fn run() {
         }
 
         // Jump if reg not zero
-        let re = Regex::new(r"jnz ([+-]?[a-d0-9]+) ([+-]?[0-9]+)").unwrap();
-        if let Some(caps) = re.captures(line) {
-            let from = caps.get(1).unwrap().as_str();
-            let jmp: i32 = caps.get(2).unwrap().as_str().parse().unwrap();
+        if parts[0] == "jnz" {
+            let from = parts[1];
+            let jmp: i32 = parts[2].parse().unwrap();
 
             let val = if let Some(reg_val) = registers.get(from) {
                 *reg_val
             } else {
                 from.parse().unwrap()
             };
-
-            // println!("val: {}", val);
 
             if val == 0 {
                 line_num += 1;
