@@ -10,7 +10,9 @@ pub enum Element {
     Plutonium,
     Strontium,
     Promethium,
-    Ruthenium
+    Ruthenium,
+    Elerium,
+    Dilithium
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, PartialOrd, Ord)]
