@@ -8,24 +8,26 @@ use map_macro::btree_set;
 use crate::days::_11::models::*;
 
 fn key_for_state(state: &GameState) -> String {
-    format!("{:?}", state)
-    // let mut key = String::from("");
+    // format!("{:?}", state)
+    let mut key = String::from("");
 
-    // for floor in &state.floors {
-    //     let mut count_gen = 0;
-    //     let mut count_mcp = 0;
+    for floor in &state.floors {
+        let mut count_gen = 0;
+        let mut count_mcp = 0;
 
-    //     for item in floor.iter() {
-    //         match item {
-    //             Item::Generator(_) => count_gen += 1,
-    //             Item::Microchip(_) => count_mcp += 1
-    //         };
-    //     }
+        key += "F";
 
-    //     key += format!("G{}M{}", count_gen, count_mcp).as_str();
-    // }
+        for item in floor.iter() {
+            match item {
+                Item::Generator(el) => key += &format!("G{}", el.name()),
+                Item::Microchip(el) => key += &format!("M{}", el.name()),
+            };
+        }
 
-    // key
+        key += &format!("G{}M{}", count_gen, count_mcp);
+    }
+
+    key
 }
 
 fn state_is_valid(state: &GameState) -> bool {

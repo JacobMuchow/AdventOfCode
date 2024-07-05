@@ -15,6 +15,22 @@ pub enum Element {
     Dilithium
 }
 
+impl Element {
+    pub fn name(&self) -> &str {
+        match self {
+            Element::Lithium => "Li",
+            Element::Hydrogen => "H",
+            Element::Thulium => "Th",
+            Element::Plutonium => "Pu",
+            Element::Strontium => "Sr",
+            Element::Promethium => "Pr",
+            Element::Ruthenium => "Ru",
+            Element::Elerium => "El",
+            Element::Dilithium => "Di",
+        }
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq, Hash, PartialOrd, Ord)]
 pub enum Item {
     Generator(Element),
