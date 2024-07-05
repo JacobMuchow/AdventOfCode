@@ -66,13 +66,9 @@ pub fn run() {
         cur_floor: 0
     };
 
-    let valid = state_is_valid(&state);
-    println!("Origin state valid: {}", valid);
-    return;
-
-    let mut queue = VecDeque::<(GameState, i8)>::from([(state, 0)]);
-    let mut visited = HashMap::<String, i8>::new();
-    let mut min_moves = i8::MAX;
+    let mut queue = VecDeque::<(GameState, i32)>::from([(state, 0)]);
+    let mut visited = HashMap::<String, i32>::new();
+    let mut min_moves = i32::MAX;
     let mut i = 0;
 
     while !queue.is_empty() {
@@ -83,6 +79,7 @@ pub fn run() {
 
         // This path has exceeded current known min, no need to continue.
         if num_moves >= min_moves {
+            println!("exceeds min: {}", min_moves);
             continue;
         }
 
@@ -96,11 +93,17 @@ pub fn run() {
 
         // If we are in the "win" state, then set min num moves.
         if state.floors.get(num_floors-1).unwrap().len() == num_items {
+            println!("new win state: {}", num_moves);
             min_moves = num_moves;
             continue;
         }
 
         // Finally check state validity and toss it if invalid.
+        if !state_is_valid(&state) {
+            println!("state invalid");
+            visited.insert(key_for_state(&state), 0);   // Small optimization to not check this again for these states.
+            continue;
+        }
 
         let cur_floor = state.floors.get(state.cur_floor).unwrap();
 
@@ -131,5 +134,5 @@ pub fn run() {
         }
     }
 
-    
+    println!("min moves: {}", min_moves);
 }
