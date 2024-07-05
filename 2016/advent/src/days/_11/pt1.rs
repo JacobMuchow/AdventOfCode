@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{collections::{BTreeSet, HashMap, VecDeque}, iter::FromFn};
+use std::collections::{BTreeSet, HashMap, VecDeque};
 
 use map_macro::btree_set;
 
@@ -88,15 +88,9 @@ pub fn run() {
     let mut queue = VecDeque::<(GameState, i32)>::from([(state, 0)]);
     let mut visited = HashMap::<String, i32>::new();
     let mut min_moves = i32::MAX;
-    let mut i = 0;
 
     while !queue.is_empty() {
         let (state, num_moves) = queue.pop_front().unwrap();
-
-        if i % 10000 == 0 {
-            println!("qi {}: {:?}", i, state);
-        }
-        i += 1;
 
         // This path has exceeded current known min, no need to continue.
         if num_moves >= min_moves {
