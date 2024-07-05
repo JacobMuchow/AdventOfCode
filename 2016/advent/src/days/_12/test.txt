@@ -1,16 +1,6 @@
-eedadn
-drvtee
-eandsr
-raavrd
-atevrs
-tsrnev
-sdttsa
-rasrtv
-nssdts
-ntnada
-svetve
-tesnvt
-vntsnd
-vrdear
-dvrsen
-enarar
+cpy b a
+inc a
+inc a
+dec a
+jnz a 2
+dec a
