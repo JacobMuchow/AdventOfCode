@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::collections::{BTreeSet, HashMap, VecDeque};
+use std::{collections::{BTreeSet, HashMap, VecDeque}, fmt::format};
 
 use map_macro::btree_set;
 
@@ -9,6 +9,23 @@ use crate::days::_11::models::*;
 
 fn key_for_state(state: &GameState) -> String {
     format!("{:?}", state)
+    // let mut key = String::from("");
+
+    // for floor in &state.floors {
+    //     let mut count_gen = 0;
+    //     let mut count_mcp = 0;
+
+    //     for item in floor.iter() {
+    //         match item {
+    //             Item::Generator(_) => count_gen += 1,
+    //             Item::Microchip(_) => count_mcp += 1
+    //         };
+    //     }
+
+    //     key += format!("G{}M{}", count_gen, count_mcp).as_str();
+    // }
+
+    // key
 }
 
 fn state_is_valid(state: &GameState) -> bool {
@@ -67,10 +84,6 @@ fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_i
     This works, but it's fairly slow (~7s on my mac in release mode).
     I suspet a DFS solution would work better, perhaps with some optimizations prioritizing
     queued states which have more items close to the top floor.
-
-    Pt 2: Adds 4 more things to the 1st floor. As suspected, this blows up my solution. I
-    killed it after a minute. It's probably exponential or factorial. Will try to optimize pt 1
-    then return.
 */
 pub fn run() {
     // let floors: Vec::<BTreeSet::<Item>> = vec![
@@ -80,13 +93,21 @@ pub fn run() {
     //     btree_set! {}
     // ];
     // let num_items: usize = 4;
+    // let floors: Vec::<BTreeSet::<Item>> = vec![
+    //     btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium) },
+    //     btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },
+    //     btree_set! { Item::Generator(Element::Promethium), Item::Microchip(Element::Promethium), Item::Generator(Element::Ruthenium), Item::Microchip(Element::Ruthenium) },
+    //     btree_set! {}
+    // ];
+    // let num_items: usize = 10;  // too lazy to count this
     let floors: Vec::<BTreeSet::<Item>> = vec![
         btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium), Item::Generator(Element::Elerium), Item::Microchip(Element::Elerium), Item::Generator(Element::Dilithium), Item::Microchip(Element::Dilithium) },
         btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },
         btree_set! { Item::Generator(Element::Promethium), Item::Microchip(Element::Promethium), Item::Generator(Element::Ruthenium), Item::Microchip(Element::Ruthenium) },
         btree_set! {}
     ];
-    let num_items: usize = 10;  // too lazy to count this
+    let num_items: usize = 14;  // too lazy to count this
+
     let num_floors: usize = floors.len();
 
     let state = GameState {
@@ -136,49 +157,55 @@ pub fn run() {
 
             // Queue move up
             if state.cur_floor < num_floors-1 {
-                let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
-                queue.push_back((new_state, num_moves+1));
+
+                // Now we will try moving pairs...
+                let mut can_move_pair = false;
+                for item2 in cur_floor.iter() {
+                    if item2 == item {
+                        continue;
+                    }
+
+                    // Any two items can move together unless it's a Chip/Gen combo with different elements
+                    let is_safe = match item {
+                        Item::Generator(el) => match item2 {
+                            Item::Generator(_) => true,
+                            Item::Microchip(el2) => el == el2
+                        },
+                        Item::Microchip(el) => match item2 {
+                            Item::Generator(el2) => el == el2,
+                            Item::Microchip(_) => true
+                        }
+                    };
+
+                    if is_safe { 
+                        // Queue move up
+                        // if state.cur_floor < num_floors-1 {
+                            let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
+                            let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor+1).unwrap();
+                            queue.push_back((new_state, num_moves+1));
+                            can_move_pair = true;
+                        // }
+
+                        // Queue move down - don't bother moving a pair down.
+                        // if state.cur_floor > 0 {
+                        //     let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor-1).unwrap();
+                        //     let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor-1).unwrap();
+                        //     queue.push_back((new_state, num_moves+1));
+                        // }
+                    }
+                }
+
+                // Only move one up if can't move a pair.
+                if !can_move_pair {
+                    let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
+                    queue.push_back((new_state, num_moves+1));
+                }
             }
 
             // Queue move down
             if state.cur_floor > 0 {
                 let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor-1).unwrap();
                 queue.push_back((new_state, num_moves+1));
-            }
-
-            // Now we will try moving pairs...
-            for item2 in cur_floor.iter() {
-                if item2 == item {
-                    continue;
-                }
-
-                // Any two items can move together unless it's a Chip/Gen combo with different elements
-                let is_safe = match item {
-                    Item::Generator(el) => match item2 {
-                        Item::Generator(_) => true,
-                        Item::Microchip(el2) => el == el2
-                    },
-                    Item::Microchip(el) => match item2 {
-                        Item::Generator(el2) => el == el2,
-                        Item::Microchip(_) => true
-                    }
-                };
-
-                if is_safe { 
-                    // Queue move up
-                    if state.cur_floor < num_floors-1 {
-                        let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
-                        let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor+1).unwrap();
-                        queue.push_back((new_state, num_moves+1));
-                    }
-
-                    // Queue move down
-                    if state.cur_floor > 0 {
-                        let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor-1).unwrap();
-                        let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor-1).unwrap();
-                        queue.push_back((new_state, num_moves+1));
-                    }
-                }
             }
         }
     }
