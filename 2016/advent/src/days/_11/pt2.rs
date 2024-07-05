@@ -4,11 +4,9 @@ use std::collections::{BTreeSet, HashMap, VecDeque};
 
 use map_macro::btree_set;
 
-// use crate::shared::io::read_lines_from_file;
 use crate::days::_11::models::*;
 
 fn key_for_state(state: &GameState) -> String {
-    // format!("{:?}", state)
     let mut key = format!("{}", state.cur_floor);
 
     for floor in &state.floors {
@@ -72,7 +70,6 @@ fn key_for_state(state: &GameState) -> String {
         }
     }
 
-    // println!("key: {}", key);
     key
 }
 
@@ -131,6 +128,12 @@ fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_i
 /*
     Got pt2 working after adding an optimization to pt1 about how next steps
     are selected from some dequeued state.. this completes not but still takes 28s :grimace:
+
+    Pt 2: Adds 4 more items to floor 1, so as expected this blew up (exponentially, factorially?).
+    I tried some optimizations without too much luck, but gained a key insight from reddit
+    about pairs being equivalent no matter the element, which becomes crucial for evaluating 
+    visited states. With this knowledge, I rewrote my key function and took solution from 28s down to 786ms.
+    Facepalm because I think I would have seen this if I thought about it more before going to reddit.
 */
 pub fn run() {
     let floors: Vec::<BTreeSet::<Item>> = vec![
