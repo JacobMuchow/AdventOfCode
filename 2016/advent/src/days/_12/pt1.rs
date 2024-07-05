@@ -23,7 +23,7 @@ pub fn run() {
 
     let mut line_num: usize = 0;
 
-    while i < 40 && line_num < lines.len() {
+    while line_num < lines.len() {
         let line = lines.get(line_num).unwrap();
         let parts: Vec<&str> = line.split(" ").collect();
 
