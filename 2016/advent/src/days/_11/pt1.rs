@@ -63,6 +63,11 @@ fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_i
     }
 }
 
+/*
+    This works, but it's fairly slow (~7s on my mac in release mode).
+    I suspet a DFS solution would work better, perhaps with some optimizations prioritizing
+    queued states which have more items close to the top floor.
+*/
 pub fn run() {
     // let floors: Vec::<BTreeSet::<Item>> = vec![
     //     btree_set! { Item::Microchip(Element::Hydrogen), Item::Microchip(Element::Lithium) },
