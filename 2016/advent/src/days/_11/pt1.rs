@@ -9,24 +9,20 @@ use crate::days::_11::models::*;
 
 fn key_for_state(state: &GameState) -> String {
     // format!("{:?}", state)
-    let mut key = String::from("");
+    let mut key = format!("{}", state.cur_floor);
 
     for floor in &state.floors {
-        let mut count_gen = 0;
-        let mut count_mcp = 0;
-
-        key += "F";
+        key += "F|";
 
         for item in floor.iter() {
             match item {
-                Item::Generator(el) => key += &format!("G{}", el.name()),
-                Item::Microchip(el) => key += &format!("M{}", el.name()),
+                Item::Generator(el) => key += &format!("G({})", el.name()),
+                Item::Microchip(el) => key += &format!("M({})", el.name()),
             };
         }
-
-        key += &format!("G{}M{}", count_gen, count_mcp);
     }
 
+    // println!("key: {}", key);
     key
 }
 
