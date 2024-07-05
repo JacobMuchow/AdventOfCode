@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::collections::{BTreeSet, HashMap, VecDeque};
+use std::{collections::{BTreeSet, HashMap, VecDeque}, iter::FromFn};
 
 use map_macro::btree_set;
 
@@ -49,6 +49,18 @@ fn state_is_valid(state: &GameState) -> bool {
     // If we've reached this point, then there are no floors with unprotected chips
     // so the state is valid.
     return true;
+}
+
+fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_idx: usize) -> Option<GameState> {
+    let mut new_state = state.clone();
+
+    if new_state.floors[from_floor_idx].remove(item) {
+        new_state.floors[to_floor_idx].insert(item.clone());
+        new_state.cur_floor = to_floor_idx;
+        Some(new_state)
+    } else {
+        None
+    }
 }
 
 pub fn run() {
@@ -107,32 +119,27 @@ pub fn run() {
 
         let cur_floor = state.floors.get(state.cur_floor).unwrap();
 
+        // We will enqueue some different states to try... first we will remove item from cur floor.
         for item in cur_floor {
-            // We will enqueue some different states to try... first we will remove item from cur floor.
-            let mut state = state.clone();
-            let cur_floor = state.floors.get_mut(state.cur_floor).unwrap();
-            cur_floor.remove(item);
 
             // Queue move up
             if state.cur_floor < num_floors-1 {
-                let mut new_state = state.clone();
-                new_state.cur_floor += 1;
-                new_state.floors.get_mut(state.cur_floor+1).unwrap().insert(item.clone());
-
+                let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
                 queue.push_back((new_state, num_moves+1));
             }
 
             // Queue move down
             if state.cur_floor > 0 {
-                let mut new_state = state.clone();
-                new_state.cur_floor -= 1;
-                new_state.floors.get_mut(state.cur_floor-1).unwrap().insert(item.clone());
-
+                let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor-1).unwrap();
                 queue.push_back((new_state, num_moves+1));
             }
 
-            // Now we will try moving pairs (TODO)
+            // Now we will try moving pairs...
             for item2 in cur_floor.iter() {
+                if item2 == item {
+                    continue;
+                }
+                
                 // Any two items can move together unless it's a Chip/Gen combo with different elements
                 let is_safe = match item {
                     Item::Generator(el) => match item2 {
@@ -146,8 +153,19 @@ pub fn run() {
                 };
 
                 if is_safe { 
-                    let mut new_state = state.clone();
-                    new_state.floors.get_mut(state.cur_floor).unwrap().remove(&item2.clone());
+                    // Queue move up
+                    if state.cur_floor < num_floors-1 {
+                        let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor+1).unwrap();
+                        let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor+1).unwrap();
+                        queue.push_back((new_state, num_moves+1));
+                    }
+
+                    // Queue move down
+                    if state.cur_floor > 0 {
+                        let new_state = move_floors(&state, item, state.cur_floor, state.cur_floor-1).unwrap();
+                        let new_state = move_floors(&new_state, item2, state.cur_floor, state.cur_floor-1).unwrap();
+                        queue.push_back((new_state, num_moves+1));
+                    }
                 }
             }
         }
