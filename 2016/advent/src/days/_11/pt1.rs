@@ -1,14 +1,12 @@
 #![allow(dead_code)]
 
-use std::{collections::{BTreeSet, HashMap, VecDeque}, fmt::format};
+use std::collections::{BTreeSet, HashMap, VecDeque};
 
 use map_macro::btree_set;
 
-// use crate::shared::io::read_lines_from_file;
 use crate::days::_11::models::*;
 
 fn key_for_state(state: &GameState) -> String {
-    // format!("{:?}", state)
     let mut key = format!("{}", state.cur_floor);
 
     for floor in &state.floors {
@@ -148,13 +146,6 @@ pub fn run() {
         btree_set! {}
     ];
     let num_items: usize = 10;  // too lazy to count this
-    // let floors: Vec::<BTreeSet::<Item>> = vec![
-    //     btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium), Item::Generator(Element::Elerium), Item::Microchip(Element::Elerium), Item::Generator(Element::Dilithium), Item::Microchip(Element::Dilithium) },
-    //     btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },
-    //     btree_set! { Item::Generator(Element::Promethium), Item::Microchip(Element::Promethium), Item::Generator(Element::Ruthenium), Item::Microchip(Element::Ruthenium) },
-    //     btree_set! {}
-    // ];
-    // let num_items: usize = 14;  // too lazy to count this
 
     let num_floors: usize = floors.len();
 
