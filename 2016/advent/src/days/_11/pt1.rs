@@ -64,13 +64,20 @@ fn move_floors(state: &GameState, item: &Item, from_floor_idx: usize, to_floor_i
 }
 
 pub fn run() {
+    // let floors: Vec::<BTreeSet::<Item>> = vec![
+    //     btree_set! { Item::Microchip(Element::Hydrogen), Item::Microchip(Element::Lithium) },
+    //     btree_set! { Item::Generator(Element::Hydrogen) },
+    //     btree_set! { Item::Generator(Element::Lithium) },
+    //     btree_set! {}
+    // ];
+    // let num_items: usize = 4;
     let floors: Vec::<BTreeSet::<Item>> = vec![
-        btree_set! { Item::Microchip(Element::Hydrogen), Item::Microchip(Element::Lithium) },
-        btree_set! { Item::Generator(Element::Hydrogen) },
-        btree_set! { Item::Generator(Element::Lithium) },
+        btree_set! { Item::Generator(Element::Thulium), Item::Microchip(Element::Thulium), Item::Generator(Element::Plutonium), Item::Generator(Element::Strontium) },
+        btree_set! { Item::Microchip(Element::Plutonium), Item::Microchip(Element::Strontium) },
+        btree_set! { Item::Generator(Element::Promethium), Item::Microchip(Element::Promethium), Item::Generator(Element::Ruthenium), Item::Microchip(Element::Ruthenium) },
         btree_set! {}
     ];
-    let num_items: usize = 4;
+    let num_items: usize = 10;  // too lazy to count this
     let num_floors: usize = floors.len();
 
     let state = GameState {
@@ -86,12 +93,14 @@ pub fn run() {
     while !queue.is_empty() {
         let (state, num_moves) = queue.pop_front().unwrap();
 
-        println!("qi {}: {:?}", i, state);
+        if i % 10000 == 0 {
+            println!("qi {}: {:?}", i, state);
+        }
         i += 1;
 
         // This path has exceeded current known min, no need to continue.
         if num_moves >= min_moves {
-            println!("exceeds min: {}", min_moves);
+            // println!("exceeds min: {}", min_moves);
             continue;
         }
 
@@ -105,14 +114,14 @@ pub fn run() {
 
         // If we are in the "win" state, then set min num moves.
         if state.floors.get(num_floors-1).unwrap().len() == num_items {
-            println!("new win state: {}", num_moves);
+            // println!("new win state: {}", num_moves);
             min_moves = num_moves;
             continue;
         }
 
         // Finally check state validity and toss it if invalid.
         if !state_is_valid(&state) {
-            println!("state invalid");
+            // println!("state invalid");
             visited.insert(key_for_state(&state), 0);   // Small optimization to not check this again for these states.
             continue;
         }
@@ -139,7 +148,7 @@ pub fn run() {
                 if item2 == item {
                     continue;
                 }
-                
+
                 // Any two items can move together unless it's a Chip/Gen combo with different elements
                 let is_safe = match item {
                     Item::Generator(el) => match item2 {
