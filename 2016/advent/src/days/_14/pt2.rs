@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-use std::collections::HashMap;
-
 use md5;
 
 fn md5_hash(str: &String) -> String {
@@ -37,7 +35,7 @@ fn stretch_hash(str: &String) -> String {
 
 pub fn run() {
     // let salt = String::from("abc");
-    let salt = String::from("abc");
+    let salt = String::from("cuanljph");
     let mut idx: usize = 0;
     let mut candidate_keys: Vec<Candidate> = Vec::new();
     let mut valid_keys: Vec<Candidate> = Vec::new();
