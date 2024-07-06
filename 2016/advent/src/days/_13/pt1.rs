@@ -44,9 +44,13 @@ fn should_visit(pos: &Pos2d, wall_cache: &mut HashMap<String, bool>, fave_num: u
 }
 
 pub fn run() {
-    let fave_num: usize = 10;
-    let goal_x = 7;
-    let goal_y = 4;
+    // let fave_num: usize = 10;
+    // let goal_x = 7;
+    // let goal_y = 4;
+
+    let fave_num: usize = 1362;
+    let goal_x = 31;
+    let goal_y = 39;
 
     let mut wall_cache: HashMap<String, bool> = HashMap::new();
     let mut visited: HashMap<String, usize> = HashMap::new();
@@ -56,8 +60,6 @@ pub fn run() {
     while !path.is_empty() {
         let pos = path.last().unwrap();
         let (x, y) = pos;
-        
-        println!("q: {},{}", x, y);
 
         visited.insert(key_for(pos), path.len());
         
