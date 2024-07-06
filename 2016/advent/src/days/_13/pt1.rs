@@ -2,8 +2,6 @@
 
 use std::collections::HashMap;
 
-use crate::shared::io::read_lines_from_file;
-
 type Pos2d = (usize, usize);
 
 fn is_wall(pos: &Pos2d, fave_num: usize, wall_cache: &mut HashMap<String, bool>) -> bool {
