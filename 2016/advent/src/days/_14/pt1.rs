@@ -33,10 +33,10 @@ pub fn run() {
     let mut valid_keys: Vec<Candidate> = Vec::new();
 
     /*
-        To prevent an O(mn) solution, I am going to use one loop
-        to both add "candidates" to a list, and check for candidate
-        matches. Technically this is till O(an) I guess, but a will
-        only be a handful, whereas m can be up to 1000. Runs in 735ms.
+        To prevent an O(mn) solution, I am going to use one loop to both add "candidates" to a list, 
+        and check for candidate matches. Technically this is till O(an) I guess, but a will only be 
+        a handful, whereas m can be up to 1000. Runs in 735ms. Having tested the more naive O(mn) 
+        solution this is in fact much faster.
      */
     while valid_keys.len() < 64 || !candidate_keys.is_empty() {
         let hash_key = md5_hash(&format!("{}{}", salt, idx));
@@ -69,6 +69,11 @@ pub fn run() {
         }
 
         // Add to candidates (but only if we haven't hit 64 valid yet yet).
+        // 
+        // We want to contineu looping even after 64 valid keys are found, because
+        // it is possible a candidate with an earlier index than the current "64th"
+        // will still be found to be valid. We sort the list upon exiting by index
+        // because it then may end up with more than 64.
         if valid_keys.len() < 64 {
             if let Some(c) = find_triple(&hash_key) {
                 let search = format!("{}{}{}{}{}", c, c, c, c, c);
