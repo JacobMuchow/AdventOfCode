@@ -2,17 +2,14 @@
 
 use std::iter;
 
-fn dragon(disk: &mut Vec<char>, len: usize, max_len: usize) -> usize {
-    println!("Dragong called, len: {}, max: {}", len, max_len);
-    print_disk(&disk);
-
-    
+fn dragon(disk: &mut Vec<char>, len: usize, max_len: usize) -> usize {    
     if len >= max_len { return len }
 
     // Add '0' seaparator.
     disk[len] = '0';
     if len+1 >= max_len { return len+1 }
 
+    // Set chars in reverse order up to new length, flipping 1s and 0s.
     let new_len = (2*len+1).min(max_len);
 
     let mut i = len+1;
@@ -54,19 +51,20 @@ fn print_disk(disk: &Vec<char>) -> () {
 }
 
 pub fn run() {
-    let str: String = iter::repeat('0').take(6).collect();
-
-    let base = String::from("110010110100");
+    // let base = String::from("10000");
     // let disk_size: usize = 20;
 
-    // let empty_space: String = iter::repeat(' ').take(disk_size - base.len()).collect();
-    // let mut disk: Vec<char> = (base.clone() + &empty_space).chars().collect();
-    // let mut len = base.len();
+    let base = String::from("10001110011110000");
+    let disk_size: usize = 272;
 
+    let empty_space: String = iter::repeat(' ').take(disk_size - base.len()).collect();
+    let mut disk: Vec<char> = (base.clone() + &empty_space).chars().collect();
+    let mut len = base.len();
 
-    // len = dragon(&mut disk, len, disk_size);
-    // print_disk(&disk);
+    while len < disk_size {
+        len = dragon(&mut disk, len, disk_size);
+    }
 
-    let checksum = checksum(&base.chars().collect());
+    let checksum = checksum(&disk);
     println!("checksum: {}", checksum);
 }
