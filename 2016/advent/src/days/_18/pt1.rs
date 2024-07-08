@@ -13,8 +13,8 @@ fn is_trap(prev_line: &Vec<char>, i: usize) -> bool {
 }
 
 pub fn run() {
-    let line = ".^^.^.^^^^";
-    let num_rows = 10;
+    // let line = ".^^.^.^^^^";
+    // let num_rows = 10;
 
     let line = ".^^^.^.^^^.^.......^^.^^^^.^^^^..^^^^^.^.^^^..^^.^.^^..^.^..^^...^.^^.^^^...^^.^.^^^..^^^^.....^....";
     let num_rows = 40;
