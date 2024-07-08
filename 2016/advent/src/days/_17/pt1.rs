@@ -5,6 +5,13 @@ use crate::shared::md5::md5_hash;
 
 type Pos2d = (usize, usize);
 
+struct QueueItem {
+    pos: Pos2d,
+    key: String,
+    steps: usize,
+    dis: usize
+}
+
 fn dis_to_goal(pos: &Pos2d, goal: &Pos2d) -> usize {
     (goal.1 - pos.1) + (goal.0 - pos.0)
 }
@@ -34,13 +41,6 @@ fn priority_enqueue(queue: &mut VecDeque<QueueItem>, item: QueueItem) -> () {
     }
 
     queue.push_back(item);
-}
-
-struct QueueItem {
-    pos: Pos2d,
-    key: String,
-    steps: usize,
-    dis: usize
 }
 
 pub fn run() {
