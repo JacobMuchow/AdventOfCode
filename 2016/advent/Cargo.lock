@@ -6,6 +6,7 @@ version = 3
 name = "advent"
 version = "0.1.0"
 dependencies = [
+ "index_list",
  "map-macro",
  "md5",
  "regex",
@@ -20,6 +21,12 @@ checksum = "8e60d3430d3a69478ad0993f19238d2df97c507009a52b3c10addcd7f6bcb916"
 dependencies = [
  "memchr",
 ]
+
+[[package]]
+name = "index_list"
+version = "0.2.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2cb725b6505e51229de32027e0cfcd9db29da4d89156f9747b0a5195643fa3e1"
 
 [[package]]
 name = "map-macro"
