@@ -4,7 +4,7 @@ mod days;
 mod shared;
 
 fn run_solution() {
-    days::_19::pt2::run();
+    days::_20::pt1::run();
 }
 
 fn main() {
