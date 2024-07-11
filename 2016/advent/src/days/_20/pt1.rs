@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-use regex::Regex;
-
 use crate::shared::io::read_lines_from_file;
 
 pub fn run() {
