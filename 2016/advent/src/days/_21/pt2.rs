@@ -34,10 +34,9 @@ pub fn rotate_by_letter(str: &Vec<char>, letter: char) -> Vec<char> {
 }
 
 pub fn rotate_by_letter_reversed(str: &Vec<char>, letter: char) -> Vec<char> {
-    // Test Left rotations of str until we get one that fulfills the original rotation command.
-
     let mut test = str.clone();
 
+    // Test Left rotations of str until we get one that fulfills the original rotation command.
     loop {
         test = rotate(&test, Dir::Left, 1);
 
@@ -56,6 +55,7 @@ pub fn run() {
     // let mut password: Vec<char> = "baecdfgh".chars().collect(); // expect "abcdefgh"
     let mut password: Vec<char> = "fbgdceah".chars().collect();
 
+    // Reverse the command order.
     lines.reverse();
 
     for line in &lines {
@@ -96,15 +96,20 @@ pub fn run() {
             let dir_raw = caps.get_as_str(1).unwrap();
             let shift: usize = caps.get_as_num(2).unwrap();
 
+            // Reversing this is just inverting Left & Right shift.
             let dir = if dir_raw == "right" { Dir::Left } else { Dir::Right };
 
             password = rotate(&password, dir, shift);
             continue;
         }
 
+        // Done.
         let re = Regex::new(r"^rotate based on position of letter ([A-Za-z])").unwrap();
         if let Some(caps) = re.captures(&line) {
             let x = caps.get_as_char(1).unwrap();
+            
+            // This will now call a function that tests candidates for prior state
+            // until we find one. Couldn't think of a derivation.
             password = rotate_by_letter_reversed(&password, x);
             continue;
         }
@@ -131,6 +136,7 @@ pub fn run() {
             let x: usize = caps.get_as_num(1).unwrap();
             let y: usize = caps.get_as_num(2).unwrap();
 
+            // Just needed to remove from y and insert to x now.
             let c = password.remove(y);
             password.insert(x, c);
             continue;
