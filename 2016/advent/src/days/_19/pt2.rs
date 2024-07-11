@@ -1,5 +1,28 @@
 #![allow(dead_code)]
 
+use index_list::{IndexList, ListIndex};
+
+fn advance<T>(list: &IndexList<T>, index: ListIndex) -> ListIndex {
+    let next = list.next_index(index);
+    let res = if next.is_none() {
+        list.first_index()
+    } else {
+        next
+    };
+
+    // println!("Advance to {}", res);
+    res
+}
+
+fn remove_elf<T>(list: &mut IndexList<T>, index: ListIndex) -> ListIndex {
+    // println!("Remove {}", index);
+    let next = advance(list, index);
+    list.remove(index);
+    next
+}
+
+// use crate::shared::doubly_linked_list::LinkedList;
+
 /*
     ugh... my solution feels heavily tailored to the first problem after the curve ball, though I don't feel back about it since 
     it ran in 25 us. I will need to go back to the drawing board and do some small solutions by hand again. 
@@ -10,41 +33,31 @@
     will half for each iteration so the compute may not be too bad either.
 */
 pub fn run() {
-    // let num_elves = 3005290;
-    let num_elves = 5;
+    let num_elves = 3005290;
+    // let num_elves = 20;
 
-    let mut circle: Vec<usize> = Vec::new();
+    let mut circle: IndexList<usize> = IndexList::new();
     for i in 1..=num_elves {
-        circle.push(i);
+        circle.insert_last(i);
     }
 
-    let mut del_i = circle.len() / 2;
+    let start_i = (circle.len() / 2) as i32;
+    let mut cur_index = circle.move_index(circle.first_index(), start_i);
 
-
-    while circle.len() > 2 {
+    while circle.len() > 10 {
         if circle.len() % 10000 == 0 {
             println!("Circle: {}", circle.len());
         }
-        circle.remove(del_i);
 
-        if del_i == circle.len() {
-            del_i = 0;
-        }
-
-        circle.remove(del_i);
-
-        if del_i == circle.len() {
-            del_i = 0;
-        }
-
-        del_i += 1;
-
-        if del_i == circle.len() {
-            del_i = 0;
-        }
+        cur_index = remove_elf(&mut circle, cur_index);
+        cur_index = remove_elf(&mut circle, cur_index);
+        cur_index = advance(&circle, cur_index);
     }
 
-    println!("Remaining elves: {:?}", circle);
+    println!("Remaining elves:");
+    for item in circle.iter() {
+        println!("{}", item);
+    }
 
     // let mut turn_i = 0;
 

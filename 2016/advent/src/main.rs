@@ -1,16 +1,10 @@
 use std::time::Instant;
 
-// use shared::lists::first::List;
-
 mod days;
 mod shared;
-// mod shared::lists;
 
 fn run_solution() {
-    // days::_19::pt2::run();
-
-    // let list: List = List::Elem(3, Box::new(List::Elem(4, Box::new(List::Empty))));
-    // println!("{:?}", list);
+    days::_19::pt2::run();
 }
 
 fn main() {
