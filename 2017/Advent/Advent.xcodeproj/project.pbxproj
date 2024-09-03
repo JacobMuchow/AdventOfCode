@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		850F877B2C87AAD000CD1E4A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F877A2C87AAD000CD1E4A /* main.swift */; };
 		850F87832C87AEEC00CD1E4A /* input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87812C87AC9800CD1E4A /* input.txt */; };
+		850F87862C87BFA700CD1E4A /* test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87852C87BF8900CD1E4A /* test.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,6 +19,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				850F87862C87BFA700CD1E4A /* test.txt in Copy Resources */,
 				850F87832C87AEEC00CD1E4A /* input.txt in Copy Resources */,
 			);
 			name = "Copy Resources";
@@ -30,6 +32,7 @@
 		850F877A2C87AAD000CD1E4A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		850F87812C87AC9800CD1E4A /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
 		850F87842C87B03700CD1E4A /* input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input2.txt; sourceTree = "<group>"; };
+		850F87852C87BF8900CD1E4A /* test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				850F877A2C87AAD000CD1E4A /* main.swift */,
+				850F87852C87BF8900CD1E4A /* test.txt */,
 				850F87812C87AC9800CD1E4A /* input.txt */,
 				850F87842C87B03700CD1E4A /* input2.txt */,
 			);
