@@ -9,17 +9,48 @@ import Foundation
 
 print("Hello, World!")
 
-let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+//let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+//
+//print("Current dir: \(currentDir.absoluteString)")
+//
+//let fileURL = currentDir.appendingPathComponent("input.txt")
+//
+//print("File URL: \(fileURL)")
+//
+//do {
+//    let content = try String(contentsOf: fileURL, encoding: .utf8)
+//    print(content)
+//} catch {
+//    print("Error reading file: \(error.localizedDescription)")
+//}
+//
+//
 
-print("Current dir: \(currentDir.absoluteString)")
 
-let fileURL = currentDir.appendingPathComponent("input.txt")
+let sequence = "112345661"
+var total = 0
 
-print("File URL: \(fileURL)")
+var indexA = sequence.startIndex
 
-do {
-    let content = try String(contentsOf: fileURL, encoding: .utf8)
-    print(content)
-} catch {
-    print("Error reading file: \(error.localizedDescription)")
+while indexA != sequence.endIndex {
+    var indexB = sequence.index(after: indexA)
+    if indexB == sequence.endIndex {
+        indexB = sequence.startIndex
+    }
+    
+    if sequence[indexA] == sequence[indexB] {
+        let val = sequence[indexA]
+        print("\(val)")
+    }
+    
+    indexA = sequence.index(after: indexA)
 }
+
+
+//for i in 0..<sequence.count {
+//    let j = i == sequence.count-1 ? 0 : i+1;
+//
+//    if sequence[i] == sequence[j] {
+//        let val = Int(sequence[i], 10)
+//    }
+//}

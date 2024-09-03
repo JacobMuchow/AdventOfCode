@@ -29,6 +29,7 @@
 		850F87772C87AAD000CD1E4A /* Advent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Advent; sourceTree = BUILT_PRODUCTS_DIR; };
 		850F877A2C87AAD000CD1E4A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		850F87812C87AC9800CD1E4A /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
+		850F87842C87B03700CD1E4A /* input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 			children = (
 				850F877A2C87AAD000CD1E4A /* main.swift */,
 				850F87812C87AC9800CD1E4A /* input.txt */,
+				850F87842C87B03700CD1E4A /* input2.txt */,
 			);
 			path = Advent;
 			sourceTree = "<group>";
