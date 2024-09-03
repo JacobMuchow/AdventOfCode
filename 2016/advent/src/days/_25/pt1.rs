@@ -18,14 +18,10 @@ fn get_reg_or_parse(val: &str, registers: &HashMap<String, i32>) -> i32 {
     }
 }
 
-/**
- * Copied initial code from day 12.
- */
-pub fn run() {
-    let mut lines = read_lines_from_file("src/days/_25/input.txt");
-
+fn run_program(lines: &Vec<String>, a: i32) -> bool {
+    let mut lines = lines.clone();
     let mut registers: HashMap<String, i32> = hash_map! {
-        String::from("a") => 12,
+        String::from("a") => a,
         String::from("b") => 0,
         String::from("c") => 0,
         String::from("d") => 0
@@ -34,15 +30,18 @@ pub fn run() {
     let mut line_num: usize = 0;
     let mut i = 0_u32;
 
+    let mut expected_signal = 0_i32;
+    let mut signal_count = 0_u32;
+
     while line_num < lines.len() {
         let line = String::from(lines.get(line_num).unwrap());
         let parts: Vec<&str> = line.split(" ").collect();
 
-        if i % 100000 == 0 {
-            println!("Registers: {:?}", registers);
-            println!("Line {}: {}", line_num, line);
-        }
-        i += 1;
+        // if i % 100000 == 0 {
+        //     println!("Registers: {:?}", registers);
+        //     println!("Line {}: {}", line_num, line);
+        // }
+        // i += 1;
 
         // Optimizing these lines.
         // L1-7 --> d += 365 * 7
@@ -57,7 +56,17 @@ pub fn run() {
 
         if parts[0] == "out" {
             let val = get_reg_or_parse(parts[1], &registers);
-            println!("Out: {}", val);
+            if val != expected_signal {
+                return false;
+            }
+
+            // Break after 100 repeats.
+            if signal_count == 100 {
+                return true;
+            }
+            signal_count += 1;
+
+            expected_signal = if expected_signal == 0 { 1 } else { 0 };
 
             line_num += 1;
             continue;
@@ -162,6 +171,26 @@ pub fn run() {
         panic!("Unmatched instruction");
     }
 
-    println!("Registers: {:?}", registers);
-    println!("Value of a: {}", registers["a"]);
+    println!("Program ended unexpectedly.");
+    return false;
+}
+
+/**
+ * Copied initial code from day 12.
+ */
+pub fn run() {
+    let lines = read_lines_from_file("src/days/_25/input.txt");
+
+    let mut a = 0_i32;
+
+    loop {
+        println!("Testing a = {}", a);
+        let valid = run_program(&lines, a);
+        if valid {
+            break;
+        }
+        a += 1;
+    }
+
+    println!("Solution found: {}", a);
 }
