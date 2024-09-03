@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		850F877B2C87AAD000CD1E4A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F877A2C87AAD000CD1E4A /* main.swift */; };
-		850F87832C87AEEC00CD1E4A /* input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87812C87AC9800CD1E4A /* input.txt */; };
-		850F87862C87BFA700CD1E4A /* test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87852C87BF8900CD1E4A /* test.txt */; };
 		850F87882C87C2E900CD1E4A /* IOUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F87872C87C2E900CD1E4A /* IOUtils.swift */; };
 		850F878C2C87C47200CD1E4A /* Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F878B2C87C47200CD1E4A /* Pt1.swift */; };
+		850F878F2C87C98400CD1E4A /* day01_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F878E2C87C69E00CD1E4A /* day01_input.txt */; };
+		850F87902C87C9B900CD1E4A /* day01_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87852C87BF8900CD1E4A /* day01_test.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,8 +21,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				850F87862C87BFA700CD1E4A /* test.txt in Copy Resources */,
-				850F87832C87AEEC00CD1E4A /* input.txt in Copy Resources */,
+				850F87902C87C9B900CD1E4A /* day01_test.txt in Copy Resources */,
+				850F878F2C87C98400CD1E4A /* day01_input.txt in Copy Resources */,
 			);
 			name = "Copy Resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,11 +32,10 @@
 /* Begin PBXFileReference section */
 		850F87772C87AAD000CD1E4A /* Advent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Advent; sourceTree = BUILT_PRODUCTS_DIR; };
 		850F877A2C87AAD000CD1E4A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		850F87812C87AC9800CD1E4A /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
-		850F87842C87B03700CD1E4A /* input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input2.txt; sourceTree = "<group>"; };
-		850F87852C87BF8900CD1E4A /* test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
+		850F87852C87BF8900CD1E4A /* day01_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day01_test.txt; sourceTree = "<group>"; };
 		850F87872C87C2E900CD1E4A /* IOUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOUtils.swift; sourceTree = "<group>"; };
 		850F878B2C87C47200CD1E4A /* Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pt1.swift; sourceTree = "<group>"; };
+		850F878E2C87C69E00CD1E4A /* day01_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day01_input.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,11 +68,9 @@
 		850F87792C87AAD000CD1E4A /* Advent */ = {
 			isa = PBXGroup;
 			children = (
+				850F878D2C87C68A00CD1E4A /* Resources */,
 				850F87892C87C44C00CD1E4A /* Days */,
 				850F877A2C87AAD000CD1E4A /* main.swift */,
-				850F87852C87BF8900CD1E4A /* test.txt */,
-				850F87812C87AC9800CD1E4A /* input.txt */,
-				850F87842C87B03700CD1E4A /* input2.txt */,
 				850F87872C87C2E900CD1E4A /* IOUtils.swift */,
 			);
 			path = Advent;
@@ -93,6 +90,15 @@
 				850F878B2C87C47200CD1E4A /* Pt1.swift */,
 			);
 			path = 01;
+			sourceTree = "<group>";
+		};
+		850F878D2C87C68A00CD1E4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				850F87852C87BF8900CD1E4A /* day01_test.txt */,
+				850F878E2C87C69E00CD1E4A /* day01_input.txt */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

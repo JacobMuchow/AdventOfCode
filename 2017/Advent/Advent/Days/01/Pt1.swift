@@ -9,7 +9,7 @@ import Foundation
 
 class Day01Pt1 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("input.txt")
+        let lines = IOUtils.readLinesFromFile("day01_input.txt")
 
         let sequence = lines[0]
         var total = 0
