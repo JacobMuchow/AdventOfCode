@@ -40,11 +40,15 @@ while indexA != sequence.endIndex {
     
     if sequence[indexA] == sequence[indexB] {
         let val = sequence[indexA]
-        print("\(val)")
+        let numVal = Int("\(val)", radix: 10)!
+        
+        total += numVal
     }
     
     indexA = sequence.index(after: indexA)
 }
+
+print("Total: \(total)")
 
 
 //for i in 0..<sequence.count {
