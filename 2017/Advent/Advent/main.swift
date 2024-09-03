@@ -7,27 +7,17 @@
 
 import Foundation
 
-print("Hello, World!")
+let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+let fileURL = currentDir.appendingPathComponent("input.txt")
 
-//let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-//
-//print("Current dir: \(currentDir.absoluteString)")
-//
-//let fileURL = currentDir.appendingPathComponent("input.txt")
-//
-//print("File URL: \(fileURL)")
-//
-//do {
-//    let content = try String(contentsOf: fileURL, encoding: .utf8)
-//    print(content)
-//} catch {
-//    print("Error reading file: \(error.localizedDescription)")
-//}
-//
-//
+let lines: [String]
 
+do {
+    let content = try! String(contentsOf: fileURL, encoding: .utf8)
+    lines = content.components(separatedBy: .newlines)
+}
 
-let sequence = "112345661"
+let sequence = lines[0]
 var total = 0
 
 var indexA = sequence.startIndex
@@ -37,24 +27,15 @@ while indexA != sequence.endIndex {
     if indexB == sequence.endIndex {
         indexB = sequence.startIndex
     }
-    
+
     if sequence[indexA] == sequence[indexB] {
         let val = sequence[indexA]
         let numVal = Int("\(val)", radix: 10)!
-        
+
         total += numVal
     }
-    
+
     indexA = sequence.index(after: indexA)
 }
 
 print("Total: \(total)")
-
-
-//for i in 0..<sequence.count {
-//    let j = i == sequence.count-1 ? 0 : i+1;
-//
-//    if sequence[i] == sequence[j] {
-//        let val = Int(sequence[i], 10)
-//    }
-//}
