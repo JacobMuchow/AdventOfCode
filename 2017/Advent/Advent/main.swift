@@ -7,27 +7,14 @@
 
 import Foundation
 
-let lines = IOUtils.readLinesFromFile("input.txt")
-
-let sequence = lines[0]
-var total = 0
-
-var indexA = sequence.startIndex
-
-while indexA != sequence.endIndex {
-    var indexB = sequence.index(after: indexA)
-    if indexB == sequence.endIndex {
-        indexB = sequence.startIndex
-    }
-
-    if sequence[indexA] == sequence[indexB] {
-        let val = sequence[indexA]
-        let numVal = Int("\(val)", radix: 10)!
-
-        total += numVal
-    }
-
-    indexA = sequence.index(after: indexA)
+func runSolution() {
+    Day01Pt1.run()
 }
 
-print("Total: \(total)")
+
+print("Running solution...")
+let start = Date()
+runSolution()
+
+let diff = start.distance(to: Date())
+print("Solution ran in \(diff)")
