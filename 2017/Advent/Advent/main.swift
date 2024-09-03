@@ -7,15 +7,7 @@
 
 import Foundation
 
-let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-let fileURL = currentDir.appendingPathComponent("input.txt")
-
-let lines: [String]
-
-do {
-    let content = try! String(contentsOf: fileURL, encoding: .utf8)
-    lines = content.components(separatedBy: .newlines)
-}
+let lines = IOUtils.readLinesFromFile("input.txt")
 
 let sequence = lines[0]
 var total = 0
