@@ -8,7 +8,7 @@
 import Foundation
 
 func runSolution() {
-    Day04Pt2.run()
+    Day05Pt1.run()
 }
 
 
