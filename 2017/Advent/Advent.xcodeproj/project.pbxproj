@@ -19,6 +19,7 @@
 		850F879B2C87D7DD00CD1E4A /* Day02Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F879A2C87D7DD00CD1E4A /* Day02Pt2.swift */; };
 		850F879E2C87DC2800CD1E4A /* Day03Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */; };
 		850F87A02C87DC5E00CD1E4A /* day03_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F879F2C87DC5700CD1E4A /* day03_input.txt */; };
+		850F87A22C8809B900CD1E4A /* Day03Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F87A12C8809B900CD1E4A /* Day03Pt2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +54,7 @@
 		850F879A2C87D7DD00CD1E4A /* Day02Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02Pt2.swift; sourceTree = "<group>"; };
 		850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day03Pt1.swift; sourceTree = "<group>"; };
 		850F879F2C87DC5700CD1E4A /* day03_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day03_input.txt; sourceTree = "<group>"; };
+		850F87A12C8809B900CD1E4A /* Day03Pt2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day03Pt2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,9 +98,9 @@
 		850F87892C87C44C00CD1E4A /* Days */ = {
 			isa = PBXGroup;
 			children = (
-				850F879C2C87DC1900CD1E4A /* 03 */,
-				850F87952C87D25200CD1E4A /* 02 */,
 				850F878A2C87C45D00CD1E4A /* 01 */,
+				850F87952C87D25200CD1E4A /* 02 */,
+				850F879C2C87DC1900CD1E4A /* 03 */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */,
+				850F87A12C8809B900CD1E4A /* Day03Pt2.swift */,
 			);
 			path = 03;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				850F87A22C8809B900CD1E4A /* Day03Pt2.swift in Sources */,
 				850F87972C87D25E00CD1E4A /* Day02Pt1.swift in Sources */,
 				850F878C2C87C47200CD1E4A /* Day01Pt1.swift in Sources */,
 				850F877B2C87AAD000CD1E4A /* main.swift in Sources */,
