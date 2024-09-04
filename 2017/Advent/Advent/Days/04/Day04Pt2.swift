@@ -20,14 +20,16 @@ class Day04Pt2 {
     }
     
     static func isValidPassphrase(_ passphrase: String) -> Bool {
-        var tokenMap: [String: Bool] = [:]
+        var anagramHashes: [String: Bool] = [:]
         
         let tokens = passphrase.split(separator: " ").map { String($0) }
         for token in tokens {
-            if tokenMap[String(token)] ?? false {
+            let hash = anagramHash(token)
+            
+            if anagramHashes[hash] != nil {
                 return false;
             }
-            tokenMap[token] = true;
+            anagramHashes[hash] = true;
         }
         return true;
     }
@@ -35,19 +37,14 @@ class Day04Pt2 {
     static func run() {
         let lines = IOUtils.readLinesFromFile("day04_input.txt")
         
-        let res = anagramHash("gtcddgdfiopwqabzznjfa")
-        print("Hash: \(res)")
-        
-//        var numValid = 0
-//
-//        for line in lines {
-//            if isValidPassphrase(line) {
-//                numValid += 1
-//            }
-//        }
-//
-//
-//
-//        print("Num valid: \(numValid)")
+        var numValid = 0
+
+        for line in lines {
+            if isValidPassphrase(line) {
+                numValid += 1
+            }
+        }
+
+        print("Num valid: \(numValid)")
     }
 }
