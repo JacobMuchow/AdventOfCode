@@ -17,6 +17,8 @@
 		850F87982C87D28900CD1E4A /* day02_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87932C87D20800CD1E4A /* day02_input.txt */; };
 		850F87992C87D28900CD1E4A /* day02_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87942C87D24300CD1E4A /* day02_test.txt */; };
 		850F879B2C87D7DD00CD1E4A /* Day02Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F879A2C87D7DD00CD1E4A /* Day02Pt2.swift */; };
+		850F879E2C87DC2800CD1E4A /* Day03Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */; };
+		850F87A02C87DC5E00CD1E4A /* day03_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F879F2C87DC5700CD1E4A /* day03_input.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				850F87A02C87DC5E00CD1E4A /* day03_input.txt in Copy Resources */,
 				850F87982C87D28900CD1E4A /* day02_input.txt in Copy Resources */,
 				850F87992C87D28900CD1E4A /* day02_test.txt in Copy Resources */,
 				850F87902C87C9B900CD1E4A /* day01_test.txt in Copy Resources */,
@@ -48,6 +51,8 @@
 		850F87942C87D24300CD1E4A /* day02_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day02_test.txt; sourceTree = "<group>"; };
 		850F87962C87D25E00CD1E4A /* Day02Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02Pt1.swift; sourceTree = "<group>"; };
 		850F879A2C87D7DD00CD1E4A /* Day02Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02Pt2.swift; sourceTree = "<group>"; };
+		850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day03Pt1.swift; sourceTree = "<group>"; };
+		850F879F2C87DC5700CD1E4A /* day03_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day03_input.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +96,7 @@
 		850F87892C87C44C00CD1E4A /* Days */ = {
 			isa = PBXGroup;
 			children = (
+				850F879C2C87DC1900CD1E4A /* 03 */,
 				850F87952C87D25200CD1E4A /* 02 */,
 				850F878A2C87C45D00CD1E4A /* 01 */,
 			);
@@ -113,6 +119,7 @@
 				850F878E2C87C69E00CD1E4A /* day01_input.txt */,
 				850F87932C87D20800CD1E4A /* day02_input.txt */,
 				850F87942C87D24300CD1E4A /* day02_test.txt */,
+				850F879F2C87DC5700CD1E4A /* day03_input.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -124,6 +131,14 @@
 				850F879A2C87D7DD00CD1E4A /* Day02Pt2.swift */,
 			);
 			path = 02;
+			sourceTree = "<group>";
+		};
+		850F879C2C87DC1900CD1E4A /* 03 */ = {
+			isa = PBXGroup;
+			children = (
+				850F879D2C87DC2800CD1E4A /* Day03Pt1.swift */,
+			);
+			path = 03;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +203,7 @@
 				850F878C2C87C47200CD1E4A /* Day01Pt1.swift in Sources */,
 				850F877B2C87AAD000CD1E4A /* main.swift in Sources */,
 				850F87922C87CBD900CD1E4A /* Day01Pt2.swift in Sources */,
+				850F879E2C87DC2800CD1E4A /* Day03Pt1.swift in Sources */,
 				850F87882C87C2E900CD1E4A /* IOUtils.swift in Sources */,
 				850F879B2C87D7DD00CD1E4A /* Day02Pt2.swift in Sources */,
 			);
