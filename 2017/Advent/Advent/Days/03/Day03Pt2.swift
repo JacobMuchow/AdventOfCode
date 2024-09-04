@@ -65,7 +65,7 @@ class Day03Pt2 {
         var layerCount = 1
         var dir = Dir.U
         
-        for _ in 0..<25 {
+        while true {
             
             // Sanity check... if a value has already been written
             // for this pos, something has gone wrong.
@@ -77,6 +77,10 @@ class Day03Pt2 {
             // Calculate new value
             let value = calculateValue(pos, written: written)
             print("Value at \(posKey): \(value)")
+            
+            if value > target {
+                return;
+            }
             
             written[posKey] = value
             
