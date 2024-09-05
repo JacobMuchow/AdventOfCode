@@ -1,6 +1,6 @@
 import Foundation
 
-class Day06Pt1 {
+class Day06Pt2 {
     static func redistribute(_ banks: [Int]) -> [Int] {
         var banks_out = banks
         
@@ -37,8 +37,10 @@ class Day06Pt1 {
     
         var banks = lines[0].split(separator: " ").map { Int($0, radix: 10)! }
         
-        var visited: [String: Bool] = [
-            banks_hash(banks): true
+        // Not hard, simply need to track the current cycle count when we add the visited
+        // state to the dictionary.
+        var visited: [String: Int] = [
+            banks_hash(banks): 0
         ]
         
         var cycle_count = 0
@@ -48,12 +50,12 @@ class Day06Pt1 {
             cycle_count += 1
             
             let hash = banks_hash(banks)
-            if visited[hash] != nil {
+            if let prev_count = visited[hash] {
+                let cycle_length = cycle_count - prev_count
+                print("Cycle length: \(cycle_length)")
                 break
             }
-            visited[hash] = true
+            visited[hash] = cycle_count
         }
-        
-        print("Num cycles until repeat: \(cycle_count)")
     }
 }
