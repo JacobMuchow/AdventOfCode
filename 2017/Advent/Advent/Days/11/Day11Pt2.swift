@@ -9,7 +9,7 @@ import Foundation
 
 class Day11Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day11_test.txt")
+        let lines = IOUtils.readLinesFromFile("day11_input.txt")
         let input = lines[0]
         
         let directions = input.split(separator: ",")
@@ -23,6 +23,7 @@ class Day11Pt2 {
         // From here we can work out what is the most optimal step count.
         var x = 0
         var y = 0
+        var maxSteps = 0
         
         for dir in directions {
             if dir == "n" {
@@ -44,10 +45,14 @@ class Day11Pt2 {
             } else {
                 fatalError("Uknown direction: \(dir)")
             }
+            
+            maxSteps = max(maxSteps, calcSteps(x, y))
         }
         
-        print("Final coords: \(x), \(y)")
-        
+        print("Max steps: \(maxSteps)")
+    }
+    
+    static func calcSteps(_ x: Int, _ y: Int) -> Int {
         // To decide most optimal step count, we will move horizontally steps,
         // counting X steps. We will subtracting this from Y. At this point we
         // should be in the same column as the ending coordinate. The steps left
@@ -60,7 +65,6 @@ class Day11Pt2 {
             fatalError("Invalid state, expected multiple of 2")
         }
         stepCount += disLeft / 2
-        
-        print("Step count: \(stepCount)")
+        return stepCount
     }
 }
