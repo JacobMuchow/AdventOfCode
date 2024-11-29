@@ -106,7 +106,7 @@ class Day07Pt2 {
             let name = String(leftMatch.output.1)
             let weight = Int(leftMatch.output.2, radix: 10)!
             
-            var disc = discMap[name] ?? Disc(name: name)
+            let disc = discMap[name] ?? Disc(name: name)
             disc.weight = weight
             
             // Parse children
@@ -115,7 +115,7 @@ class Day07Pt2 {
                     let childName = String($0.output.1)
                     
                     disc.children.append(childName)
-                    var childDisc = discMap[childName] ?? Disc(name: childName)
+                    let childDisc = discMap[childName] ?? Disc(name: childName)
                     if (childDisc.parent != nil) {
                         fatalError("\(childName) already has a parent (\(childDisc.parent!))")
                     }
