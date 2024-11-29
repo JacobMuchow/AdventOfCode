@@ -18,18 +18,39 @@ class Day09Pt1 {
     }
     
     class Group {
-        var children: [Either<Group, Garbage>] = []
+        var children: [Group] = []
         var score: Int = 0
         var content: String = ""
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day09_test.txt")
+        let lines = IOUtils.readLinesFromFile("day09_input.txt")
         let input = lines[0]
         print("Input: \(input)")
         
         let cleanedInput = removeGarbage(input)
         print("Cleaned Input: \(cleanedInput)")
+        
+        let score = scoreGroups(cleanedInput)
+        print("Score: \(score)")
+    }
+    
+    static func scoreGroups(_ input: String) -> Int {
+        var idx = input.startIndex
+        var score = 0
+        var depth = 0
+        
+        while idx < input.endIndex {
+            if input[idx] == "{" {
+                depth += 1
+                score += depth
+            } else if input[idx] == "}" {
+                depth -= 1
+            }
+            idx = input.index(after: idx)
+        }
+        
+        return score
     }
     
     static func removeGarbage(_ input: String) -> String {
