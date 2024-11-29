@@ -35,6 +35,7 @@
 		850F87C42C89771100CD1E4A /* day07_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87C22C8976E400CD1E4A /* day07_input.txt */; };
 		850F87C52C89771100CD1E4A /* day07_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 850F87C32C89770300CD1E4A /* day07_test.txt */; };
 		850F87C82C89773400CD1E4A /* Day07Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F87C72C89773400CD1E4A /* Day07Pt1.swift */; };
+		85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +94,7 @@
 		850F87C22C8976E400CD1E4A /* day07_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day07_input.txt; sourceTree = "<group>"; };
 		850F87C32C89770300CD1E4A /* day07_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day07_test.txt; sourceTree = "<group>"; };
 		850F87C72C89773400CD1E4A /* Day07Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07Pt1.swift; sourceTree = "<group>"; };
+		85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07Pt2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 		850F87C62C89771800CD1E4A /* 07 */ = {
 			isa = PBXGroup;
 			children = (
+				85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */,
 				850F87C72C89773400CD1E4A /* Day07Pt1.swift */,
 			);
 			path = 07;
@@ -291,6 +294,7 @@
 				850F87972C87D25E00CD1E4A /* Day02Pt1.swift in Sources */,
 				850F878C2C87C47200CD1E4A /* Day01Pt1.swift in Sources */,
 				850F877B2C87AAD000CD1E4A /* main.swift in Sources */,
+				85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */,
 				850F87BC2C89713000CD1E4A /* Day06Pt1.swift in Sources */,
 				850F87C82C89773400CD1E4A /* Day07Pt1.swift in Sources */,
 				850F87922C87CBD900CD1E4A /* Day01Pt2.swift in Sources */,
