@@ -47,6 +47,7 @@
 		85CA6A942CFA203200DFAD12 /* Day10Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A932CFA203000DFAD12 /* Day10Pt1.swift */; };
 		85CA6A972CFA20BF00DFAD12 /* day10_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A952CFA206C00DFAD12 /* day10_test.txt */; };
 		85CA6A982CFA20BF00DFAD12 /* day10_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A962CFA207600DFAD12 /* day10_input.txt */; };
+		85CA6A9A2CFA2A5800DFAD12 /* Day10Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A992CFA2A5600DFAD12 /* Day10Pt2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -123,6 +124,7 @@
 		85CA6A932CFA203000DFAD12 /* Day10Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10Pt1.swift; sourceTree = "<group>"; };
 		85CA6A952CFA206C00DFAD12 /* day10_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day10_test.txt; sourceTree = "<group>"; };
 		85CA6A962CFA207600DFAD12 /* day10_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day10_input.txt; sourceTree = "<group>"; };
+		85CA6A992CFA2A5600DFAD12 /* Day10Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10Pt2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 		85CA6A922CFA1FFF00DFAD12 /* 10 */ = {
 			isa = PBXGroup;
 			children = (
+				85CA6A992CFA2A5600DFAD12 /* Day10Pt2.swift */,
 				85CA6A932CFA203000DFAD12 /* Day10Pt1.swift */,
 			);
 			path = 10;
@@ -371,6 +374,7 @@
 				850F879B2C87D7DD00CD1E4A /* Day02Pt2.swift in Sources */,
 				850F87C12C8975ED00CD1E4A /* Day06Pt2.swift in Sources */,
 				850F87AD2C8913D600CD1E4A /* Day04Pt1.swift in Sources */,
+				85CA6A9A2CFA2A5800DFAD12 /* Day10Pt2.swift in Sources */,
 				85CA6A8B2CF982B800DFAD12 /* Day09Pt1.swift in Sources */,
 				85CA6A942CFA203200DFAD12 /* Day10Pt1.swift in Sources */,
 				850F87AF2C89162300CD1E4A /* Day04Pt2.swift in Sources */,
