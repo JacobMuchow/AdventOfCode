@@ -1,15 +1,15 @@
 //
-//  Day09Pt1.swift
+//  Day09Pt2.swift
 //  Advent
 //
-//  Created by Jacob Muchow on 11/28/24.
+//  Created by Jacob Muchow on 11/29/24.
 //
 
 import Foundation
 
-class Day09Pt1 {
+class Day09Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day09_input.txt")
+        let lines = IOUtils.readLinesFromFile("day09_test.txt")
         let input = lines[0]
         print("Input: \(input)")
         
