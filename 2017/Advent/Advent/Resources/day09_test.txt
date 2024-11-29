@@ -1,5 +1,17 @@
-{{<a!>},{<a!>},{<a!>},{<ab>}}
+<{o"i!a,<{i<a>
 
+
+Examples of scoring garbage from part 2.
+<>, 0 characters.
+<random characters>, 17 characters.
+<<<<>, 3 characters.
+<{!>}>, 2 characters.
+<!!>, 0 characters.
+<!!!>>, 0 characters.
+<{o"i!a,<{i<a>, 10 characters.
+
+
+Examples of scoring inputs from part 1.
 {}, score of 1.
 {{{}}}, score of 1 + 2 + 3 = 6.
 {{},{}}, score of 1 + 2 + 2 = 5.
@@ -8,6 +20,7 @@
 {{<ab>},{<ab>},{<ab>},{<ab>}}, score of 1 + 2 + 2 + 2 + 2 = 9.
 {{<!!>},{<!!>},{<!!>},{<!!>}}, score of 1 + 2 + 2 + 2 + 2 = 9.
 {{<a!>},{<a!>},{<a!>},{<ab>}}, score of 1 + 2 = 3.
+
 
 These are examples of self-contained pieces of garbage.
 <>, empty garbage.
