@@ -9,7 +9,7 @@ import Foundation
 
 class Day09Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day09_test.txt")
+        let lines = IOUtils.readLinesFromFile("day09_input.txt")
         let input = lines[0]
         
         let score = scoreGarbage(input)
@@ -17,30 +17,11 @@ class Day09Pt2 {
     }
     
     static func scoreGarbage(_ input: String) -> Int {
-        var idx = input.startIndex
-        var score = 0
-        var depth = 0
-        
-        while idx < input.endIndex {
-            if input[idx] == "{" {
-                depth += 1
-                score += depth
-            } else if input[idx] == "}" {
-                depth -= 1
-            }
-            idx = input.index(after: idx)
-        }
-        
-        return score
-    }
-    
-    static func removeGarbage(_ input: String) -> String {
         var output = input
         var idx = output.startIndex
+        var score = 0
         
         var garbaseStart: String.Index?
-        
-        print("Running garbage remove operation on input: \(input)")
         
         while idx < output.endIndex {
             // Iterate until garbase is detected "<", at which point we set a start index.
@@ -64,23 +45,19 @@ class Day09Pt2 {
                     idx = output.index(output.startIndex, offsetBy: garbageOffset)
                     garbaseStart = nil
                     
-                    print("Removed garabage. New output: \(output)")
-                    if (idx < output.endIndex) {
-                        print("New index: \(idx), \(output[idx])")
-                    } else {
-                        print("Reached end.")
-                    }
                     continue
                 } else if output[idx] == "!" {
                     // Ignore the next character.
                     idx = output.index(idx, offsetBy: 2)
                     continue
+                } else {
+                    score += 1
                 }
             }
             
             idx = output.index(after: idx)
         }
         
-        return output
+        return score
     }
 }
