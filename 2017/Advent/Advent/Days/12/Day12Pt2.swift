@@ -18,17 +18,34 @@ class Day12Pt2 {
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day12_test.txt")
+        let lines = IOUtils.readLinesFromFile("day12_input.txt")
         
         let programsMap = parsePrograms(from: lines)
         
-        let startId = "0"
-        let count = countPrograms(reachableFrom: startId, programsMap: programsMap)
-        print("\(count) reachable programs from program '\(startId)'")
+        let groupCount = countGroups(in: programsMap)
+        print("Group count: \(groupCount)")
     }
     
-    static func countPrograms(reachableFrom startId: String, programsMap: [String: Program]) -> Int {
-        var count = 0
+    static func countGroups(in programsMap: [String: Program]) -> Int {
+        var groupCount = 0
+        var programsLeft = Array(programsMap.keys)
+        
+        while !programsLeft.isEmpty {
+            let startId = programsLeft.first!
+            let group = findGroup(reachableFrom: startId, programsMap: programsMap)
+            groupCount += 1
+            
+            // Remove each program in the group from the list.
+            for programId in group {
+                let idx = programsLeft.firstIndex(of: programId)!
+                programsLeft.remove(at: idx)
+            }
+        }
+        
+        return groupCount
+    }
+    
+    static func findGroup(reachableFrom startId: String, programsMap: [String: Program]) -> Set<String> {
         var visited: Set<String> = []
         var queue: [String] = [startId]
         
@@ -37,14 +54,13 @@ class Day12Pt2 {
             if visited.contains(currentId) { continue }
             
             visited.insert(currentId)
-            count += 1
             
             for pipe in programsMap[currentId]!.pipes {
                 queue.append(pipe)
             }
         }
         
-        return count
+        return visited
     }
     
     static func parsePrograms(from lines: [String]) -> [String:Program] {
