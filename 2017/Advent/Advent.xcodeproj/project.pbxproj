@@ -55,6 +55,7 @@
 		85CA6AA62CFA857800DFAD12 /* Day12Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */; };
 		85CA6AA92CFA85D500DFAD12 /* day12_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6AA82CFA85A500DFAD12 /* day12_test.txt */; };
 		85CA6AAA2CFA85D500DFAD12 /* day12_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6AA72CFA859B00DFAD12 /* day12_input.txt */; };
+		85CA6AAC2CFA898200DFAD12 /* Day12Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6AAB2CFA898000DFAD12 /* Day12Pt2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -143,6 +144,7 @@
 		85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day12Pt1.swift; sourceTree = "<group>"; };
 		85CA6AA72CFA859B00DFAD12 /* day12_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day12_input.txt; sourceTree = "<group>"; };
 		85CA6AA82CFA85A500DFAD12 /* day12_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day12_test.txt; sourceTree = "<group>"; };
+		85CA6AAB2CFA898000DFAD12 /* Day12Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day12Pt2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +336,7 @@
 		85CA6AA42CFA856700DFAD12 /* 12 */ = {
 			isa = PBXGroup;
 			children = (
+				85CA6AAB2CFA898000DFAD12 /* Day12Pt2.swift */,
 				85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */,
 			);
 			path = 12;
@@ -413,6 +416,7 @@
 				850F87B82C891C1A00CD1E4A /* Day05Pt2.swift in Sources */,
 				850F87882C87C2E900CD1E4A /* IOUtils.swift in Sources */,
 				850F87B62C891A7700CD1E4A /* Day05Pt1.swift in Sources */,
+				85CA6AAC2CFA898200DFAD12 /* Day12Pt2.swift in Sources */,
 				85CA6A882CF981EE00DFAD12 /* Day08Pt2.swift in Sources */,
 				850F879B2C87D7DD00CD1E4A /* Day02Pt2.swift in Sources */,
 				850F87C12C8975ED00CD1E4A /* Day06Pt2.swift in Sources */,
