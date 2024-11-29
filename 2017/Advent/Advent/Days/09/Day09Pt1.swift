@@ -11,10 +11,8 @@ class Day09Pt1 {
     static func run() {
         let lines = IOUtils.readLinesFromFile("day09_input.txt")
         let input = lines[0]
-        print("Input: \(input)")
         
         let cleanedInput = removeGarbage(input)
-        print("Cleaned Input: \(cleanedInput)")
         
         let score = scoreGroups(cleanedInput)
         print("Score: \(score)")
@@ -44,8 +42,6 @@ class Day09Pt1 {
         
         var garbaseStart: String.Index?
         
-        print("Running garbage remove operation on input: \(input)")
-        
         while idx < output.endIndex {
             // Iterate until garbase is detected "<", at which point we set a start index.
             if garbaseStart == nil {
@@ -67,13 +63,6 @@ class Day09Pt1 {
                     output = output.replacingCharacters(in: garbaseStart!...idx, with: "")
                     idx = output.index(output.startIndex, offsetBy: garbageOffset)
                     garbaseStart = nil
-                    
-                    print("Removed garabage. New output: \(output)")
-                    if (idx < output.endIndex) {
-                        print("New index: \(idx), \(output[idx])")
-                    } else {
-                        print("Reached end.")
-                    }
                     continue
                 } else if output[idx] == "!" {
                     // Ignore the next character.

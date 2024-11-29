@@ -11,16 +11,12 @@ class Day09Pt2 {
     static func run() {
         let lines = IOUtils.readLinesFromFile("day09_test.txt")
         let input = lines[0]
-        print("Input: \(input)")
         
-        let cleanedInput = removeGarbage(input)
-        print("Cleaned Input: \(cleanedInput)")
-        
-        let score = scoreGroups(cleanedInput)
+        let score = scoreGarbage(input)
         print("Score: \(score)")
     }
     
-    static func scoreGroups(_ input: String) -> Int {
+    static func scoreGarbage(_ input: String) -> Int {
         var idx = input.startIndex
         var score = 0
         var depth = 0
