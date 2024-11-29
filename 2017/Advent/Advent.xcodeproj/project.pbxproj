@@ -52,6 +52,9 @@
 		85CA6AA02CFA5B8300DFAD12 /* day11_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A9E2CFA5B5800DFAD12 /* day11_test.txt */; };
 		85CA6AA12CFA5B8300DFAD12 /* day11_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A9F2CFA5B6000DFAD12 /* day11_input.txt */; };
 		85CA6AA32CFA84C500DFAD12 /* Day11Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6AA22CFA84C300DFAD12 /* Day11Pt2.swift */; };
+		85CA6AA62CFA857800DFAD12 /* Day12Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */; };
+		85CA6AA92CFA85D500DFAD12 /* day12_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6AA82CFA85A500DFAD12 /* day12_test.txt */; };
+		85CA6AAA2CFA85D500DFAD12 /* day12_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6AA72CFA859B00DFAD12 /* day12_input.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +64,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				85CA6AA92CFA85D500DFAD12 /* day12_test.txt in Copy Resources */,
+				85CA6AAA2CFA85D500DFAD12 /* day12_input.txt in Copy Resources */,
 				85CA6AA02CFA5B8300DFAD12 /* day11_test.txt in Copy Resources */,
 				85CA6AA12CFA5B8300DFAD12 /* day11_input.txt in Copy Resources */,
 				85CA6A972CFA20BF00DFAD12 /* day10_test.txt in Copy Resources */,
@@ -135,6 +140,9 @@
 		85CA6A9E2CFA5B5800DFAD12 /* day11_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day11_test.txt; sourceTree = "<group>"; };
 		85CA6A9F2CFA5B6000DFAD12 /* day11_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day11_input.txt; sourceTree = "<group>"; };
 		85CA6AA22CFA84C300DFAD12 /* Day11Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11Pt2.swift; sourceTree = "<group>"; };
+		85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day12Pt1.swift; sourceTree = "<group>"; };
+		85CA6AA72CFA859B00DFAD12 /* day12_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day12_input.txt; sourceTree = "<group>"; };
+		85CA6AA82CFA85A500DFAD12 /* day12_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day12_test.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +197,7 @@
 				85CA6A892CF982A200DFAD12 /* 09 */,
 				85CA6A922CFA1FFF00DFAD12 /* 10 */,
 				85CA6A9B2CFA5B2A00DFAD12 /* 11 */,
+				85CA6AA42CFA856700DFAD12 /* 12 */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -226,6 +235,8 @@
 				85CA6A962CFA207600DFAD12 /* day10_input.txt */,
 				85CA6A9E2CFA5B5800DFAD12 /* day11_test.txt */,
 				85CA6A9F2CFA5B6000DFAD12 /* day11_input.txt */,
+				85CA6AA82CFA85A500DFAD12 /* day12_test.txt */,
+				85CA6AA72CFA859B00DFAD12 /* day12_input.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -320,6 +331,14 @@
 			path = 11;
 			sourceTree = "<group>";
 		};
+		85CA6AA42CFA856700DFAD12 /* 12 */ = {
+			isa = PBXGroup;
+			children = (
+				85CA6AA52CFA857600DFAD12 /* Day12Pt1.swift */,
+			);
+			path = 12;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,6 +405,7 @@
 				850F877B2C87AAD000CD1E4A /* main.swift in Sources */,
 				85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */,
 				850F87BC2C89713000CD1E4A /* Day06Pt1.swift in Sources */,
+				85CA6AA62CFA857800DFAD12 /* Day12Pt1.swift in Sources */,
 				850F87C82C89773400CD1E4A /* Day07Pt1.swift in Sources */,
 				850F87922C87CBD900CD1E4A /* Day01Pt2.swift in Sources */,
 				850F879E2C87DC2800CD1E4A /* Day03Pt1.swift in Sources */,
