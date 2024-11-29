@@ -9,9 +9,13 @@ import Foundation
 
 class Day10Pt1 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day10_input.txt")
-        let input = lines[0]
+        let lines = IOUtils.readLinesFromFile("day10_test.txt")
+        let listSize = Int(lines[0])!
+        let inputs = lines[1].split(separator: ",").map({ Int($0)! })
         
-        print("Input: \(input)")
+        let list = Array(0..<listSize)
+        print("List: \(list)")
+        
+        print("Inputs: \(inputs)")
     }
 }
