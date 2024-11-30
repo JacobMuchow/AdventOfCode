@@ -12,19 +12,39 @@ class Day14Pt2 {
         let lines = IOUtils.readLinesFromFile("day14_test.txt")
         let input = lines[0]
         
+        let grid = parseGrid(input)
+        
         var count = 0
+        for i in 0..<128 {
+            for j in 0..<128 {
+                if grid[i][j] == "#" {
+                    count += 1
+                }
+            }
+        }
+        
+        print("Count: \(count)")
+    }
+    
+    static func parseGrid(_ input: String) -> [[String]] {
+        // 128x128 grid, empty (".")
+        var grid = Array(repeating: Array(repeating: ".", count: 128), count: 128)
 
         for i in 0..<128 {
             let hashInput = "\(input)-\(i)"
             let hash = KnotHash.hash(hashInput)
-            let bitstr = hexToBitStr(hash)
+            let bitStr = hexToBitStr(hash)
             
-            bitstr.forEach({
-                if $0 == "1" { count += 1 }
-            })
+            for j in 0..<128 {
+                let idx = bitStr.index(bitStr.startIndex, offsetBy: j)
+                
+                if bitStr[idx] == "1" {
+                    grid[i][j] = "#"
+                }
+            }
         }
         
-        print("Count: \(count)")
+        return grid
     }
     
     static func hexToBitStr(_ hex: String) -> String {
