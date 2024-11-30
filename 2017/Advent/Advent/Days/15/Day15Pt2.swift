@@ -9,7 +9,7 @@ import Foundation
 
 class Day15Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day15_test.txt")
+        let lines = IOUtils.readLinesFromFile("day15_input.txt")
         var valueA = UInt64(lines[0])!
         var valueB = UInt64(lines[1])!
         
@@ -18,13 +18,13 @@ class Day15Pt2 {
         
         var matchCount = 0
         
-        for i in 0..<40_000_000 {
-            if i % 1_000_000 == 0 {
+        for i in 0..<5_000_000 {
+            if i % 100_000 == 0 {
                 print("Loop \(i)")
             }
             
-            valueA = (valueA * 16807) % 2147483647
-            valueB = (valueB * 48271) % 2147483647
+            valueA = nextAcceptableValue(after: valueA, factor: 16807, divisor: 4)
+            valueB = nextAcceptableValue(after: valueB, factor: 48271, divisor: 8)
             
             let bitsA = last16Bits(from: valueA)
             let bitsB = last16Bits(from: valueB)
@@ -35,6 +35,16 @@ class Day15Pt2 {
         }
         
         print("Match count: \(matchCount)")
+    }
+    
+    static func nextAcceptableValue(after prevValue: UInt64, factor: UInt64, divisor: UInt64) -> UInt64 {
+        var value = prevValue
+        while true {
+            value = (value * factor) % 2147483647
+            if value % divisor == 0 { break }
+        }
+        
+        return value
     }
     
     static func last16Bits(from input: UInt64) -> String {
