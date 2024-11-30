@@ -9,7 +9,7 @@ import Foundation
 
 class Day13Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day13_test.txt")
+        let lines = IOUtils.readLinesFromFile("day13_input.txt")
         
         let scanners = parseScanners(from: lines)
         
@@ -20,19 +20,23 @@ class Day13Pt2 {
         let maxDepth = scanners.keys.max()!
         print("Max depth: \(maxDepth)")
         
-        var severity = 0
-        
-        for curDepth in 0...maxDepth {
-            if let scannerRange = scanners[curDepth] {
-                let scannerPos = scannerPos(at: curDepth, range: scannerRange)
-                if (scannerPos == 0) {
-                    print("Tripped scanner at \(curDepth)")
-                    severity += curDepth * scannerRange
-                }
-            }
+        var startTime = 0
+        while willBeCaught(startingFrom: startTime, scanners: scanners) {
+            startTime += 1
         }
         
-        print("Trip severity: \(severity)")
+        print("Minimum time to not get caught: \(startTime)")
+    }
+    
+    static func willBeCaught(startingFrom startTime: Int, scanners: [Int: Int]) -> Bool {
+        for (depth, range) in scanners {
+            let time = startTime + depth
+            let scannerPos = scannerPos(at: time, range: range)
+            if (scannerPos == 0) {
+                return true
+            }
+        }
+        return false
     }
     
     static func scannerPos(at time: Int, range: Int) -> Int {
