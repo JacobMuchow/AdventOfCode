@@ -313,8 +313,8 @@
 		8579CA252CFA8BBE0055DA87 /* 13 */ = {
 			isa = PBXGroup;
 			children = (
-				8579CA2C2CFADE490055DA87 /* Day13Pt2.swift */,
 				8579CA262CFA8BC90055DA87 /* Day13Pt1.swift */,
+				8579CA2C2CFADE490055DA87 /* Day13Pt2.swift */,
 			);
 			path = 13;
 			sourceTree = "<group>";
