@@ -48,6 +48,9 @@
 		8579CA3E2CFB96490055DA87 /* day15_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA3C2CFB960A0055DA87 /* day15_test.txt */; };
 		8579CA3F2CFB96490055DA87 /* day15_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA3D2CFB96110055DA87 /* day15_input.txt */; };
 		8579CA412CFB9C7C0055DA87 /* Day15Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8579CA402CFB9C790055DA87 /* Day15Pt2.swift */; };
+		8579CA442CFB9E5C0055DA87 /* Day16Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8579CA432CFB9E570055DA87 /* Day16Pt1.swift */; };
+		8579CA472CFB9ED20055DA87 /* day16_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA452CFB9E840055DA87 /* day16_test.txt */; };
+		8579CA482CFB9ED20055DA87 /* day16_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA462CFB9E8E0055DA87 /* day16_input.txt */; };
 		85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */; };
 		85CA6A812CF97B7B00DFAD12 /* Day08Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A802CF97B7600DFAD12 /* Day08Pt1.swift */; };
 		85CA6A842CF97D4A00DFAD12 /* day08_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A822CF97CA600DFAD12 /* day08_test.txt */; };
@@ -78,6 +81,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				8579CA472CFB9ED20055DA87 /* day16_test.txt in Copy Resources */,
+				8579CA482CFB9ED20055DA87 /* day16_input.txt in Copy Resources */,
 				8579CA3E2CFB96490055DA87 /* day15_test.txt in Copy Resources */,
 				8579CA3F2CFB96490055DA87 /* day15_input.txt in Copy Resources */,
 				8579CA332CFAE0350055DA87 /* day14_test.txt in Copy Resources */,
@@ -156,6 +161,9 @@
 		8579CA3C2CFB960A0055DA87 /* day15_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day15_test.txt; sourceTree = "<group>"; };
 		8579CA3D2CFB96110055DA87 /* day15_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day15_input.txt; sourceTree = "<group>"; };
 		8579CA402CFB9C790055DA87 /* Day15Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day15Pt2.swift; sourceTree = "<group>"; };
+		8579CA432CFB9E570055DA87 /* Day16Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day16Pt1.swift; sourceTree = "<group>"; };
+		8579CA452CFB9E840055DA87 /* day16_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day16_test.txt; sourceTree = "<group>"; };
+		8579CA462CFB9E8E0055DA87 /* day16_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day16_input.txt; sourceTree = "<group>"; };
 		85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07Pt2.swift; sourceTree = "<group>"; };
 		85CA6A802CF97B7600DFAD12 /* Day08Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08Pt1.swift; sourceTree = "<group>"; };
 		85CA6A822CF97CA600DFAD12 /* day08_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day08_test.txt; sourceTree = "<group>"; };
@@ -235,6 +243,7 @@
 				8579CA252CFA8BBE0055DA87 /* 13 */,
 				8579CA2E2CFADFE50055DA87 /* 14 */,
 				8579CA392CFB95DD0055DA87 /* 15 */,
+				8579CA422CFB9E490055DA87 /* 16 */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -280,6 +289,8 @@
 				8579CA322CFAE0200055DA87 /* day14_input.txt */,
 				8579CA3C2CFB960A0055DA87 /* day15_test.txt */,
 				8579CA3D2CFB96110055DA87 /* day15_input.txt */,
+				8579CA452CFB9E840055DA87 /* day16_test.txt */,
+				8579CA462CFB9E8E0055DA87 /* day16_input.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -363,6 +374,14 @@
 				8579CA402CFB9C790055DA87 /* Day15Pt2.swift */,
 			);
 			path = 15;
+			sourceTree = "<group>";
+		};
+		8579CA422CFB9E490055DA87 /* 16 */ = {
+			isa = PBXGroup;
+			children = (
+				8579CA432CFB9E570055DA87 /* Day16Pt1.swift */,
+			);
+			path = 16;
 			sourceTree = "<group>";
 		};
 		85CA6A7F2CF97B4000DFAD12 /* 08 */ = {
@@ -490,6 +509,7 @@
 				850F87B82C891C1A00CD1E4A /* Day05Pt2.swift in Sources */,
 				850F87882C87C2E900CD1E4A /* IOUtils.swift in Sources */,
 				850F87B62C891A7700CD1E4A /* Day05Pt1.swift in Sources */,
+				8579CA442CFB9E5C0055DA87 /* Day16Pt1.swift in Sources */,
 				8579CA382CFAEE010055DA87 /* Day14Pt2.swift in Sources */,
 				85CA6AAC2CFA898200DFAD12 /* Day12Pt2.swift in Sources */,
 				85CA6A882CF981EE00DFAD12 /* Day08Pt2.swift in Sources */,
