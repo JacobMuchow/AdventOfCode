@@ -71,7 +71,7 @@ class Day12Pt2 {
             let programId = String(tokens[0])
             let pipes = tokens[1].split(separator: ",").map({ String($0) }).map({ $0.trimmingCharacters(in: .whitespaces) })
             
-            var program = Program(id: programId)
+            let program = Program(id: programId)
             program.pipes = pipes
             programsMap[programId] = program
         }
