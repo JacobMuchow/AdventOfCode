@@ -3,11 +3,9 @@ package main
 import (
 	"fmt"
 	"time"
-)
 
-func day01() {
-	fmt.Println("Day 01")
-}
+	"github.com/JacobMuchow/AdventOfCode/2024/day01"
+)
 
 func runChallenge(routine func()) {
 	start := time.Now()
@@ -17,5 +15,5 @@ func runChallenge(routine func()) {
 }
 
 func main() {
-	runChallenge(day01)
+	runChallenge(day01.Pt1)
 }
