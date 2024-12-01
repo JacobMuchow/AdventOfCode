@@ -51,6 +51,7 @@
 		8579CA442CFB9E5C0055DA87 /* Day16Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8579CA432CFB9E570055DA87 /* Day16Pt1.swift */; };
 		8579CA472CFB9ED20055DA87 /* day16_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA452CFB9E840055DA87 /* day16_test.txt */; };
 		8579CA482CFB9ED20055DA87 /* day16_input.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 8579CA462CFB9E8E0055DA87 /* day16_input.txt */; };
+		8579CA4A2CFC17550055DA87 /* Day16Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8579CA492CFC17500055DA87 /* Day16Pt2.swift */; };
 		85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */; };
 		85CA6A812CF97B7B00DFAD12 /* Day08Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA6A802CF97B7600DFAD12 /* Day08Pt1.swift */; };
 		85CA6A842CF97D4A00DFAD12 /* day08_test.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85CA6A822CF97CA600DFAD12 /* day08_test.txt */; };
@@ -164,6 +165,7 @@
 		8579CA432CFB9E570055DA87 /* Day16Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day16Pt1.swift; sourceTree = "<group>"; };
 		8579CA452CFB9E840055DA87 /* day16_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day16_test.txt; sourceTree = "<group>"; };
 		8579CA462CFB9E8E0055DA87 /* day16_input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day16_input.txt; sourceTree = "<group>"; };
+		8579CA492CFC17500055DA87 /* Day16Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day16Pt2.swift; sourceTree = "<group>"; };
 		85CA6A7D2CF9591400DFAD12 /* Day07Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07Pt2.swift; sourceTree = "<group>"; };
 		85CA6A802CF97B7600DFAD12 /* Day08Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08Pt1.swift; sourceTree = "<group>"; };
 		85CA6A822CF97CA600DFAD12 /* day08_test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day08_test.txt; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				8579CA432CFB9E570055DA87 /* Day16Pt1.swift */,
+				8579CA492CFC17500055DA87 /* Day16Pt2.swift */,
 			);
 			path = 16;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				8579CA302CFADFEF0055DA87 /* Day14Pt1.swift in Sources */,
 				85CA6A9D2CFA5B3900DFAD12 /* Day11Pt1.swift in Sources */,
 				8579CA3B2CFB95E90055DA87 /* Day15Pt1.swift in Sources */,
+				8579CA4A2CFC17550055DA87 /* Day16Pt2.swift in Sources */,
 				850F87A22C8809B900CD1E4A /* Day03Pt2.swift in Sources */,
 				8579CA362CFAEAF20055DA87 /* KnotHash.swift in Sources */,
 				8579CA272CFA8BCC0055DA87 /* Day13Pt1.swift in Sources */,
