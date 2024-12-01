@@ -9,11 +9,34 @@ import Foundation
 
 class Day16Pt2 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day16_test.txt")
+        let lines = IOUtils.readLinesFromFile("day16_input.txt")
         var programs: [String] = lines[0].map { String($0) }
         let instructions = lines[1].split(separator: ",").map { String($0) }
         
         print("Order start: \(programs)")
+        
+        let startSpots = Array(programs)
+        var cycleLength = 0
+        
+        while true {
+            programs = dance(programs, instructions)
+            cycleLength += 1
+            
+            if programs == startSpots { break }
+        }
+        
+        let cyclesRemaining = 1_000_000_000 % cycleLength
+
+        for _ in 0..<cyclesRemaining {
+            programs = dance(programs, instructions)
+        }
+        
+        print("Order end: \(programs)")
+        print("Joined: \(programs.joined())")
+    }
+    
+    static func dance(_ programs: [String], _ instructions: [String]) -> [String] {
+        var output = programs
         
         for ins in instructions {
             let cmd = ins.prefix(upTo: ins.index(after: ins.startIndex))
@@ -21,20 +44,19 @@ class Day16Pt2 {
             
             if (cmd == "s") {
                 let count = Int(args, radix: 10)!
-                programs = shift(programs, count)
+                output = shift(output, count)
             } else if cmd == "x" {
                 let tokens = args.split(separator: "/").map { Int($0)! }
-                programs = swap(programs, tokens[0], tokens[1])
+                output = swap(output, tokens[0], tokens[1])
             } else if cmd == "p" {
                 let tokens = args.split(separator: "/").map { String($0) }
-                programs = swap(programs, tokens[0], tokens[1])
+                output = swap(output, tokens[0], tokens[1])
             } else {
                 fatalError("Unknown instruction: \(cmd)")
             }
         }
         
-        print("Order end: \(programs)")
-        print("Joined: \(programs.joined())")
+        return output
     }
     
     static func shift(_ programs: [String], _ count: Int) -> [String] {
