@@ -10,14 +10,17 @@ import Foundation
 class Day19Pt1 {
     typealias Grid = [[String]]
     
+    enum Dir {
+        case Up, Down, Right, Left
+    }
+    
     struct QueueItem {
         let pos: (Int, Int)
-        let lastPos: (Int, Int)
-        let lastVal: String
+        let dir: Dir
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day19_test.txt")
+        let lines = IOUtils.readLinesFromFile("day19_input.txt")
         
         let grid = parseGrid(lines: lines)
         for row in grid {
@@ -32,17 +35,16 @@ class Day19Pt1 {
     }
     
     static func findPathMarkers(grid: Grid, start: (Int, Int)) -> [String] {
-        var visited: Set<String> = []
         var markers: [String] = []
+        
         var queue: [QueueItem] = [
-            QueueItem(pos: start, lastPos: start, lastVal: "|")
+            QueueItem(pos: start, dir: Dir.Down)
         ]
         
         while !queue.isEmpty {
             let item = queue.removeFirst()
             let pos = item.pos;
-            let lastPos = item.lastPos;
-            let lastval = item.lastVal;
+            let dir = item.dir;
             let (x, y) = pos
             
             // Ignore invalid positions
@@ -50,52 +52,39 @@ class Day19Pt1 {
                 continue
             }
             
-            // Do no re-visit positions
-            let key = keyFor(pos: pos)
-            if visited.contains(key) { continue }
-            visited.insert(key)
-            
             let val = grid[y][x]
             
-            print("Pos: \(pos), val: \(val), last: \(lastval)")
-            
             switch val {
+            // Ignore import spaces.
             case " ":
                 continue
                 
-            case "|":
-                if lastval == "-" {
-                    queue.append(QueueItem(pos: (x+1, y), lastPos: pos, lastVal: val))
-                    queue.append(QueueItem(pos: (x-1, y), lastPos: pos, lastVal: val))
-                } else {
-                    queue.append(QueueItem(pos: (x, y+1), lastPos: pos, lastVal: val))
-                    queue.append(QueueItem(pos: (x, y-1), lastPos: pos, lastVal: val))
-                }
-                continue
-                
-            case "-":
-                if lastval == "|" {
-                    queue.append(QueueItem(pos: (x, y+1), lastPos: pos, lastVal: val))
-                    queue.append(QueueItem(pos: (x, y-1), lastPos: pos, lastVal: val))
-                } else {
-                    queue.append(QueueItem(pos: (x+1, y), lastPos: pos, lastVal: val))
-                    queue.append(QueueItem(pos: (x-1, y), lastPos: pos, lastVal: val))
-                }
-                continue
-                
+            // Handle corners.
             case "+":
-                queue.append(QueueItem(pos: (x, y+1), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x, y-1), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x+1, y), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x-1, y), lastPos: pos, lastVal: val))
+                if dir == Dir.Up || dir == Dir.Down {
+                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right))
+                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left))
+                } else {
+                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down))
+                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up))
+                }
                 continue
                 
+            // Handle "|", "-" and any letter markers.
             default:
-                markers.append(val)
-                queue.append(QueueItem(pos: (x, y+1), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x, y-1), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x+1, y), lastPos: pos, lastVal: val))
-                queue.append(QueueItem(pos: (x-1, y), lastPos: pos, lastVal: val))
+                if val != "|" && val != "-" {
+                    markers.append(val)
+                }
+                
+                if dir == Dir.Down {
+                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down))
+                } else if dir == Dir.Up {
+                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up))
+                } else if dir == Dir.Right {
+                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right))
+                } else {
+                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left))
+                }
                 continue
             }
         }
