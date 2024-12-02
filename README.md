@@ -14,6 +14,7 @@ I try to write code here in a way that is straight forward with reasonable effic
 
 ## Years
 
+- 2024 (WIP) - Golang
 - 2023 (45/50) - Python
 - 2022 - ...
 - 2021 - ...
