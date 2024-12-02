@@ -17,10 +17,11 @@ class Day19Pt2 {
     struct QueueItem {
         let pos: (Int, Int)
         let dir: Dir
+        var stepCount: Int
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day19_test.txt")
+        let lines = IOUtils.readLinesFromFile("day19_input.txt")
         
         let grid = parseGrid(lines: lines)
         for row in grid {
@@ -36,15 +37,17 @@ class Day19Pt2 {
     
     static func findPathMarkers(grid: Grid, start: (Int, Int)) -> [String] {
         var markers: [String] = []
+        var stepsAtLastMarker = 0
         
         var queue: [QueueItem] = [
-            QueueItem(pos: start, dir: Dir.Down)
+            QueueItem(pos: start, dir: Dir.Down, stepCount: 1)
         ]
         
         while !queue.isEmpty {
             let item = queue.removeFirst()
             let pos = item.pos;
             let dir = item.dir;
+            let stepCount = item.stepCount
             let (x, y) = pos
             
             // Ignore invalid positions
@@ -62,11 +65,11 @@ class Day19Pt2 {
             // Handle corners.
             case "+":
                 if dir == Dir.Up || dir == Dir.Down {
-                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right))
-                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left))
+                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right, stepCount: stepCount+1))
+                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left, stepCount: stepCount+1))
                 } else {
-                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down))
-                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up))
+                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down, stepCount: stepCount+1))
+                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up, stepCount: stepCount+1))
                 }
                 continue
                 
@@ -74,20 +77,23 @@ class Day19Pt2 {
             default:
                 if val != "|" && val != "-" {
                     markers.append(val)
+                    stepsAtLastMarker = stepCount
                 }
                 
                 if dir == Dir.Down {
-                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down))
+                    queue.append(QueueItem(pos: (x, y+1), dir: Dir.Down, stepCount: stepCount+1))
                 } else if dir == Dir.Up {
-                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up))
+                    queue.append(QueueItem(pos: (x, y-1), dir: Dir.Up, stepCount: stepCount+1))
                 } else if dir == Dir.Right {
-                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right))
+                    queue.append(QueueItem(pos: (x+1, y), dir: Dir.Right, stepCount: stepCount+1))
                 } else {
-                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left))
+                    queue.append(QueueItem(pos: (x-1, y), dir: Dir.Left, stepCount: stepCount+1))
                 }
                 continue
             }
         }
+        
+        print("Step count at last marker: \(stepsAtLastMarker)")
         
         return markers
     }
