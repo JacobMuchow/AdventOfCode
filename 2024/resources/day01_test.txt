@@ -1,0 +1,4 @@
+Hello, World!
+Go is great!
+Let's read lines from a file.
+Beep boop.
