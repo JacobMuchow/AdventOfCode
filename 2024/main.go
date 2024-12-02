@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/JacobMuchow/AdventOfCode/2024/day01"
+	days "github.com/JacobMuchow/AdventOfCode/2024/days"
 )
 
 func runChallenge(routine func()) {
@@ -15,5 +15,5 @@ func runChallenge(routine func()) {
 }
 
 func main() {
-	runChallenge(day01.Pt1)
+	runChallenge(days.Day01Pt1)
 }
