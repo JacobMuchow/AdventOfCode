@@ -13,6 +13,8 @@ class Day18Pt2 {
     class Program {
         let id: Int
         var registers: [String:Int]
+        var pos: Int = 0
+        var exited = false
         
         init(id: Int) {
             self.id = id
@@ -23,57 +25,61 @@ class Day18Pt2 {
     static func run() {
         let lines = IOUtils.readLinesFromFile("day18_test.txt")
         
-        let program0 = Program(id: 0)
-        let program1 = Program(id: 1)
+        let programs = [
+            Program(id: 0),
+            Program(id: 1)
+        ]
         
-        var pos = 0
+        var curProgram = 0
         var lastSentFreq: Int? = nil
         
-        while pos >= 0 && pos < lines.count {
-            let tokens = lines[pos].split(separator: " ")
+        while !programs[0].exited || !programs[1].exited {
+            let program = programs[curProgram]
+            
+            let tokens = lines[program.pos].split(separator: " ")
             let cmd = tokens[0]
             
             switch cmd {
             case "set":
                 let reg = String(tokens[1])
-                let val = valueFor(input: String(tokens[2]))
-                registers[reg] = val
+                let val = valueFor(input: String(tokens[2]), program: program)
+                program.registers[reg] = val
                 break
                 
             case "add":
                 let reg = String(tokens[1])
-                let val = valueFor(input: String(tokens[2]))
-                registers[reg] = registers[reg, default: 0] + val
+                let val = valueFor(input: String(tokens[2]), program: program)
+                program.registers[reg] = program.registers[reg, default: 0] + val
                 break
                 
             case "mul":
                 let reg = String(tokens[1])
-                let val = valueFor(input: String(tokens[2]))
-                registers[reg] = registers[reg, default: 0] * val
+                let val = valueFor(input: String(tokens[2]), program: program)
+                program.registers[reg] = program.registers[reg, default: 0] * val
                 break
                 
             case "mod":
                 let reg = String(tokens[1])
-                let val = valueFor(input: String(tokens[2]))
-                registers[reg] = registers[reg, default: 0] % val
+                let val = valueFor(input: String(tokens[2]), program: program)
+                program.registers[reg] = program.registers[reg, default: 0] % val
                 break
                 
             case "jgz":
-                let cond = valueFor(input: String(tokens[1]))
+                let cond = valueFor(input: String(tokens[1]), program: program)
                 if cond > 0 {
-                    let jump = valueFor(input: String(tokens[2]))
-                    pos += jump
+                    let jump = valueFor(input: String(tokens[2]), program: program)
+                    program.pos += jump
                     continue
                 }
                 break
                 
             case "snd":
-                let val = valueFor(input: String(tokens[1]))
+                let val = valueFor(input: String(tokens[1]), program: program)
                 lastSentFreq = val
                 break
                 
             case "rcv":
-                let cond = valueFor(input: String(tokens[1]))
+                let cond = valueFor(input: String(tokens[1]), program: program)
                 if cond > 0 {
                     if let freq = lastSentFreq {
                         print("Last received frequency: \(freq)")
@@ -89,15 +95,15 @@ class Day18Pt2 {
                 fatalError("Unknown command: \(cmd)")
             }
             
-            pos += 1
+            program.pos += 1
         }
         
         print("Program exited.")
     }
     
-    static func valueFor(input: String) -> Int {
+    static func valueFor(input: String, program: Program) -> Int {
         if let _ = try! isRegisterRegex.prefixMatch(in: input) {
-            return registers[input, default: 0]
+            return program.registers[input, default: 0]
         } else {
             return Int(input)!
         }
