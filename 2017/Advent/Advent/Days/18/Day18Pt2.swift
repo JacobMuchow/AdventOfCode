@@ -14,7 +14,11 @@ class Day18Pt2 {
         let id: Int
         var registers: [String:Int]
         var pos: Int = 0
+        
         var exited = false
+        var awaitingSignal = false
+        var signalQueue: [Int] = []
+        var sendCount: Int = 0
         
         init(id: Int) {
             self.id = id
@@ -23,7 +27,7 @@ class Day18Pt2 {
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day18_test.txt")
+        let lines = IOUtils.readLinesFromFile("day18_input.txt")
         
         let programs = [
             Program(id: 0),
@@ -31,10 +35,43 @@ class Day18Pt2 {
         ]
         
         var curProgram = 0
-        var lastSentFreq: Int? = nil
         
-        while !programs[0].exited || !programs[1].exited {
+        while true {
             let program = programs[curProgram]
+            let otherProgram = programs[(curProgram+1) % programs.count]
+            
+            // Deadlock conditions
+            if program.awaitingSignal && program.signalQueue.isEmpty &&
+                otherProgram.awaitingSignal && otherProgram.signalQueue.isEmpty {
+                print("Programs deadlocked. Both awaiting signals.")
+                break
+            }
+            
+            if (program.exited && otherProgram.awaitingSignal && otherProgram.signalQueue.isEmpty) {
+                print("Program \(otherProgram.id) deadlocked. Awaiting signal while other program has exited.")
+                break
+            }
+            
+            if (otherProgram.exited && program.awaitingSignal && program.signalQueue.isEmpty) {
+                print("Program \(otherProgram.id) deadlocked. Awaiting signal while other program has exited.")
+                break
+            }
+            
+            // Handle both programs existed
+            if (program.exited && otherProgram.exited) {
+                print("Both programs exited.")
+                break
+            }
+            
+            // Handle program "exited" by position
+            if (program.pos < 0 || program.pos >= lines.count) {
+                if !program.exited {
+                    print("Program \(curProgram) exited.")
+                    program.exited = true
+                }
+                curProgram = (curProgram+1) % programs.count
+                break
+            }
             
             let tokens = lines[program.pos].split(separator: " ")
             let cmd = tokens[0]
@@ -75,20 +112,23 @@ class Day18Pt2 {
                 
             case "snd":
                 let val = valueFor(input: String(tokens[1]), program: program)
-                lastSentFreq = val
+                otherProgram.signalQueue.append(val)
+                program.sendCount += 1
                 break
                 
             case "rcv":
-                let cond = valueFor(input: String(tokens[1]), program: program)
-                if cond > 0 {
-                    if let freq = lastSentFreq {
-                        print("Last received frequency: \(freq)")
-                    } else {
-                        fatalError("rcv command given, but no frequency has been sent.")
-                    }
+                let reg = String(tokens[1])
+                if program.signalQueue.isEmpty {
+                    program.awaitingSignal = true
                     
-                    // Exit program.
-                    return
+                    // Switch programs while waiting
+                    curProgram = (curProgram+1) % programs.count
+                    continue
+                    
+                } else {
+                    program.awaitingSignal = false
+                    let signal = program.signalQueue.removeFirst()
+                    program.registers[reg] = signal
                 }
                 
             default:
@@ -98,7 +138,8 @@ class Day18Pt2 {
             program.pos += 1
         }
         
-        print("Program exited.")
+        print("Programs exited.")
+        print("Program 1 send count: \(programs[1].sendCount)")
     }
     
     static func valueFor(input: String, program: Program) -> Int {
