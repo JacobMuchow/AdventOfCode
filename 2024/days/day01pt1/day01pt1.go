@@ -1,4 +1,4 @@
-package days
+package day01pt1
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
 )
 
-func Day01Pt1() {
+func Run() {
 	lines := utils.ReadLinesFromFile("resources/day01_input.txt")
 
 	listA := make([]int, len(lines))
