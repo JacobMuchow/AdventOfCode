@@ -20,7 +20,7 @@ class Day17Pt1 {
         for i in 1...2017 {
             // Step forward (with some optimizations & circular list logic).
             var stepsLeft = stepCount
-            var disToEnd = buffer.count - 1 - currentPos
+            let disToEnd = buffer.count - 1 - currentPos
             
             if stepsLeft > disToEnd {
                 stepsLeft -= (disToEnd+1)
