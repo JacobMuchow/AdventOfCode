@@ -15,5 +15,5 @@ func runChallenge(routine func()) {
 }
 
 func main() {
-	runChallenge(days.Day01Pt2)
+	runChallenge(days.Day02Pt1)
 }
