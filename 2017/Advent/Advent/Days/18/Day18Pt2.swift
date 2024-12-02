@@ -8,11 +8,23 @@
 import Foundation
 
 class Day18Pt2 {
-    static var registers: [String:Int] = [:]
     static let isRegisterRegex = try! Regex("^[A-Za-z]")
+    
+    class Program {
+        let id: Int
+        var registers: [String:Int]
+        
+        init(id: Int) {
+            self.id = id
+            self.registers = ["p": id]
+        }
+    }
     
     static func run() {
         let lines = IOUtils.readLinesFromFile("day18_test.txt")
+        
+        let program0 = Program(id: 0)
+        let program1 = Program(id: 1)
         
         var pos = 0
         var lastSentFreq: Int? = nil
