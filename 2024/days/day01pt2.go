@@ -2,7 +2,6 @@ package days
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
@@ -24,13 +23,15 @@ func Day01Pt2() {
 		listB[i] = num2
 	}
 
-	sort.Ints(listA)
-	sort.Ints(listB)
-
-	sum := 0
-	for i := 0; i < len(listA); i++ {
-		sum += utils.Abs(listA[i] - listB[i])
+	listBMap := make(map[int]int, len(listB))
+	for _, num := range listB {
+		listBMap[num] = listBMap[num] + 1
 	}
 
-	fmt.Println("Diff sum:", sum)
+	score := 0
+	for i := 0; i < len(listA); i++ {
+		score += listA[i] * listBMap[listA[i]]
+	}
+
+	fmt.Println("Similarity sum:", score)
 }
