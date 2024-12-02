@@ -4,16 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	days "github.com/JacobMuchow/AdventOfCode/2024/days"
+	"github.com/JacobMuchow/AdventOfCode/2024/days/day01pt2"
 )
 
-func runChallenge(routine func()) {
+func main() {
 	start := time.Now()
-	routine()
+	day01pt2.Run()
 	time_taken := time.Since(start)
 	fmt.Printf("Time taken: %v\n", time_taken)
-}
-
-func main() {
-	runChallenge(days.Day02Pt1)
 }
