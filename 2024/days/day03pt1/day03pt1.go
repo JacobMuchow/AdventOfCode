@@ -18,14 +18,14 @@ func Run() {
 	sumTotal := 0
 
 	for _, line := range lines {
-		tokens := regex.FindAllStringSubmatch(line, -1)
-		if tokens == nil {
+		matches := regex.FindAllStringSubmatch(line, -1)
+		if matches == nil {
 			panic("Failed to match from line")
 		}
 
-		for _, token := range tokens {
-			a := utils.ParseInt(token[1])
-			b := utils.ParseInt(token[2])
+		for _, match := range matches {
+			a := utils.ParseInt(match[1])
+			b := utils.ParseInt(match[2])
 
 			sumTotal += a * b
 		}
