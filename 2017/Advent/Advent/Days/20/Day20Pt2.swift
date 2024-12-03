@@ -13,11 +13,13 @@ class Day20Pt2 {
     }
     
     class Particle {
+        let id: Int
         var pos: Vector3D
         var vel: Vector3D
         var acc: Vector3D
         
-        init(pos: Vector3D, vel: Vector3D, acc: Vector3D) {
+        init(id: Int, pos: Vector3D, vel: Vector3D, acc: Vector3D) {
+            self.id = id
             self.pos = pos
             self.vel = vel
             self.acc = acc
@@ -29,147 +31,99 @@ class Day20Pt2 {
     }
     
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day20_test.txt")
+        let lines = IOUtils.readLinesFromFile("day20_input.txt")
         for line in lines {
             print(line)
         }
         
-        // Parse input into Particle objects.
         let particles = parseParticles(lines: lines)
-//        for particle in particles {
-//            print("\(particle.pos) \(particle.vel) \(particle.acc)")
-//        }
         
-//        let t = calcCollisionTime(of: particles[0], with: particles[1])
-//        print("Collision time: \(t)")
+        // Simulate environment, this will exit on it's own when it's likely
+        // no more collisions will occur.
+        var particlesLeft = particles
+        var time = 0
+        var lastCollision = 0
         
-        print("Comp 0-1")
-        _ = calcCollisionTime(of: particles[0], with: particles[1])
+        while true {
+            time += 1
+            
+            if particlesLeft.isEmpty { break }
+            
+            // Stop simulation after there have been no collisions for 100 ticks.
+            // This isn't technically perfect, but works for this problem.
+            if time-lastCollision > 100 {
+                break
+            }
+            
+            print("Tick \(time)")
+            let updatedList = tick(particles: particlesLeft)
+            
+            // Track time of last collision by comparing in/out list counts.
+            if updatedList.count != particlesLeft.count {
+                lastCollision = time
+            }
+            particlesLeft = updatedList
+        }
         
-        print("\nComp 1-0")
-        _ = calcCollisionTime(of: particles[1], with: particles[0])
+        print("Num particles left: \(particlesLeft.count)")
+    }
+
+    static func tick(particles: [Particle]) -> [Particle] {
+        // Step every particle forward 1 tick.
+        for particle in particles {
+            tick(particle: particle)
+        }
         
-        return
-        
-        var potentialCollisions: [Double:Set<Int>] = [:]
+        // Build set of which particles have collided by ID (number).
+        var collided = Set<Int>()
         
         for i in 0..<particles.count-1 {
             for j in i+1..<particles.count {
-                if let time = calcCollisionTime(of: particles[i], with: particles[j]) {
-                    var set = potentialCollisions[time, default: Set()]
-                    set.insert(i)
-                    set.insert(j)
-                    potentialCollisions[time] = set
+                let iParticle = particles[i]
+                let jParticle = particles[j]
+                
+                let iPos = iParticle.pos
+                let jPos = jParticle.pos
+                
+                // Particles have collided if positions match after all have ticked forward.
+                if iPos.x == jPos.x && iPos.y == jPos.y && iPos.z == jPos.z {
+                    collided.insert(particles[i].id)
+                    collided.insert(particles[j].id)
                 }
             }
         }
-        
-        let sortedTimes = potentialCollisions.keys.sorted()
-        print("Sorted times: \(sortedTimes)")
-        
-
-        // Filter collisions keeping track of which have already collided and ignoring any future collisions.
-        var collidedParticles = Set<Int>()
-        
-        for time in sortedTimes {
-            let potentials = potentialCollisions[time]!.filter({ !collidedParticles.contains($0) })
-            if potentials.count > 1 {
-                for p in potentials {
-                    collidedParticles.insert(p)
-                }
-            }
-        }
-        
-        print("Collided particles: \(collidedParticles)")
-        
-        let particlesLeft = particles.count - collidedParticles.count
-        print("Particles left: \(particlesLeft)")
+    
+        // Return list of remaining particles.
+        return particles.filter({ !collided.contains($0.id)})
     }
     
-    static func calcCollisionTime(of particleA: Particle, with particleB: Particle) -> Double? {
-        print(particleA.toString())
-        print(particleB.toString())
-        let ax = particleA.acc.x - particleB.acc.x
-        let bx = particleA.vel.x - particleB.vel.x
-        let cx = particleA.pos.x - particleB.pos.x
+    static func tick(particle: Particle) {
+        // Update vel vector
+        particle.vel.x += particle.acc.x
+        particle.vel.y += particle.acc.y
+        particle.vel.z += particle.acc.z
         
-        var timesX = calcTimesQuadratic(a: Double(ax), b: Double(bx), c: Double(cx))
-        print("TimesX: \(timesX)")
-            
-        timesX = timesX.filter({ $0 > 0 })
-        if timesX.isEmpty { return nil }
-        
-        let ay = particleA.acc.y - particleB.acc.y
-        let by = particleA.vel.y - particleB.vel.y
-        let cy = particleA.pos.y - particleB.pos.y
-        
-        var timesY = calcTimesQuadratic(a: Double(ay), b: Double(by), c: Double(cy))
-        print("TimesY: \(timesY)")
-        timesY = timesY.filter({ $0 > 0 })
-        if timesY.isEmpty { return nil }
-        
-        let az = particleA.acc.z - particleB.acc.z
-        let bz = particleA.vel.z - particleB.vel.z
-        let cz = particleA.pos.z - particleB.pos.z
-        
-        var timesZ = calcTimesQuadratic(a: Double(az), b: Double(bz), c: Double(cz))
-        print("TimesZ: \(timesZ)")
-        timesZ = timesZ.filter({ $0 > 0 })
-        if timesZ.isEmpty { return nil }
-        
-        let sortedTimes = timesX.sorted(by: { a,b in a < b })
-        
-        for time in sortedTimes {
-            if timesY.filter({ $0 == time || $0 == Double.infinity }).count > 0 &&
-                timesZ.filter({ $0 == time || $0 == Double.infinity }).count > 0 {
-                return time
-            }
-        }
-        
-        return nil
-    }
-    
-    static func calcTimesQuadratic(a: Double, b: Double, c: Double) -> [Double] {
-        print("Calc times... a: \(a), b: \(b), c: \(c)")
-        
-        // Quadratic
-        if a != 0 {
-            let root = sqrt(b*b - 4*a*c)
-            let nom = -b + root
-            let dom = 2*a
-//            print("root \(root) nom \(nom) dom \(dom)")
-            return [
-                (-b + root) / (2*a),
-                (-b - root) / (2*a)
-            ]
-        }
-        
-        // Linear
-        if b != 0 {
-            return [-c/b]
-        }
-        
-        return c == 0 ? [Double.infinity] : []
-    }
-    
-    static func calcMagnitude(of particle: Particle) -> Double {
-        let acc = particle.acc
-        let xSquared = acc.x * acc.x
-        let ySquared = acc.y * acc.y
-        let zSquared = acc.z * acc.z
-        return sqrt(Double(xSquared + ySquared + zSquared))
+        // Update pos vector
+        particle.pos.x += particle.vel.x
+        particle.pos.y += particle.vel.y
+        particle.pos.z += particle.vel.z
     }
     
     static func parseParticles(lines: [String]) -> [Particle] {
-        return lines.map { line in
-            let tokens = line.components(separatedBy: ", ")
+        var particles: [Particle] = []
+        
+        for i in 0..<lines.count {
+            let tokens = lines[i].components(separatedBy: ", ")
             
-            return Particle(
+            particles.append(Particle(
+                id: i,
                 pos: parseVector3D(tokens[0]),
                 vel: parseVector3D(tokens[1]),
                 acc: parseVector3D(tokens[2])
-            )
+            ))
         }
+        
+        return particles
     }
     
     static func parseVector3D(_ input: String) -> Vector3D {
