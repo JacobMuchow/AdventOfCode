@@ -9,54 +9,37 @@ import (
 type Grid = [][]rune
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day04_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day04_input.txt")
 
 	grid := parseGrid(lines)
 
-	wordCount := 0
+	xmasCount := 0
 
-	for y := range grid {
-		for x := range grid[y] {
-			wordCount += countWords(grid, x, y, []rune("XMAS"))
+	for y := 1; y < len(grid)-1; y++ {
+		for x := 1; x < len(grid[0])-1; x++ {
+			if isXMAS(grid, y, x) {
+				xmasCount += 1
+			}
 		}
 	}
 
-	fmt.Println("Total word count:", wordCount)
+	fmt.Println("Total XMAS count:", xmasCount)
 }
 
-func countWords(grid Grid, x int, y int, word []rune) int {
-	wordCount := 0
-
-	wordCount += checkWordRecursive(grid, x, y, 1, 0, word, 0)   // Right
-	wordCount += checkWordRecursive(grid, x, y, 1, 1, word, 0)   // Down-Right
-	wordCount += checkWordRecursive(grid, x, y, 0, 1, word, 0)   // Down
-	wordCount += checkWordRecursive(grid, x, y, -1, 1, word, 0)  // Down-Left
-	wordCount += checkWordRecursive(grid, x, y, -1, 0, word, 0)  // Left
-	wordCount += checkWordRecursive(grid, x, y, -1, -1, word, 0) // Up-Left
-	wordCount += checkWordRecursive(grid, x, y, 0, -1, word, 0)  // Up
-	wordCount += checkWordRecursive(grid, x, y, 1, -1, word, 0)  // Up-Right
-
-	return wordCount
-}
-
-func checkWordRecursive(grid Grid, x int, y int, dx int, dy int, word []rune, idx int) int {
-	// End of word reached, this works.
-	if idx >= len(word) {
-		return 1
+func isXMAS(grid Grid, x int, y int) bool {
+	if grid[y][x] != 'A' {
+		return false
 	}
 
-	// Gone out of bounds.
-	if x < 0 || x >= len(grid[0]) || y < 0 || y >= len(grid) {
-		return 0
-	}
+	tl := grid[y-1][x-1]
+	tr := grid[y-1][x+1]
+	br := grid[y+1][x+1]
+	bl := grid[y+1][x-1]
 
-	// Character not a match.
-	if grid[y][x] != word[idx] {
-		return 0
-	}
+	fwdLine := (tl == 'M' && br == 'S') || (tl == 'S' && br == 'M')
+	bwdLine := (bl == 'M' && tr == 'S') || (bl == 'S' && tr == 'M')
 
-	// Check next
-	return checkWordRecursive(grid, x+dx, y+dy, dx, dy, word, idx+1)
+	return fwdLine && bwdLine
 }
 
 func parseGrid(lines []string) Grid {
