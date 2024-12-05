@@ -42,9 +42,11 @@ func updateIsValid(update []int, rules Rules) bool {
 func parseInput(lines []string) (Rules, [][]int) {
 	rules := make(Rules, 0)
 	updates := make([][]int, 0)
+
+	// First parse the rules. When empty line is hit,
+	// this is changed to false and we parse the update lists.
 	parsing_rules := true
 
-	// First parse the rules
 	for _, line := range lines {
 		if len(line) == 0 {
 			parsing_rules = false
