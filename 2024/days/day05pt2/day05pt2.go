@@ -5,38 +5,68 @@ import (
 	"strings"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
+	"github.com/JacobMuchow/AdventOfCode/2024/utils/arrays"
 )
 
 type Rules = map[string]bool
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day05_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day05_input.txt")
 
 	rules, updates := parseInput(lines)
 
-	sum := 0
+	//  Find invalid updates.
+	invalid_updates := make([][]int, 0, len(lines))
 	for _, update := range updates {
-		if updateIsValid(update, rules) {
-			sum += update[len(update)/2]
+		if failedRule(update, rules) != "" {
+			invalid_updates = append(invalid_updates, update)
 		}
 	}
 
-	fmt.Println("Valid update sum:", sum)
+	// Fix each update, then sum up the middle values in the fixed list.
+	sum := 0
+	for i, update := range invalid_updates {
+		fmt.Println(i)
+		fixed_update := fixUpdate(update, rules)
+		sum += update[len(fixed_update)/2]
+	}
+
+	fmt.Println("Sum of fixed updates:", sum)
 }
 
-func updateIsValid(update []int, rules Rules) bool {
+func fixUpdate(update []int, rules Rules) []int {
+	for {
+		// Check for failed rule, then update. As soon as there isn't
+		// one break the loop.
+		rule := failedRule(update, rules)
+		if rule == "" {
+			return update
+		}
+
+		tokens := strings.Split(rule, "|")
+		valA := utils.ParseInt(tokens[0])
+		valB := utils.ParseInt(tokens[1])
+
+		idxA := arrays.IndexOf(update, valA)
+		idxB := arrays.IndexOf(update, valB)
+
+		update = arrays.MoveValue(update, idxB, idxA)
+	}
+}
+
+func failedRule(update []int, rules Rules) string {
 	// For all combinations, check if there is a rule that they should actually
 	// be in the reverse order.
 	for i := 0; i < len(update)-1; i++ {
 		for j := i + 1; j < len(update); j++ {
 			rule := fmt.Sprintf("%d|%d", update[j], update[i])
 			if rules[rule] {
-				return false
+				return rule
 			}
 		}
 	}
 
-	return true
+	return ""
 }
 
 func parseInput(lines []string) (Rules, [][]int) {

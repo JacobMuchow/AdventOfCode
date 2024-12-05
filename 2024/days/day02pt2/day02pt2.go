@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
+	"github.com/JacobMuchow/AdventOfCode/2024/utils/arrays"
 )
 
 func Run() {
@@ -33,7 +34,7 @@ func Run() {
 			// If the initial report is not safe, try removing 1 level
 			// at each index until it is safe (pt2 "dampener").
 			for i := 0; i < len(report); i++ {
-				reportCopy := removingIndex(report, i)
+				reportCopy := arrays.RemovingIndex(report, i)
 				if isSafe(reportCopy) {
 					numSafe += 1
 					break
@@ -66,15 +67,4 @@ func isSafe(report []int) bool {
 	}
 
 	return true
-}
-
-func removingIndex(s []int, index int) []int {
-	newArray := make([]int, len(s))
-	copy(newArray, s)
-
-	if index == len(newArray)-1 {
-		return newArray[:index]
-	}
-
-	return append(newArray[:index], newArray[index+1:]...)
 }
