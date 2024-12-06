@@ -23,23 +23,53 @@ func Run() {
 		fmt.Println(string(row))
 	}
 
-	x, y := findStartPos(grid)
-	fmt.Println("Start pos:", x, y)
+	startX, startY := findStartPos(grid)
+	fmt.Println("Start pos:", startX, startY)
 
 	// Remove the marker for the guard from the grid.
-	grid[y][x] = '.'
+	grid[startY][startX] = '.'
+
+	possibleLoops := 0
+
+	for y := range grid {
+		for x := range grid {
+			// Skip obstacles & starting position.
+			if grid[y][x] == '#' || (x == startX && y == startY) {
+				continue
+			}
+
+			// Place obstacle.
+			grid[y][x] = '#'
+
+			if detectLoop(grid, startX, startY) {
+				possibleLoops += 1
+			}
+
+			// Remove obstacle.
+			grid[y][x] = '.'
+		}
+	}
+
+	fmt.Println("Potential loops:", possibleLoops)
+}
+
+func detectLoop(grid Grid, x int, y int) bool {
+	// Will keep track of the visited places in a map, with a list of directions.
+	visited := make(map[string]bool, 0)
 	dir := Up
 
-	// Will keep track of the visited places in a map.
-	visited := make(map[string]bool, 0)
-	visited[posKey(x, y)] = true
-
 	for {
-		visited[posKey(x, y)] = true
+		key := posKey(x, y, dir)
+
+		// Already visited this pos, facing this direction. This is a loop.
+		if visited[key] {
+			return true
+		}
+		visited[key] = true
 
 		// Edge of grid, no way back.
 		if x <= 0 || x >= len(grid[0])-1 || y <= 0 || y >= len(grid)-1 {
-			break
+			return false
 		}
 
 		switch dir {
@@ -69,8 +99,6 @@ func Run() {
 			}
 		}
 	}
-
-	fmt.Println("Total visited:", len(visited))
 }
 
 func findStartPos(grid Grid) (int, int) {
@@ -94,6 +122,6 @@ func parseGrid(lines []string) Grid {
 	return grid
 }
 
-func posKey(x int, y int) string {
-	return fmt.Sprintf("%d,%d", x, y)
+func posKey(x int, y int, dir int) string {
+	return fmt.Sprintf("%d,%d,%d", x, y, dir)
 }
