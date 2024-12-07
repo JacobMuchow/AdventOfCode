@@ -2,13 +2,14 @@ package day07pt2
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
 )
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day07_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day07_input.txt")
 
 	sumTotal := 0
 
@@ -33,7 +34,12 @@ func isPossible(expected int, cur int, operands []int) bool {
 	}
 
 	return isPossible(expected, cur*operands[0], operands[1:]) ||
-		isPossible(expected, cur+operands[0], operands[1:])
+		isPossible(expected, cur+operands[0], operands[1:]) ||
+		isPossible(expected, concat(cur, operands[0]), operands[1:])
+}
+
+func concat(cur int, operator int) int {
+	return utils.ParseInt(strconv.Itoa(cur) + strconv.Itoa(operator))
 }
 
 func parseLine(line string) (int, []int) {
