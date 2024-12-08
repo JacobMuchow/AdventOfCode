@@ -1,4 +1,4 @@
-package day08pt1
+package day08pt2
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type Pos2d struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day08_input.txt")
+	lines := utils.ReadLinesFromFile("resources/day08_test.txt")
 
 	grid := parseGrid(lines)
 
