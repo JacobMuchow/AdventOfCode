@@ -14,7 +14,7 @@ type Pos2d struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day08_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day08_input.txt")
 
 	grid := parseGrid(lines)
 
@@ -27,19 +27,33 @@ func Run() {
 	// Add the positions to a Set to keep track of the number of
 	// unique positions.
 	for _, points := range freqMap {
+		// Atenna points are antinodes by definitions
+		for _, point := range points {
+			antinodes[keyFor(point)] = true
+		}
+
+		// For each combination points, figure the delta XY, then
+		// project "forward" and "backwards" across the grid boundaries
+		// to find all antinodes.
 		for i := 0; i < len(points)-1; i++ {
 			for j := i + 1; j < len(points); j++ {
 				dx := points[j].x - points[i].x
 				dy := points[j].y - points[i].y
 
-				anPos := Pos2d{points[j].x + dx, points[j].y + dy}
-				if posInGrid(anPos, grid) {
-					antinodes[keyFor(anPos)] = true
+				// Look "forward"
+				cur := Pos2d{points[j].x + dx, points[j].y + dy}
+				for posInGrid(cur, grid) {
+					antinodes[keyFor(cur)] = true
+					cur.x += dx
+					cur.y += dy
 				}
 
-				anPos = Pos2d{points[i].x - dx, points[i].y - dy}
-				if posInGrid(anPos, grid) {
-					antinodes[keyFor(anPos)] = true
+				// Look "backward"
+				cur = Pos2d{points[i].x - dx, points[i].y - dy}
+				for posInGrid(cur, grid) {
+					antinodes[keyFor(cur)] = true
+					cur.x -= dx
+					cur.y -= dy
 				}
 			}
 		}
