@@ -1,44 +1,52 @@
 package day09pt1
 
 import (
+	"fmt"
+
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
-	"github.com/JacobMuchow/AdventOfCode/2024/utils/arrays"
 )
+
+type LinkedList struct {
+	head *Segment
+	tail *Segment
+}
 
 type Segment struct {
 	fileId int
 	size   int
+	empty  bool
+
+	prev *Segment
+	next *Segment
 }
 
 func Run() {
 	lines := utils.ReadLinesFromFile("resources/day09_test.txt")
 	input := lines[0]
 
-	segments := parseSegments(input)
+	list := parseSegments(input)
+	visualize(list)
+}
 
-	for i := 0; i < len(segments); {
-		if segments[i].fileId != -1 {
-			i +=1
-			continue
+func visualize(list *LinkedList) {
+	for cur := list.head.next; cur != list.tail; cur = cur.next {
+		for i := 0; i < cur.size; i++ {
+			if cur.empty {
+				fmt.Printf(".")
+			} else {
+				fmt.Printf("%d", cur.fileId)
+			}
 		}
-
-
 	}
 }
 
-func fillEmptySegment(segments []Segment, pos int) []Segment {
-	emptySeg := segments[pos]
-
-	movedSegs := make([]Segment, 0)
-	for i := pos+1; i < len(segments); i++ {
-		if 
-	}
-}
-
-func parseSegments(input string) []Segment {
+func parseSegments(input string) *LinkedList {
 	runes := []rune(input)
 
-	segments := make([]Segment, len(runes))
+	head := &Segment{fileId: -1, empty: true, size: 0}
+	tail := &Segment{fileId: -1, empty: true, size: 0}
+	prev := head
+
 	isEmpty := false
 
 	for i, char := range runes {
@@ -47,13 +55,21 @@ func parseSegments(input string) []Segment {
 			fileId = i / 2
 		}
 
-		segments[i] = Segment{
+		segment := Segment{
 			fileId: fileId,
+			empty:  isEmpty,
 			size:   utils.ParseInt(string(char)),
 		}
 
+		segment.prev = prev
+		prev.next = &segment
+
 		isEmpty = !isEmpty
+		prev = &segment
 	}
 
-	return segments
+	prev.next = tail
+	tail.prev = prev
+
+	return &LinkedList{head, tail}
 }
