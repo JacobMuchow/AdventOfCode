@@ -26,6 +26,40 @@ func Run() {
 
 	list := parseSegments(input)
 	visualize(list)
+	// optimize(list)
+
+	listMove(list, list.tail.prev, list.head.next)
+	visualize(list)
+}
+
+func optimize(list *LinkedList) {
+	for cur := list.head.next; cur != list.tail; cur = cur.next {
+		if cur.empty {
+			filled := fillEmpty(list, cur)
+			if !filled {
+				break
+			}
+		}
+	}
+}
+
+func fillEmpty(list *LinkedList, seg *Segment) bool {
+	for cur := list.tail.prev; cur != seg; cur = cur.prev {
+
+	}
+	return true
+}
+
+func listMove(list *LinkedList, seg *Segment, after *Segment) {
+	seg.prev.next = seg.next
+	seg.next.prev = seg.prev
+
+	before := after.next
+	before.prev = seg
+	after.next = seg
+
+	seg.prev = after
+	seg.next = before
 }
 
 func visualize(list *LinkedList) {
@@ -38,6 +72,7 @@ func visualize(list *LinkedList) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func parseSegments(input string) *LinkedList {
