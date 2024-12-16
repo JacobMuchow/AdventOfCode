@@ -18,51 +18,59 @@ type Node struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day09_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day09_input.txt")
 	input := lines[0]
 
 	list := parseSegments(input)
-	visualize(list)
+	// visualize(list)
 	optimize(list)
+	// visualize(list)
 
-	// listMove(list.tail.prev, list.head.next)
-	visualize(list)
+	checksum := checksum(list)
+	fmt.Println("Checksum:", checksum)
+}
+
+func checksum(list *LinkedList) int {
+	sum := 0
+	i := 0
+	cur := list.head.next
+
+	for cur != list.tail && cur.value != -1 {
+		sum += cur.value * i
+
+		i++
+		cur = cur.next
+	}
+
+	return sum
 }
 
 func optimize(list *LinkedList) {
+	// We can traverse using a left and right pointer. Swapping empty elements from the left
+	// with next non-empty element from the right. When the pointers meet, we are done.
 	left := list.head.next
 	right := list.tail.prev
 
+	// Move left pointer in until we find empty space.
 	for ; left != right; left = left.next {
 		if left.value == -1 {
+			// Once empty space is found, move right pointer in until we find non-empty space.
 			for ; right != left; right = right.prev {
 				if right.value != -1 {
+					// Swap the nodes positions in the LinkedList.
 					prev := right.prev
 					listMove(right, left)
 					listMove(left, prev)
 
+					// Don't forget we will need to swap our left & right pointers.
 					swap := left
 					left = right
 					right = swap
-
-					visualize(list)
 					break
 				}
 			}
 		}
 	}
-}
-
-func fillEmpty(list *LinkedList, seg *Node) *Node {
-	for cur := list.tail.prev; cur != seg; cur = cur.prev {
-		if cur.value != -1 {
-			prev := cur.prev
-			listMove(cur, seg)
-			listMove(seg, prev)
-			return cur
-		}
-	}
-	return nil
 }
 
 func listInsert(value int, after *Node) *Node {
