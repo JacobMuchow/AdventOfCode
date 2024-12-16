@@ -18,7 +18,7 @@ type Node struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day09_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day09_input.txt")
 	input := lines[0]
 
 	list := parseSegments(input)
@@ -33,42 +33,90 @@ func Run() {
 func checksum(list *LinkedList) int {
 	sum := 0
 	i := 0
-	cur := list.head.next
 
-	for cur != list.tail && cur.value != -1 {
-		sum += cur.value * i
-
+	for cur := list.head.next; cur != list.tail; cur = cur.next {
+		if cur.value != -1 {
+			sum += cur.value * i
+		}
 		i++
-		cur = cur.next
 	}
 
 	return sum
 }
 
-func optimize(list *LinkedList) {
-	// We can traverse using a left and right pointer. Swapping empty elements from the left
-	// with next non-empty element from the right. When the pointers meet, we are done.
-	left := list.head.next
-	right := list.tail.prev
+func highestID(list *LinkedList) int {
+	for cur := list.tail.prev; cur != list.head; cur = cur.prev {
+		if cur.value != -1 {
+			return cur.value
+		}
+	}
+	panic("No file IDs found")
+}
 
-	// Move left pointer in until we find empty space.
-	for ; left != right; left = left.next {
-		if left.value == -1 {
-			// Once empty space is found, move right pointer in until we find non-empty space.
-			for ; right != left; right = right.prev {
-				if right.value != -1 {
-					// Swap the nodes positions in the LinkedList.
-					prev := right.prev
-					listMove(right, left)
-					listMove(left, prev)
+func segmentStart(list *LinkedList, end *Node) (*Node, int) {
+	size := 1
 
-					// Don't forget we will need to swap our left & right pointers.
-					swap := left
-					left = right
-					right = swap
-					break
+	// Seek prev nodes until value changes
+	cur := end
+	for {
+		if cur.prev.value != end.value || cur.prev == list.head {
+			break
+
+		}
+		cur = cur.prev
+		size += 1
+	}
+
+	return cur, size
+}
+
+func segmentEnd(list *LinkedList, start *Node) (*Node, int) {
+	size := 1
+	cur := start
+
+	for {
+		if cur.next.value != start.value || cur.next == list.tail {
+			break
+		}
+		size += 1
+		cur = cur.next
+	}
+	return cur, size
+}
+
+func tryMoveLeft(list *LinkedList, fileEnd *Node) {
+	fileId := fileEnd.value
+	fileStart, fileSize := segmentStart(list, fileEnd)
+
+	for cur := list.head.next; cur != fileStart && cur != list.tail; cur = cur.next {
+		if cur.value == -1 {
+			_, emptySize := segmentEnd(list, cur)
+
+			if emptySize >= fileSize {
+				// Instead of editing the LinkedList, we will swap values.
+				fileItr := fileStart
+				emptyItr := cur
+
+				for i := 0; i < fileSize; i++ {
+					emptyItr.value = fileId
+					fileItr.value = -1
+
+					emptyItr = emptyItr.next
+					fileItr = fileItr.next
 				}
+				return
 			}
+		}
+	}
+}
+
+func optimize(list *LinkedList) {
+	curId := highestID(list)
+
+	for cur := list.tail.prev; cur != list.head && curId >= 0; cur = cur.prev {
+		if cur.value == curId {
+			tryMoveLeft(list, cur)
+			curId--
 		}
 	}
 }
