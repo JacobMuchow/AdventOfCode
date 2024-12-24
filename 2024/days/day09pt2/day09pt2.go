@@ -4,18 +4,11 @@ import (
 	"fmt"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
+	"github.com/JacobMuchow/AdventOfCode/2024/utils/linkedlist"
 )
 
-type LinkedList struct {
-	head *Node
-	tail *Node
-}
-
-type Node struct {
-	value int
-	prev  *Node
-	next  *Node
-}
+type LinkedList = linkedlist.LinkedList[int]
+type Node = linkedlist.Node[int]
 
 func Run() {
 	lines := utils.ReadLinesFromFile("resources/day09_input.txt")
@@ -34,9 +27,9 @@ func checksum(list *LinkedList) int {
 	sum := 0
 	i := 0
 
-	for cur := list.head.next; cur != list.tail; cur = cur.next {
-		if cur.value != -1 {
-			sum += cur.value * i
+	for cur := list.Head.Next; cur != list.Tail; cur = cur.Next {
+		if cur.Value != -1 {
+			sum += cur.Value * i
 		}
 		i++
 	}
@@ -45,9 +38,9 @@ func checksum(list *LinkedList) int {
 }
 
 func highestID(list *LinkedList) int {
-	for cur := list.tail.prev; cur != list.head; cur = cur.prev {
-		if cur.value != -1 {
-			return cur.value
+	for cur := list.Tail.Prev; cur != list.Head; cur = cur.Prev {
+		if cur.Value != -1 {
+			return cur.Value
 		}
 	}
 	panic("No file IDs found")
@@ -59,11 +52,11 @@ func segmentStart(list *LinkedList, end *Node) (*Node, int) {
 	// Seek prev nodes until value changes
 	cur := end
 	for {
-		if cur.prev.value != end.value || cur.prev == list.head {
+		if cur.Prev.Value != end.Value || cur.Prev == list.Head {
 			break
 
 		}
-		cur = cur.prev
+		cur = cur.Prev
 		size += 1
 	}
 
@@ -75,21 +68,21 @@ func segmentEnd(list *LinkedList, start *Node) (*Node, int) {
 	cur := start
 
 	for {
-		if cur.next.value != start.value || cur.next == list.tail {
+		if cur.Next.Value != start.Value || cur.Next == list.Tail {
 			break
 		}
 		size += 1
-		cur = cur.next
+		cur = cur.Next
 	}
 	return cur, size
 }
 
 func tryMoveLeft(list *LinkedList, fileEnd *Node) {
-	fileId := fileEnd.value
+	fileId := fileEnd.Value
 	fileStart, fileSize := segmentStart(list, fileEnd)
 
-	for cur := list.head.next; cur != fileStart && cur != list.tail; cur = cur.next {
-		if cur.value == -1 {
+	for cur := list.Head.Next; cur != fileStart && cur != list.Tail; cur = cur.Next {
+		if cur.Value == -1 {
 			_, emptySize := segmentEnd(list, cur)
 
 			if emptySize >= fileSize {
@@ -98,11 +91,11 @@ func tryMoveLeft(list *LinkedList, fileEnd *Node) {
 				emptyItr := cur
 
 				for i := 0; i < fileSize; i++ {
-					emptyItr.value = fileId
-					fileItr.value = -1
+					emptyItr.Value = fileId
+					fileItr.Value = -1
 
-					emptyItr = emptyItr.next
-					fileItr = fileItr.next
+					emptyItr = emptyItr.Next
+					fileItr = fileItr.Next
 				}
 				return
 			}
@@ -113,59 +106,29 @@ func tryMoveLeft(list *LinkedList, fileEnd *Node) {
 func optimize(list *LinkedList) {
 	curId := highestID(list)
 
-	for cur := list.tail.prev; cur != list.head && curId >= 0; cur = cur.prev {
-		if cur.value == curId {
+	for cur := list.Tail.Prev; cur != list.Head && curId >= 0; cur = cur.Prev {
+		if cur.Value == curId {
 			tryMoveLeft(list, cur)
 			curId--
 		}
 	}
 }
 
-func listInsert(value int, after *Node) *Node {
-	new := Node{value: value}
-
-	before := after.next
-
-	before.prev = &new
-	new.next = before
-
-	after.next = &new
-	new.prev = after
-
-	return &new
-}
-
-func listMove(seg *Node, after *Node) {
-	seg.prev.next = seg.next
-	seg.next.prev = seg.prev
-
-	before := after.next
-	before.prev = seg
-	after.next = seg
-
-	seg.prev = after
-	seg.next = before
-}
-
 func visualize(list *LinkedList) {
-	for cur := list.head.next; cur != list.tail; cur = cur.next {
-		if cur.value == -1 {
+	for cur := list.Head.Next; cur != list.Tail; cur = cur.Next {
+		if cur.Value == -1 {
 			fmt.Printf(".")
 		} else {
-			fmt.Printf("%d", cur.value)
+			fmt.Printf("%d", cur.Value)
 		}
 	}
 	fmt.Println()
 }
 
 func parseSegments(input string) *LinkedList {
-	head := &Node{}
-	tail := &Node{}
+	list := linkedlist.New[int]()
 
-	head.next = tail
-	tail.prev = head
-
-	prev := head
+	prev := list.Head
 	isEmpty := false
 
 	for i, char := range input {
@@ -176,14 +139,14 @@ func parseSegments(input string) *LinkedList {
 		}
 
 		for i := 0; i < size; i++ {
-			prev = listInsert(value, prev)
+			prev = list.Insert(value, prev)
 		}
 
 		isEmpty = !isEmpty
 	}
 
-	prev.next = tail
-	tail.prev = prev
+	prev.Next = list.Tail
+	list.Tail.Prev = prev
 
-	return &LinkedList{head, tail}
+	return list
 }
