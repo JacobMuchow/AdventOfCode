@@ -1,7 +1,7 @@
 package arrays
 
-func RemovingIndex(s []int, index int) []int {
-	newArray := make([]int, len(s))
+func RemovingIndex[T any](s []T, index int) []T {
+	newArray := make([]T, len(s))
 	copy(newArray, s)
 
 	if index == len(newArray)-1 {
