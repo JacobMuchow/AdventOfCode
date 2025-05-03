@@ -1,4 +1,4 @@
-package day10pt1
+package day10pt2
 
 import (
 	"fmt"
@@ -51,7 +51,7 @@ func findTrailheads(grid Grid) []Pos2d {
 func findEndings(grid Grid, trailhead Pos2d) []Pos2d {
 	endings := make([]Pos2d, 0)
 
-	visited := make(map[string]bool, 0)
+	// visited := make(map[string]bool, 0)
 	queue := queue.New[QueueItem]()
 	queue.Push(QueueItem{trailhead, -1})
 
@@ -69,14 +69,14 @@ func findEndings(grid Grid, trailhead Pos2d) []Pos2d {
 			continue
 		}
 
-		key := posKey(item.pos)
-		if visited[key] {
-			continue
-		}
-		visited[key] = true
+		// key := posKey(item.pos)
+		// if visited[key] {
+		// 	continue
+		// }
+		// visited[key] = true
 
 		if curVal == 9 {
-			endings = appendTrailEnding(endings, item.pos)
+			endings = append(endings, item.pos)
 			continue
 		}
 
@@ -87,16 +87,6 @@ func findEndings(grid Grid, trailhead Pos2d) []Pos2d {
 	}
 
 	return endings
-}
-
-func appendTrailEnding(endings []Pos2d, endPos Pos2d) []Pos2d {
-	for _, pos := range endings {
-		if pos.X == endPos.X && pos.Y == endPos.Y {
-			return endings
-		}
-	}
-
-	return append(endings, endPos)
 }
 
 func parseGrid(lines []string) Grid {
