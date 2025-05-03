@@ -19,7 +19,7 @@ type QueueItem struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day10_test.txt")
+	lines := utils.ReadLinesFromFile("resources/day10_input.txt")
 
 	grid := parseGrid(lines)
 	printGrid(grid)
@@ -27,8 +27,13 @@ func Run() {
 	trailheads := findTrailheads(grid)
 	fmt.Println("Trailheads:", trailheads)
 
-	endings := findEndings(grid, trailheads[1])
-	fmt.Println("Endings:", endings)
+	totalScore := 0
+	for _, trailhead := range trailheads {
+		endings := findEndings(grid, trailhead)
+		totalScore += len(endings)
+	}
+
+	fmt.Println("Total score:", totalScore)
 }
 
 func findTrailheads(grid Grid) []Pos2d {
@@ -36,7 +41,7 @@ func findTrailheads(grid Grid) []Pos2d {
 	for y, row := range grid {
 		for x, val := range row {
 			if val == 0 {
-				trailheads = append(trailheads, Pos2d{x, y})
+				trailheads = appendTrailEnding(trailheads, Pos2d{x, y})
 			}
 		}
 	}
@@ -82,6 +87,16 @@ func findEndings(grid Grid, trailhead Pos2d) []Pos2d {
 	}
 
 	return endings
+}
+
+func appendTrailEnding(endings []Pos2d, endPos Pos2d) []Pos2d {
+	for _, pos := range endings {
+		if pos.X == endPos.X && pos.Y == endPos.Y {
+			return endings
+		}
+	}
+
+	return append(endings, endPos)
 }
 
 func parseGrid(lines []string) Grid {
