@@ -6,32 +6,46 @@ import (
 	"strings"
 
 	"github.com/JacobMuchow/AdventOfCode/2024/utils"
-	"github.com/JacobMuchow/AdventOfCode/2024/utils/arrays"
+	"github.com/JacobMuchow/AdventOfCode/2024/utils/linkedlist"
 )
+
+type StoneList = linkedlist.LinkedList[string]
 
 func Run() {
 	lines := utils.ReadLinesFromFile("resources/day11_input.txt")
 	stones := parseStones(lines[0])
 
-	for i := 0; i < 25; i++ {
-		fmt.Println("Iter", i)
+	for range 25 {
 		stones = blink(stones)
 	}
-	fmt.Println("Num stones:", len(stones))
+	fmt.Println("Num stones:", stones.Len())
 }
 
-func parseStones(line string) []string {
+func parseStones(line string) *StoneList {
 	fields := strings.Fields(line)
-	return fields
+
+	list := linkedlist.New[string]()
+	prev := list.Head
+
+	for _, stone := range fields {
+		prev = list.Insert(stone, prev)
+	}
+
+	prev.Next = list.Tail
+	list.Tail.Prev = prev
+	return list
 }
 
-func blink(stones []string) []string {
-	for i := 0; i < len(stones); i++ {
-		stone := stones[i]
+func blink(stones *StoneList) *StoneList {
+	cur := stones.First()
+
+	for cur != stones.Tail {
+		stone := cur.Value
 
 		// Rule 1
 		if stone == "0" {
-			stones[i] = "1"
+			cur.Value = "1"
+			cur = cur.Next
 			continue
 		}
 
@@ -45,15 +59,16 @@ func blink(stones []string) []string {
 			stoneA = strconv.Itoa(utils.ParseInt(stoneA))
 			stoneB = strconv.Itoa(utils.ParseInt(stoneB))
 
-			stones[i] = stoneA
-			stones = arrays.Insert(stones, i+1, stoneB)
-			i++
+			cur.Value = stoneA
+			newStone := stones.Insert(stoneB, cur)
+			cur = newStone.Next
 			continue
 		}
 
 		// Rule 3
 		value := utils.ParseInt(stone) * 2024
-		stones[i] = strconv.Itoa(value)
+		cur.Value = strconv.Itoa(value)
+		cur = cur.Next
 	}
 
 	return stones
