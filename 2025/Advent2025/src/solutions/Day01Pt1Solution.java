@@ -1,10 +1,16 @@
 package solutions;
 
+import utils.ResourceUtils;
 import utils.Runnable;
 
 public class Day01Pt1Solution implements Runnable {
     @Override
     public void run() {
-        System.out.println("Hello world");
+        var content = ResourceUtils.readLines("resources/day01/test.txt");
+
+        System.out.println("File content:");
+        for (var line : content) {
+            System.out.println(line);
+        }
     }
 }
