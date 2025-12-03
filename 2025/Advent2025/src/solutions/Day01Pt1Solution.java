@@ -4,7 +4,6 @@ import utils.ResourceUtils;
 import utils.Runnable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Day01Pt1Solution implements Runnable {
     @Override
