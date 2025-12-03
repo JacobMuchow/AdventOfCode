@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class SolutionRunner {
     private static final Map<Solution, Runnable> solutionMap = Map.of(
-        Solution.Day01Pt1, new Day01Pt1Solution()
+        Solution.Day01Pt1, new Day01Pt1Solution(),
+        Solution.Day01Pt2, new Day01Pt2Solution()
     );
 
     public static void run(Solution solution) {
