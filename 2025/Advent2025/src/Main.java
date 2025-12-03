@@ -1,11 +1,13 @@
 import solutions.Solution;
 import solutions.SolutionRunner;
 
-void main() {
-    var start = System.currentTimeMillis();
+public class Main {
+    public static void main(String[] args) {
+        var start = System.currentTimeMillis();
 
-    SolutionRunner.run(Solution.Day01Pt1);
+        SolutionRunner.run(Solution.Day01Pt1);
 
-    var timeTaken = System.currentTimeMillis() - start;
-    System.out.printf("Time taken: %dms\n", timeTaken);
+        var timeTaken = System.currentTimeMillis() - start;
+        System.out.printf("Time taken: %dms\n", timeTaken);
+    }
 }
