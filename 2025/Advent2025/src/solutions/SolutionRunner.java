@@ -12,7 +12,8 @@ public class SolutionRunner {
         Solution.Day02Pt2, new Day02Pt2Solution(),
         Solution.Day03Pt1, new Day03Pt1Solution(),
         Solution.Day03Pt2, new Day03Pt2Solution(),
-        Solution.Day04Pt1, new Day04Pt1Solution()
+        Solution.Day04Pt1, new Day04Pt1Solution(),
+        Solution.Day04Pt2, new Day04Pt2Solution()
     );
 
     public static void run(Solution solution) {
