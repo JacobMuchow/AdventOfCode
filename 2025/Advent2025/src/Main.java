@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         var start = System.currentTimeMillis();
 
-        SolutionRunner.run(Solution.Day03Pt2);
+        SolutionRunner.run(Solution.Day04Pt1);
 
         var timeTaken = System.currentTimeMillis() - start;
         System.out.printf("Time taken: %dms\n", timeTaken);
