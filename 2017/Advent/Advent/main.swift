@@ -8,13 +8,15 @@
 import Foundation
 
 func runSolution() {
-    Day21Pt1.run()
+    Day21Pt2.run()
 }
 
 
 print("Running solution...")
-let start = Date()
+let start = DispatchTime.now()
 runSolution()
 
-let diff = start.distance(to: Date())
-print("Solution ran in \(diff)")
+let end = DispatchTime.now()
+let timeTakenNano = end.uptimeNanoseconds - start.uptimeNanoseconds
+let timeTakenMs = Double(timeTakenNano) / 1_000_000.0
+print(String(format: "Solution ran in %.3f ms", timeTakenMs))
