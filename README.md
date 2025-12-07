@@ -18,7 +18,7 @@ My goals/rules:
 
 2. Besides 1 new language per year, my aim is for the code to be straightforward, self-contained and understandable to anyone coming here. Interview-code style. I'm looking for reasonable efficiency, but not hyper-optimized. No non-native dependencies. No sorting libraries. Mostly primitives.
 
-3. Lastly, I'm saving inputs to files and doing File I/O for each problem. Which I know is slower, but I like to experiment with File I/O in new languages. Sue me. I think it's scratching an itch from College or something (can't be from the B- I got for forgetting a homework assignment over Christmas break could it??)
+3. Lastly, I'm saving inputs to files and doing File I/O for each problem. Which I know is slower, but I like to experiment with File I/O in new languages. Sue me. I think it's scratching an itch from college or something (can't be from the B- I got for forgetting a homework assignment over Christmas break could it??)
 
 ## Years
 
@@ -30,7 +30,7 @@ My goals/rules:
 - 2020 - ...
 - 2019 - ...
 - 2018 - ...
-- 2017 (40/50) - Swift
+- 2017 (50/50 ⭐) - Swift
 - 2016 (50/50 ⭐) - Rust
 - 2015 (50/50 ⭐) - C++
 
