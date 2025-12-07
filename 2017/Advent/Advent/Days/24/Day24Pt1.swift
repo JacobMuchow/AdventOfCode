@@ -19,14 +19,14 @@ class Day24Pt1 {
             ))
         }
         
-        let bridge = [Part(id: 0, port1: 0, port2: 0)]
+        var bridge = [Part(id: 0, port1: 0, port2: 0)]
         
-        let maxStrength = tryParts(bridge: bridge, partPool: partPool)
+        let maxStrength = tryParts(bridge: &bridge, partPool: &partPool)
         
         print("Max strength: \(maxStrength)")
     }
     
-    private static func tryParts(bridge: [Part], partPool: [Part]) -> Int {
+    private static func tryParts(bridge: inout [Part], partPool: inout [Part]) -> Int {
         var maxStrength = calcStrength(bridge: bridge)
         var pinMatch = openPortPins(bridge: bridge)
         
@@ -34,29 +34,28 @@ class Day24Pt1 {
         for (i, part) in partPool.enumerated() {
             if (part.port1 != pinMatch) { continue }
             
-            var nextBridge = Array(bridge)
-            var nextPool = Array(partPool)
-            nextBridge.append(part)
-            nextPool.remove(at: i)
+            partPool.remove(at: i)
+            bridge.append(part)
             
-            var strength = tryParts(bridge: nextBridge, partPool: nextPool)
+            var strength = tryParts(bridge: &bridge, partPool: &partPool)
             maxStrength = max(maxStrength, strength)
+            
+            bridge.removeLast()
+            partPool.insert(part, at: i)
         }
         
         // Try all parts backward.
         for (i, part) in partPool.enumerated() {
             if (part.port2 != pinMatch) { continue }
             
-            // Remove from pool
-            var nextPool = Array(partPool)
-            nextPool.remove(at: i)
+            partPool.remove(at: i)
+            bridge.append(Part(id: part.id, port1: part.port2, port2: part.port1))
             
-            // Add to bridge, but in reverse order
-            var nextBridge = Array(bridge)
-            nextBridge.append(Part(id: part.id, port1: part.port2, port2: part.port1))
-            
-            var strength = tryParts(bridge: nextBridge, partPool: nextPool)
+            var strength = tryParts(bridge: &bridge, partPool: &partPool)
             maxStrength = max(maxStrength, strength)
+            
+            bridge.removeLast()
+            partPool.insert(part, at: i)
         }
         
         return maxStrength
