@@ -106,7 +106,6 @@
 		85E800952EE3CB6800E319F7 /* Day23Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E800912EE3CB6800E319F7 /* Day23Pt2.swift */; };
 		85E800992EE3CB6800E319F7 /* Day24Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E800962EE3CB6800E319F7 /* Day24Pt2.swift */; };
 		85E8009A2EE3CB6800E319F7 /* Day24Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E800972EE3CB6800E319F7 /* Day24Pt1.swift */; };
-		85E8009E2EE3CB6900E319F7 /* Day25Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8009B2EE3CB6900E319F7 /* Day25Pt2.swift */; };
 		85E8009F2EE3CB6900E319F7 /* Day25Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8009C2EE3CB6900E319F7 /* Day25Pt1.swift */; };
 		85E800A12EE4E4FC00E319F7 /* day23_input2.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85E800A02EE4E4FC00E319F7 /* day23_input2.txt */; };
 /* End PBXBuildFile section */
@@ -273,7 +272,6 @@
 		85E800922EE3CB6800E319F7 /* Day23Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day23Pt1.swift; sourceTree = "<group>"; };
 		85E800962EE3CB6800E319F7 /* Day24Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day24Pt2.swift; sourceTree = "<group>"; };
 		85E800972EE3CB6800E319F7 /* Day24Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day24Pt1.swift; sourceTree = "<group>"; };
-		85E8009B2EE3CB6900E319F7 /* Day25Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day25Pt2.swift; sourceTree = "<group>"; };
 		85E8009C2EE3CB6900E319F7 /* Day25Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day25Pt1.swift; sourceTree = "<group>"; };
 		85E800A02EE4E4FC00E319F7 /* day23_input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day23_input2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -625,7 +623,6 @@
 			isa = PBXGroup;
 			children = (
 				85E8009C2EE3CB6900E319F7 /* Day25Pt1.swift */,
-				85E8009B2EE3CB6900E319F7 /* Day25Pt2.swift */,
 			);
 			path = 25;
 			sourceTree = "<group>";
@@ -709,7 +706,6 @@
 				850F877B2C87AAD000CD1E4A /* main.swift in Sources */,
 				8579CA5F2CFE1DC00055DA87 /* Day19Pt1.swift in Sources */,
 				85CA6A7E2CF9591800DFAD12 /* Day07Pt2.swift in Sources */,
-				85E8009E2EE3CB6900E319F7 /* Day25Pt2.swift in Sources */,
 				85E8009F2EE3CB6900E319F7 /* Day25Pt1.swift in Sources */,
 				850F87BC2C89713000CD1E4A /* Day06Pt1.swift in Sources */,
 				85CA6AA62CFA857800DFAD12 /* Day12Pt1.swift in Sources */,
