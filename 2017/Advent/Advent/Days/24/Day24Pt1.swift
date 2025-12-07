@@ -28,7 +28,7 @@ class Day24Pt1 {
             partPool[partRev.port1, default: []].append(partRev)
         }
         
-        var bridge = [Part(id: 0, port1: 0, port2: 0)]
+        var bridge = Bridge()
         var usedParts = Set<Int>()
         
         let maxStrength = tryParts(bridge: &bridge, partPool: &partPool, usedParts: &usedParts)
@@ -36,36 +36,51 @@ class Day24Pt1 {
         print("Max strength: \(maxStrength)")
     }
     
-    private static func tryParts(bridge: inout [Part], partPool: inout [Int: [Part]], usedParts: inout Set<Int>) -> Int {
-        var maxStrength = calcStrength(bridge: bridge)
-        let pinMatch = openPortPins(bridge: bridge)
+    private static func tryParts(bridge: inout Bridge, partPool: inout [Int: [Part]], usedParts: inout Set<Int>) -> Int {
+        var maxStrength = bridge.strength
+        let pinMatch = bridge.parts.last!.port2
         
         let possibleParts = partPool[pinMatch, default: []]
         
         for part in possibleParts {
             if usedParts.contains(part.id) { continue }
             
-            bridge.append(part)
+            bridge.addPart(part)
             usedParts.insert(part.id)
             
             let strength = tryParts(bridge: &bridge, partPool: &partPool, usedParts: &usedParts)
             maxStrength = max(maxStrength, strength)
             
-            bridge.removeLast()
+            bridge.popLastPart()
             usedParts.remove(part.id)
         }
  
         return maxStrength
     }
     
-    private static func openPortPins(bridge: [Part]) -> Int {
-        return bridge.last!.port2;
-    }
-    
     private static func calcStrength(bridge: [Part]) -> Int {
         return bridge.reduce(0, { acc, part in
             return acc + part.port1 + part.port2
         })
+    }
+    
+    class Bridge {
+        var parts: [Part] = [Part(id: 0, port1: 0, port2: 0)]
+        var strength: Int = 0
+        
+        func openPinCount() -> Int {
+            return parts.last!.port2
+        }
+        
+        func addPart(_ part: Part) {
+            self.parts.append(part)
+            self.strength += part.port1 + part.port2
+        }
+        
+        func popLastPart()  {
+            var part = self.parts.popLast()!
+            self.strength -= part.port1 + part.port2
+        }
     }
     
     struct Part: CustomStringConvertible {
