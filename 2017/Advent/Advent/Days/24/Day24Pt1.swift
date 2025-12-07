@@ -58,12 +58,6 @@ class Day24Pt1 {
         return maxStrength
     }
     
-    private static func calcStrength(bridge: [Part]) -> Int {
-        return bridge.reduce(0, { acc, part in
-            return acc + part.port1 + part.port2
-        })
-    }
-    
     class Bridge {
         var parts: [Part] = [Part(id: 0, port1: 0, port2: 0)]
         var strength: Int = 0
@@ -78,7 +72,7 @@ class Day24Pt1 {
         }
         
         func popLastPart()  {
-            var part = self.parts.popLast()!
+            let part = self.parts.popLast()!
             self.strength -= part.port1 + part.port2
         }
     }
@@ -97,10 +91,5 @@ class Day24Pt1 {
         var description: String {
             "\(self.id)|\(self.port1)/\(self.port2)"
         }
-    }
-    
-    enum Dir {
-        case Fwd;
-        case Rev;
     }
 }
