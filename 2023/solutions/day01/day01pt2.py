@@ -1,115 +1,119 @@
-inputFile = open('input.txt', 'r')
+from solutions.solution import Solution
 
-sum = 0
-words = [
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine'
-]
+class Day01Pt2Solution(Solution):
+    def run(self) -> None:
+        inputFile = open('resources/day01/input.txt', 'r')
 
-mapping = {
-    'one': '1',
-    'two': '2',
-    'three': '3',
-    'four': '4',
-    'five': '5',
-    'six': '6',
-    'seven': '7',
-    'eight': '8',
-    'nine': '9'
-}
+        sum = 0
+        words = [
+            'one',
+            'two',
+            'three',
+            'four',
+            'five',
+            'six',
+            'seven',
+            'eight',
+            'nine'
+        ]
 
-def isNumber(char):
-    uni = ord(char)
-    return uni >= 48 and uni <= 57
- 
-while True:
-    line = inputFile.readline()
-    if not line:
-        break
+        mapping = {
+            'one': '1',
+            'two': '2',
+            'three': '3',
+            'four': '4',
+            'five': '5',
+            'six': '6',
+            'seven': '7',
+            'eight': '8',
+            'nine': '9'
+        }
 
-    # print(line.strip())
-
-    x = 0
-    y = len(line)-1
-
-    valX = None
-    valY = None
-
-    while x <= y:
-        if isNumber(line[x]):
-            valX = line[x]
-            break
-
-        for word in words:
-            x_word = 0
-            x_line = x
-
-            while True:
-                if x_line >= len(line):
-                    break
-
-                if x_word >= len(word):
-                    valX = mapping[word]
-                    break
-
-                if word[x_word] == line[x_line]:
-                    x_word += 1
-                    x_line += 1
-                else:
-                    break
-
-            if valX is not None:
+        def isNumber(char):
+            uni = ord(char)
+            return uni >= 48 and uni <= 57
+        
+        while True:
+            line = inputFile.readline()
+            if not line:
                 break
 
-        if valX is not None:
-            break
+            # print(line.strip())
 
-        x += 1
+            x = 0
+            y = len(line)-1
 
-    while y >= x:
-        if isNumber(line[y]):
-            valY = line[y]
-            break
+            valX = None
+            valY = None
 
-        for word in words:
-            y_word = len(word)-1
-            y_line = y
-
-            while True:
-                if y_line < 0:
+            while x <= y:
+                if isNumber(line[x]):
+                    valX = line[x]
                     break
 
-                if y_word < 0:
-                    valY = mapping[word]
+                for word in words:
+                    x_word = 0
+                    x_line = x
+
+                    while True:
+                        if x_line >= len(line):
+                            break
+
+                        if x_word >= len(word):
+                            valX = mapping[word]
+                            break
+
+                        if word[x_word] == line[x_line]:
+                            x_word += 1
+                            x_line += 1
+                        else:
+                            break
+
+                    if valX is not None:
+                        break
+
+                if valX is not None:
                     break
 
-                if word[y_word] == line[y_line]:
-                    y_word -= 1
-                    y_line -= 1
-                else:
+                x += 1
+
+            while y >= x:
+                if isNumber(line[y]):
+                    valY = line[y]
                     break
 
-            if valY is not None:
-                break
+                for word in words:
+                    y_word = len(word)-1
+                    y_line = y
 
-        if valY is not None:
-            break
+                    while True:
+                        if y_line < 0:
+                            break
 
-        y -= 1
+                        if y_word < 0:
+                            valY = mapping[word]
+                            break
 
-    # print(valX)
-    # print(valY)
+                        if word[y_word] == line[y_line]:
+                            y_word -= 1
+                            y_line -= 1
+                        else:
+                            break
 
-    num = int(valX + valY)
-    sum += num
-    
- 
-print("Sum: " + str(sum))
-inputFile.close()
+                    if valY is not None:
+                        break
+
+                if valY is not None:
+                    break
+
+                y -= 1
+
+            # print(valX)
+            # print(valY)
+
+            num = int(valX + valY)
+            sum += num
+            
+        
+        print("Sum: " + str(sum))
+        inputFile.close()
