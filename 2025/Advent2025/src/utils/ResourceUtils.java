@@ -28,4 +28,15 @@ public class ResourceUtils {
             throw new Error(String.format("Error reading file: %s\n", e.getMessage()));
         }
     }
+
+    public static char[][] readCharGrid(String path) {
+        try {
+            var lines = Files.readAllLines(Path.of(path));
+            return lines.stream()
+                    .map(String::toCharArray)
+                    .toArray(char[][]::new);
+        } catch (IOException e) {
+            throw new Error(String.format("Error reading file: %s\n", e.getMessage()));
+        }
+    }
 }
