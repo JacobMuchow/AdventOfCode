@@ -7,19 +7,79 @@
 
 class Day25Pt1 {
     static func run() {
-        let lines = IOUtils.readLinesFromFile("day25_test.txt")
+        let lines = IOUtils.readLinesFromFile("day25_input.txt")
         let blueprint = parseBlueprint(from: lines)
         
-        print("Start state: \(blueprint.startState)")
-        print("Checksum step: \(blueprint.diagnosticStep)")
+
+        var curState = blueprint.startState
+        var curNode = Node()
+        let nodeList = NodeList(nodes: [curNode])
         
-        print("ACTIONS:")
-        for (key, action) in blueprint.actionMap {
-            print(key)
-            print("* Write \(action.writeValue)")
-            print("* Move \(action.moveDir)")
-            print("* New state: \(action.nextState)\n")
+        for _ in 0..<blueprint.diagnosticStep {
+            let action = blueprint.actionMap[mapKey(curState, curNode.value)]!
+            
+            curNode.value = action.writeValue
+            curNode = nodeList.neighbor(of: curNode, dir: action.moveDir)
+            curState = action.nextState
         }
+        
+        print("Checksum: \(nodeList.checksum())")
+    }
+    
+    class NodeList {
+        var nodes: [Node]
+        
+        init(nodes: [Node]) {
+            self.nodes = nodes
+        }
+        
+        func neighbor(of node: Node, dir: Dir) -> Node {
+            if dir == Dir.Right {
+                return self.node(toRightOf: node)
+            } else {
+                return self.node(toLeftOf: node)
+            }
+        }
+        
+        func node(toRightOf: Node) -> Node {
+            if let right = toRightOf.right {
+                return right
+            }
+            
+            // Add new linked node
+            let newNode = Node()
+            newNode.left = toRightOf
+            toRightOf.right = newNode
+            
+            // Retain strong ref
+            self.nodes.append(newNode)
+            return newNode
+        }
+        
+        func node(toLeftOf: Node) -> Node {
+            if let left = toLeftOf.left {
+                return left
+            }
+            
+            // Add new linked node
+            let newNode = Node()
+            newNode.right = toLeftOf
+            toLeftOf.left = newNode
+            
+            // Retain strong ref
+            self.nodes.append(newNode)
+            return newNode
+        }
+        
+        func checksum() -> Int {
+            return nodes.reduce(0, { acc, node in acc + node.value })
+        }
+    }
+    
+    class Node {
+        var value: Int = 0
+        weak var left: Node?
+        weak var right: Node?
     }
     
     private static func parseBlueprint(from lines: [String]) -> Blueprint {
