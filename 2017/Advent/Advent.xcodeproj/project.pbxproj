@@ -108,6 +108,7 @@
 		85E8009A2EE3CB6800E319F7 /* Day24Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E800972EE3CB6800E319F7 /* Day24Pt1.swift */; };
 		85E8009E2EE3CB6900E319F7 /* Day25Pt2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8009B2EE3CB6900E319F7 /* Day25Pt2.swift */; };
 		85E8009F2EE3CB6900E319F7 /* Day25Pt1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8009C2EE3CB6900E319F7 /* Day25Pt1.swift */; };
+		85E800A12EE4E4FC00E319F7 /* day23_input2.txt in Copy Resources */ = {isa = PBXBuildFile; fileRef = 85E800A02EE4E4FC00E319F7 /* day23_input2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +153,7 @@
 				85CA6A842CF97D4A00DFAD12 /* day08_test.txt in Copy Resources */,
 				85CA6A852CF97D4A00DFAD12 /* day08_input.txt in Copy Resources */,
 				850F87C42C89771100CD1E4A /* day07_input.txt in Copy Resources */,
+				85E800A12EE4E4FC00E319F7 /* day23_input2.txt in Copy Resources */,
 				850F87C52C89771100CD1E4A /* day07_test.txt in Copy Resources */,
 				850F87BF2C89729900CD1E4A /* day06_test.txt in Copy Resources */,
 				850F87BD2C89717300CD1E4A /* day06_input.txt in Copy Resources */,
@@ -273,6 +275,7 @@
 		85E800972EE3CB6800E319F7 /* Day24Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day24Pt1.swift; sourceTree = "<group>"; };
 		85E8009B2EE3CB6900E319F7 /* Day25Pt2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day25Pt2.swift; sourceTree = "<group>"; };
 		85E8009C2EE3CB6900E319F7 /* Day25Pt1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day25Pt1.swift; sourceTree = "<group>"; };
+		85E800A02EE4E4FC00E319F7 /* day23_input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day23_input2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -401,6 +404,7 @@
 				85E8007A2EE3CB0400E319F7 /* day22_test.txt */,
 				85E8007B2EE3CB0400E319F7 /* day22_input.txt */,
 				85E8007F2EE3CB0500E319F7 /* day23_input.txt */,
+				85E800A02EE4E4FC00E319F7 /* day23_input2.txt */,
 				85E800822EE3CB0D00E319F7 /* day24_test.txt */,
 				85E800832EE3CB0D00E319F7 /* day24_input.txt */,
 				85E800862EE3CB0E00E319F7 /* day25_test.txt */,
