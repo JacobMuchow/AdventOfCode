@@ -3,7 +3,7 @@ import sys
 
 # sys.setrecursionlimit(1_000_000)
 
-inputFile = open('test4.txt', 'r')
+inputFile = open('../../resources/day10/input.txt', 'r')
 grid = []
 start = None
 
