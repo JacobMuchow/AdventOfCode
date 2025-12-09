@@ -3,12 +3,14 @@ from solutions.day01.day01pt1 import Day01Pt1Solution
 from solutions.day01.day01pt2 import Day01Pt2Solution
 from solutions.day02.day02pt1 import Day02Pt1Solution
 from solutions.day10.Day10Pt1 import Day10Pt1Solution
+from solutions.day10.Day10Pt2 import Day10Pt2Solution
 
 solution_map: dict[str, Solution] = {
     "day01pt1": Day01Pt1Solution(),
     "day01pt2": Day01Pt2Solution(),
     "day02pt1": Day02Pt1Solution(),
-    "day10pt1": Day10Pt1Solution()
+    "day10pt1": Day10Pt1Solution(),
+    "day10pt2": Day10Pt2Solution()
 }
 
 class SolutionRunner:
