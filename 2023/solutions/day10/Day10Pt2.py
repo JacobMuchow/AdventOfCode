@@ -2,6 +2,8 @@ from enum import Enum
 from solutions.solution import Solution
 from utils.files import FileUtils
 
+type Grid = list[list[str]]
+
 class Dir(Enum):
     R = 'R'
     L = 'L'
@@ -52,74 +54,176 @@ class Pos2D:
         return Pos2D(self.x, self.y+1)
 
 class Day10Pt2Solution(Solution):
-    grid: list[str]
-    start: Pos2D
-
     def run(self) -> None:
-        self.grid = FileUtils.read_lines('resources/day10/test4.txt')
-        self.start = self.findStart()
+        lines = FileUtils.read_lines('resources/day10/input.txt')
+        grid = [list(line) for line in lines]
+        start = self.findStart(grid)
 
-        path: list[Pos2D] = []
-
-        # Pick a start path
-        pos, dir = self.pickFirstStep()
-        path.append(pos)
-
-        while self.valAtPos(pos) != 'S':
-            pos, dir = self.nextStep(pos, dir)
-            path.append(pos)
-
+        path = self.findPath(grid, start)
+        path_set = set(path)
 
         # Create set of all positions which we intend to check to see if they are enclosed by the path or not.
+        # Also remove all the extra pipes not in the path.
         unchecked_positions = set()
-        for y in range(0, len(self.grid)):
-            for x in range(0, len(self.grid[y])):
-                unchecked_positions.add(Pos2D(x, y))
+        for y in range(0, len(grid)):
+            for x in range(0, len(grid[y])):
+                pos = Pos2D(x, y)
+                if pos not in path_set:
+                    grid[y][x] = '.'
+                    unchecked_positions.add(pos)
 
-        print(f"Unchecked positions: {unchecked_positions}")
-        print(f"Path: {path}")
-        for p in path:
-            unchecked_positions.remove(p)
-
-        # These will help with checks.
-        path_set = set(path)
-        enclosed_set = set()
-        unenclosed_set = set()
+        # Now final all potential enclosed positions in the grid.
+        enclosed_set: set[Pos2D] = set()
 
         while len(unchecked_positions) > 0:
             pos = unchecked_positions.pop()
-            enclosed, visited = self.checkEnclosed(pos, path_set)
+            enclosed, visited = self.checkEnclosed(grid, pos)
 
             if enclosed:
                 enclosed_set = enclosed_set.union(visited)
-            else:
-                unenclosed_set = unenclosed_set.union(visited)
 
             unchecked_positions = unchecked_positions.difference(visited)
 
-        print("Enclosed:")
-        for pos in enclosed_set:
-            print(pos)
-        print("\nUnenclosed:")
-        for pos in unenclosed_set:
-            print(pos)
+        print(f"# Candidate Enclosed: {len(enclosed_set)}")
 
-        print(f"Num enclosed: {len(enclosed_set)}")
+        # Now expand the grid, then veryify if all the enclosed positions are still enclosed.
+        expanded_grid = self.expandGrid(grid, path)
+
+        # print("Expanded grid:")
+        # self.printGrid(expanded_grid)
+        # print()
+        
+        final_enclosed_set: set[Pos2D] = set(enclosed_set)
+        while len(enclosed_set) > 0:
+            pos = enclosed_set.pop()
+            enclosed, visited = self.checkEnclosed(expanded_grid, Pos2D(pos.x*2, pos.y*2))
+
+            visited = set([Pos2D(int(p.x/2), int(p.y/2)) for p in visited if p.x % 2 == 0 and p.y % 2 == 0])
+
+            if not enclosed:
+                final_enclosed_set = final_enclosed_set.difference(visited)
+            enclosed_set = enclosed_set.difference(visited)
+        
+        print(f"# Final Enclosed: {len(final_enclosed_set)}")
+        
+
+    # def filterEnclosed(self, grid: list[str], path: list[Pos2D], groups: list[set[Pos2D]]) -> set[Pos2D]:
+    #     enclosed_set: set[Pos2D] = set()
+
+    #     grid = self.expandGrid(path)
+    #     start = Pos2D(self.start.y*2, self.start.x*2)
+
+    #     # while enc
+
+    #     return enclosed_set
+
+    def printGrid(self, grid: Grid):
+        for row in grid:
+            print(''.join(row))
+
+    def findPath(self, grid: Grid, start: Pos2D) -> list[Pos2D]:
+        path: list[Pos2D] = []
+
+        # Pick a start path
+        pos, dir = self.pickFirstStep(grid, start)
+        path.append(pos)
+
+        print(f"POS: {pos}")
+
+        while self.valAtPos(grid, pos) != 'S':
+            pos, dir = self.nextStep(grid, pos, dir)
+            path.append(pos)
+
+        return path
+            
+    def expandGrid(self, grid: Grid, path: list[Pos2D]) -> list[str]:
+        new_h = len(grid) * 2
+        new_w = len(grid[0]) * 2
+        new_grid = [['.' for _ in range(new_w)] for _ in range(0, new_h)]
+
+        path_set = set(path)
+        # for pos in path:
+        #     val = self.grid[pos.y][pos.x]
+
+        #     if val == 'S':
+        #         val = self.pipeTypeOfStart(path)
+
+        #     new_grid[pos.y][pos.x] = val
+
+        #     if val == '-':
+        #         new_grid[pos.y][pos.x+1] = '-'
+        #     elif val == '|':
+        #         new_grid[pos.y+1][pos.x] = '|'
+        #     elif val == 'F':
+        #         new_grid[pos.y+1][pos.x] = '|'
+        #         new_grid[pos.y][pos.x+1] = '-'
+        #     elif val == '7':
+        #         new_grid[pos.y+1][pos.x] = '|'
+        #     elif val == 'L':
+        #         new_grid[pos.y][pos.x+1] = '-'
+                
+        
+        for y in range(0, new_h, 2):
+            for x in range(0, new_w, 2):
+                pos = Pos2D(int(x/2), int(y/2))
+                if pos not in path_set:
+                    new_grid[y][x] = '.'
+                    new_grid[y][x+1] = '.'
+                    new_grid[y+1][x] = '.'
+                    new_grid[y+1][x+1] = '.'
+                else:
+                    val = self.valAtPos(grid, pos)
+                    if val == 'S':
+                        val = self.pipeTypeOfStart(path)
+
+                    new_grid[y][x] = val
+                    if val == '-' or val == 'F' or val == 'L':
+                        new_grid[y][x+1] = '-'
+                    else:
+                        new_grid[y][x+1] = '.'
+                    if val == '|' or val == 'F' or val == '7':
+                        new_grid[y+1][x] = '|'
+                    else:
+                        new_grid[y+1][x] = '.'
+                    new_grid[y+1][x+1] = '.'
+
+        return [''.join(row) for row in new_grid]
+                
+    def pipeTypeOfStart(self, path: list[Pos2D]) -> str:
+        first = path[0]
+        last = path[len(path)-2]
+        dx = last.x - first.x
+        dy = last.y - first.y
+
+        if dx == 0 and abs(dy) == 2:
+            return '|'
+        if dy == 0 and abs(dx) == 2:
+            return '-'
+        if dx == 1 and dy == 1:
+            return '7'
+        if dx == 1 and dy == -1:
+            return 'J'
+        if dx == -1 and dy == 1:
+            return 'F'
+        if dx == -1 and dy == -1:
+            return 'L'
+        
+        raise Exception('Error figuring out pipe type for start')
             
 
-    def checkEnclosed(self, start: Pos2D, path_set: set[Pos2D]) -> tuple[bool, set[Pos2D]]:
+    def checkEnclosed(self, grid: Grid, start: Pos2D) -> tuple[bool, set[Pos2D]]:
         enclosed = True
         queue = [start]
         visited = set()
 
         while len(queue) > 0:
             pos = queue.pop()
-            if pos.x < 0 or pos.x >= len(self.grid[0]) or pos.y < 0 or pos.y >= len(self.grid):
+            if pos.x < 0 or pos.x >= len(grid[0]) or pos.y < 0 or pos.y >= len(grid):
                 enclosed = False
                 continue
             if pos in visited:
                 continue
-            if pos in path_set:
+            if self.valAtPos(grid, pos) != '.':
                 continue
 
             visited.add(pos)
@@ -128,42 +232,36 @@ class Day10Pt2Solution(Solution):
             queue.append(pos.below())
             queue.append(pos.toLeft())
 
-        return enclosed, visited
+        return enclosed, visited     
 
-
-                
-
-    def findStart(self) -> Pos2D:
-        for y in range(0, len(self.grid)):
-            for x in range(0, len(self.grid[y])):
-                if self.grid[y][x] == 'S':
+    def findStart(self, grid: Grid) -> Pos2D:
+        for y in range(0, len(grid)):
+            for x in range(0, len(grid[y])):
+                if grid[y][x] == 'S':
                     return Pos2D(x, y)
         raise ValueError("Starting position not found in grid")
     
-    def pickFirstStep(self) -> tuple[Pos2D, Dir]:
-        x = self.start.x
-        y = self.start.y
-
+    def pickFirstStep(self, grid: Grid, start: Pos2D) -> tuple[Pos2D, Dir]:
         # If up valid, return.
-        up = self.valAt(x, y-1)
+        up = self.valAtPos(grid, start.above())
         if up == '|' or up == 'F' or up == '7':
-            return (Pos2D(x, y-1), Dir.U)
+            return (start.above(), Dir.U)
         
         # If right valid, return
-        right = self.valAt(x+1, y)
+        right = self.valAtPos(grid, start.toRight())
         if right == '-' or right == '7' or right == 'J':
-            return (Pos2D(x+1, y), Dir.R)
+            return (start.toRight(), Dir.R)
         
         # If down valid, return
-        down = self.valAt(x, y+1)
+        down = self.valAtPos(grid, start.below())
         if down == '|' or down == 'L' or down == 'J':
-            return (Pos2D(x, y+1), Dir.D)
+            return (start.below(), Dir.D)
         
         # Technically left need not be checked. At least one should have been found by rules of the input.
         raise 'Valid first step not found'
     
-    def nextStep(self, pos: Pos2D, last_dir: Dir) -> tuple[Pos2D, Dir]:
-        val = self.valAtPos(pos)
+    def nextStep(self, grid: Grid, pos: Pos2D, last_dir: Dir) -> tuple[Pos2D, Dir]:
+        val = self.valAtPos(grid, pos)
 
         if val == '-':
             if last_dir == Dir.R:
@@ -198,13 +296,13 @@ class Day10Pt2Solution(Solution):
               
         raise Exception(f'Unepxected situation pos: {pos}, val: {val}, last_dir: {last_dir}')
     
-    def valAtPos(self, pos: Pos2D) -> str | None:
-        return self.valAt(pos.x, pos.y)
+    def valAtPos(self, grid: Grid, pos: Pos2D) -> str | None:
+        return self.valAt(grid, pos.x, pos.y)
     
-    def valAt(self, x: int, y: int) -> str | None:
-        if x < 0 or x >= len(self.grid[0]):
+    def valAt(self, grid: Grid, x: int, y: int) -> str | None:
+        if x < 0 or x >= len(grid[0]):
             return None
-        if y < 0 or y >= len(self.grid):
+        if y < 0 or y >= len(grid):
             return None
-        return self.grid[y][x]
+        return grid[y][x]
     
