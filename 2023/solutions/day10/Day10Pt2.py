@@ -88,10 +88,6 @@ class Day10Pt2Solution(Solution):
 
         # Now expand the grid, then veryify if all the enclosed positions are still enclosed.
         expanded_grid = self.expandGrid(grid, path)
-
-        # print("Expanded grid:")
-        # self.printGrid(expanded_grid)
-        # print()
         
         final_enclosed_set: set[Pos2D] = set(enclosed_set)
         while len(enclosed_set) > 0:
@@ -106,16 +102,6 @@ class Day10Pt2Solution(Solution):
         
         print(f"# Final Enclosed: {len(final_enclosed_set)}")
         
-
-    # def filterEnclosed(self, grid: list[str], path: list[Pos2D], groups: list[set[Pos2D]]) -> set[Pos2D]:
-    #     enclosed_set: set[Pos2D] = set()
-
-    #     grid = self.expandGrid(path)
-    #     start = Pos2D(self.start.y*2, self.start.x*2)
-
-    #     # while enc
-
-    #     return enclosed_set
 
     def printGrid(self, grid: Grid):
         for row in grid:
@@ -140,29 +126,8 @@ class Day10Pt2Solution(Solution):
         new_h = len(grid) * 2
         new_w = len(grid[0]) * 2
         new_grid = [['.' for _ in range(new_w)] for _ in range(0, new_h)]
-
         path_set = set(path)
-        # for pos in path:
-        #     val = self.grid[pos.y][pos.x]
-
-        #     if val == 'S':
-        #         val = self.pipeTypeOfStart(path)
-
-        #     new_grid[pos.y][pos.x] = val
-
-        #     if val == '-':
-        #         new_grid[pos.y][pos.x+1] = '-'
-        #     elif val == '|':
-        #         new_grid[pos.y+1][pos.x] = '|'
-        #     elif val == 'F':
-        #         new_grid[pos.y+1][pos.x] = '|'
-        #         new_grid[pos.y][pos.x+1] = '-'
-        #     elif val == '7':
-        #         new_grid[pos.y+1][pos.x] = '|'
-        #     elif val == 'L':
-        #         new_grid[pos.y][pos.x+1] = '-'
                 
-        
         for y in range(0, new_h, 2):
             for x in range(0, new_w, 2):
                 pos = Pos2D(int(x/2), int(y/2))
@@ -210,7 +175,6 @@ class Day10Pt2Solution(Solution):
         
         raise Exception('Error figuring out pipe type for start')
             
-
     def checkEnclosed(self, grid: Grid, start: Pos2D) -> tuple[bool, set[Pos2D]]:
         enclosed = True
         queue = [start]
