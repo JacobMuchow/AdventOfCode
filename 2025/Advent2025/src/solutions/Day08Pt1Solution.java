@@ -114,18 +114,8 @@ public class Day08Pt1Solution implements Runnable {
         return String.format("%d,%d,%d", point.x, point.y, point.z);
     }
 
-    record Vec3D(long x, long y, long z) {
-//        @Override
-//        public int hashCode() {
-//            return Objects.hash(x, y, z);
-//        }
-    }
+    record Vec3D(long x, long y, long z) {}
 
-    record Pairing(Vec3D p1, Vec3D p2, double dist) {
-//        @Override
-//        public int hashCode() {
-//            return Objects.hash(p1, p2);
-//        }
-    }
+    record Pairing(Vec3D p1, Vec3D p2, double dist) {}
 }
 
