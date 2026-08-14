@@ -1,0 +1,13 @@
+# Keep puzzle inputs out of git
+**/input.txt
+**/input[0-9].txt
+**/day[0-9][0-9]_input.txt
+**/day[0-9][0-9]_input[0-9].txt
+
+# These ones have slices or copies of puzzle inputs.
+2015/day16/test.txt
+2015/day19/test2.txt
+2016/advent/src/days/_03/test.txt
+2016/advent/src/days/_04/test.txt
+2017/Advent/Advent/Resources/day20_test.txt
+2023/resources/day12/test2.txt
