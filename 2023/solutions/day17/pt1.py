@@ -2,7 +2,7 @@ import re
 import sys
 sys.setrecursionlimit(1000000)
 
-inputFile = open('test.txt', 'r')
+inputFile = open('input.txt', 'r')
 grid = []
 
 # Read lines

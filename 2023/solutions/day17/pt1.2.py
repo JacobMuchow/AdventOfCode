@@ -3,7 +3,7 @@ import sys
 from pprint import pprint
 sys.setrecursionlimit(1000000)
 
-inputFile = open('test.txt', 'r')
+inputFile = open('input.txt', 'r')
 grid = []
 
 # Read lines

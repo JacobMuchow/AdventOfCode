@@ -5,7 +5,7 @@ from copy import deepcopy
 
 sys.setrecursionlimit(1000000)
 
-inputFile = open('test.txt', 'r')
+inputFile = open('input.txt', 'r')
 
 grid = []
 

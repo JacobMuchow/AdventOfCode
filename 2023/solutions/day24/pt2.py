@@ -6,7 +6,7 @@ import numpy as np
 
 sys.setrecursionlimit(1000000)
 
-inputFile = open('test.txt', 'r')
+inputFile = open('input.txt', 'r')
 
 stones = []
 

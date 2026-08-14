@@ -1,6 +1,6 @@
 import re
 
-inputFile = open('test.txt', 'r')
+inputFile = open('input.txt', 'r')
 lines = []
 symbols = []
 
