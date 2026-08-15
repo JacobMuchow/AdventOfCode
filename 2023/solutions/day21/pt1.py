@@ -1,7 +1,5 @@
 import re
 import sys
-from pprint import pprint
-from copy import deepcopy
 
 sys.setrecursionlimit(1000000)
 
@@ -35,7 +33,7 @@ for y in range(0, len(grid)):
         if grid[y][x] == 'S':
             opts[posKey(x, y)] = (x, y)
 
-for step in range(0, 10):
+for step in range(0, 64):
     new_opts = {}
 
     for opt in opts.values():
