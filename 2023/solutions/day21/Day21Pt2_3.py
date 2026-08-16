@@ -5,8 +5,8 @@ from math import floor
 from solutions.solution import Solution
 from utils.files import FileUtils
 
-# STEP_GOAL = 26501365
-STEP_GOAL = 115
+STEP_GOAL = 26501365
+# STEP_GOAL = 115
 
 @dataclass
 class Pos2D:
@@ -54,7 +54,7 @@ class Day21Pt2_3Solution(Solution):
     start: Pos2D
 
     def run(self) -> None:
-        self.grid = FileUtils.read_lines('resources/day21/test2.txt')
+        self.grid = FileUtils.read_lines('resources/day21/input.txt')
         self.grid_size = len(self.grid)
         grid_radius = floor(self.grid_size/2)
         grid_steps = (STEP_GOAL - grid_radius) / self.grid_size
@@ -98,24 +98,75 @@ class Day21Pt2_3Solution(Solution):
         # Large corner step budget = STEP_GOAL - ((grid_size-1) + (grid_steps-2)*(4*grid_radius)
         # Small corner step budget = STEP_GOAL - (2*grid_radius + (grid_steps-1)*(4*grid_radius))
 
-        # Compute values of different tile types
-        even_tile_value = self._count_end_spots(start, Polarity.Even, goal_polarity, step_limit=None, debug_label="Even Tile")
-        odd_tile_value = self._count_end_spots(start, Polarity.Odd, goal_polarity, step_limit=None, debug_label="Odd Tile")
-
         axial_corner_steps_left = self.grid_size-1
-        large_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-2)*self.grid_size)
-        small_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-1)*self.grid_size)
+        large_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-2)*self.grid_size + 2)
+        small_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-1)*self.grid_size + 2)
 
-        n_corner_value = self._count_end_spots(Pos2D(grid_radius,      self.grid_size-1), goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="North Corner")
-        s_corner_value = self._count_end_spots(Pos2D(grid_radius,      0),                goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="South Corner")
-        e_corner_value = self._count_end_spots(Pos2D(0,                grid_radius),      goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="East Corner")
-        w_corner_value = self._count_end_spots(Pos2D(self.grid_size-1, grid_radius),      goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="West Corner")
+        print(f"Alex corner steps: {axial_corner_steps_left}")
+        print(f"Large corner steps: {large_corner_steps_left}")
+        print(f"Small corner steps: {small_corner_steps_left}")
 
+        # Compute values of different tile types
+        odd_tile_value = self._count_end_spots(start, Polarity.Even, goal_polarity, step_limit=None, debug_label="Even Tile")
+        even_tile_value = self._count_end_spots(start, Polarity.Odd, goal_polarity, step_limit=None, debug_label="Odd Tile")
+
+        n_corner_value = self._count_end_spots(Pos2D(grid_radius,      self.grid_size-1), Polarity.Odd, goal_polarity, axial_corner_steps_left, debug_label="North Corner")
+        e_corner_value = self._count_end_spots(Pos2D(0,                grid_radius),      Polarity.Odd, goal_polarity, axial_corner_steps_left, debug_label="East Corner")
+        s_corner_value = self._count_end_spots(Pos2D(grid_radius,      0),                Polarity.Odd, goal_polarity, axial_corner_steps_left, debug_label="South Corner")
+        w_corner_value = self._count_end_spots(Pos2D(self.grid_size-1, grid_radius),      Polarity.Odd, goal_polarity, axial_corner_steps_left, debug_label="West Corner")
+
+        ne_sm_corner_val = self._count_end_spots(Pos2D(0,                self.grid_size-1), Polarity.Odd, goal_polarity, small_corner_steps_left, debug_label="NE Small Corner")
+        ne_lg_corner_val = self._count_end_spots(Pos2D(0,                self.grid_size-1), Polarity.Even,  goal_polarity, large_corner_steps_left, debug_label="NE Large Corner")
+        se_sm_corner_val = self._count_end_spots(Pos2D(0,                0),                Polarity.Odd, goal_polarity, small_corner_steps_left, debug_label="SE Small Corner")
+        se_lg_corner_val = self._count_end_spots(Pos2D(0,                0),                Polarity.Even,  goal_polarity, large_corner_steps_left, debug_label="SE Large Corner") 
+        sw_sm_corner_val = self._count_end_spots(Pos2D(self.grid_size-1, 0),                Polarity.Odd, goal_polarity, small_corner_steps_left, debug_label="SW Small Corner")        
+        sw_lg_corner_val = self._count_end_spots(Pos2D(self.grid_size-1, 0),                Polarity.Even,  goal_polarity, large_corner_steps_left, debug_label="SW Large Corner")
+        nw_sm_corner_val = self._count_end_spots(Pos2D(self.grid_size-1, self.grid_size-1), Polarity.Odd, goal_polarity, small_corner_steps_left, debug_label="NW Small Corner")
+        nw_lg_corner_val = self._count_end_spots(Pos2D(self.grid_size-1, self.grid_size-1), Polarity.Even,  goal_polarity, large_corner_steps_left, debug_label="NW Large Corner")
+        
         val_odd_whole_tiles = pow(grid_steps-1, 2) * odd_tile_value
         val_even_whole_tiles = pow(grid_steps, 2) * even_tile_value
+        val_ne_lg_corners = (grid_steps-1) * ne_lg_corner_val
+        val_ne_sm_corners = grid_steps * ne_sm_corner_val
+        val_se_lg_corners = (grid_steps-1) * se_lg_corner_val
+        val_se_sm_corners = grid_steps * se_sm_corner_val
+        val_sw_lg_corners = (grid_steps-1) * sw_lg_corner_val
+        val_sw_sm_corners = grid_steps * sw_sm_corner_val
+        val_nw_lg_corners = (grid_steps-1) * nw_lg_corner_val
+        val_nw_sm_corners = grid_steps * nw_sm_corner_val
 
-        total = val_odd_whole_tiles \
-            + val_even_whole_tiles
+        total = floor(val_odd_whole_tiles \
+            + val_even_whole_tiles \
+            + n_corner_value \
+            + e_corner_value \
+            + s_corner_value \
+            + w_corner_value \
+            + val_ne_lg_corners \
+            + val_ne_sm_corners \
+            + val_se_lg_corners \
+            + val_se_sm_corners \
+            + val_sw_lg_corners \
+            + val_sw_sm_corners \
+            + val_nw_lg_corners \
+            + val_nw_sm_corners)
+
+        print(f"Total: {total}")
+
+        # Prevoius submissions:
+        # 1) not sure
+        # 2) 596857362309021 -- too low
+        # 3) 596857396295337 -- no feedback
+        # 4) 596857397104703
+
+
+        prev = 596857396295337
+        if total == prev:
+            print("Same")
+        elif total > prev:
+            print("Higher")
+        else:
+            print("Lower")
+        print(f"Goal polarity: {goal_polarity}")
 
         return
 
@@ -167,14 +218,14 @@ class Day21Pt2_3Solution(Solution):
             queue.append(QueueItem(pos.left(), next_polarity, next_step))
 
         # print grid showing 
-        print(f"\n\n{debug_label}:")
-        for y in range(self.grid_size):
-            for x in range(self.grid_size):
-                if Pos2D(x, y).key() in seen:
-                    print('*', end="")
-                else:
-                    print(self.grid[y][x], end="")
-            print("")
+        # print(f"\n\n{debug_label}:")
+        # for y in range(self.grid_size):
+        #     for x in range(self.grid_size):
+        #         if Pos2D(x, y).key() in seen:
+        #             print('*', end="")
+        #         else:
+        #             print(self.grid[y][x], end="")
+        #     print("")
 
         return end_count
 
