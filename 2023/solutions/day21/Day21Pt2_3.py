@@ -5,7 +5,8 @@ from math import floor
 from solutions.solution import Solution
 from utils.files import FileUtils
 
-STEP_GOAL = 26501365
+# STEP_GOAL = 26501365
+STEP_GOAL = 115
 
 @dataclass
 class Pos2D:
@@ -53,17 +54,15 @@ class Day21Pt2_3Solution(Solution):
     start: Pos2D
 
     def run(self) -> None:
-        self.grid = FileUtils.read_lines('resources/day21/input.txt')
+        self.grid = FileUtils.read_lines('resources/day21/test2.txt')
         self.grid_size = len(self.grid)
         grid_radius = floor(self.grid_size/2)
         grid_steps = (STEP_GOAL - grid_radius) / self.grid_size
+        goal_polarity = Polarity.of(STEP_GOAL)
 
         start = self._find_start()
         # Assign start '.' value so later comparisons are easier
         self.grid[start.y] = self.grid[start.y].replace('S', '.', 1)
-
-        even_grid_value = self.grid_value(Polarity.Even, start)
-        odd_grid_value = self.grid_value(Polarity.Odd, start)
 
         for line in self.grid:
             print(line)
@@ -71,8 +70,6 @@ class Day21Pt2_3Solution(Solution):
         print(f"Grid Radius: {grid_radius}")
         print(f"Grid Steps: {grid_steps}")
         print(f"Start: {start}")
-        print(f"Even value: {even_grid_value}")
-        print(f"Odd value: {odd_grid_value}")
 
         # Check grid is square
         if len(self.grid) != len(self.grid[0]):
@@ -101,29 +98,48 @@ class Day21Pt2_3Solution(Solution):
         # Large corner step budget = STEP_GOAL - ((grid_size-1) + (grid_steps-2)*(4*grid_radius)
         # Small corner step budget = STEP_GOAL - (2*grid_radius + (grid_steps-1)*(4*grid_radius))
 
-        # Total =
-        # Odd val = (grid_steps-1)^2
-        # Even val = (grid_steps)^2
-        #  
+        # Compute values of different tile types
+        even_tile_value = self._count_end_spots(start, Polarity.Even, goal_polarity, step_limit=None, debug_label="Even Tile")
+        odd_tile_value = self._count_end_spots(start, Polarity.Odd, goal_polarity, step_limit=None, debug_label="Odd Tile")
 
-        print("\nAll checks pass")
+        axial_corner_steps_left = self.grid_size-1
+        large_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-2)*self.grid_size)
+        small_corner_steps_left = STEP_GOAL - (2*grid_radius + (grid_steps-1)*self.grid_size)
 
-    def grid_value(self, grid_polarity: Polarity, start: Pos2D) -> int:
-        queue: list[QueueItem] = [QueueItem(start, grid_polarity, step=0)]
+        n_corner_value = self._count_end_spots(Pos2D(grid_radius,      self.grid_size-1), goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="North Corner")
+        s_corner_value = self._count_end_spots(Pos2D(grid_radius,      0),                goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="South Corner")
+        e_corner_value = self._count_end_spots(Pos2D(0,                grid_radius),      goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="East Corner")
+        w_corner_value = self._count_end_spots(Pos2D(self.grid_size-1, grid_radius),      goal_polarity, goal_polarity, axial_corner_steps_left, debug_label="West Corner")
+
+        val_odd_whole_tiles = pow(grid_steps-1, 2) * odd_tile_value
+        val_even_whole_tiles = pow(grid_steps, 2) * even_tile_value
+
+        total = val_odd_whole_tiles \
+            + val_even_whole_tiles
+
+        return
+
+    def _count_end_spots(self, 
+        start: Pos2D, 
+        start_polarity: Polarity, 
+        goal_polarity: Polarity,
+        step_limit: int | None,
+        debug_label: str
+    ) -> int:
+        # Set up optimized search queue
+        queue: list[QueueItem] = [QueueItem(start, start_polarity, step=0)]
         seen: set[str] = set()
-        goal_polarity = Polarity.of(STEP_GOAL)
         end_count = 0
+        goal_polarity = Polarity.of(STEP_GOAL)
 
         # process queue
         while len(queue) > 0:
             item = queue.pop(0)
             pos = item.pos
 
-            # Ignore non-origin chunks
-            if pos.x < 0 or pos.x >= self.grid_size or pos.y < 0 or pos.y >= self.grid_size:
-                continue
-
             # Validate pos
+            if pos.y < 0 or pos.y >= len(self.grid): continue
+            if pos.x < 0 or pos.x >= len(self.grid[0]): continue
             if self.grid[pos.y][pos.x] == '#': continue
 
             # Skip seen, else add to seen
@@ -136,6 +152,10 @@ class Day21Pt2_3Solution(Solution):
             if item.polarity == goal_polarity:
                 end_count += 1
 
+            # Don't proceed past the step goal
+            if step_limit and item.step >= step_limit:
+                continue
+
             # Enqueue future step possibilities. 
             # Guard on popping the item covers out-of-bounds and invalid tiles.
             next_polarity = item.polarity.flip()
@@ -143,11 +163,20 @@ class Day21Pt2_3Solution(Solution):
 
             queue.append(QueueItem(pos.above(), next_polarity, next_step))
             queue.append(QueueItem(pos.below(), next_polarity, next_step))
-            queue.append(QueueItem(pos.left(), next_polarity, next_step))
             queue.append(QueueItem(pos.right(), next_polarity, next_step))
+            queue.append(QueueItem(pos.left(), next_polarity, next_step))
+
+        # print grid showing 
+        print(f"\n\n{debug_label}:")
+        for y in range(self.grid_size):
+            for x in range(self.grid_size):
+                if Pos2D(x, y).key() in seen:
+                    print('*', end="")
+                else:
+                    print(self.grid[y][x], end="")
+            print("")
 
         return end_count
-
 
     def _find_start(self) -> Pos2D:
         for y in range(0, len(self.grid)):
