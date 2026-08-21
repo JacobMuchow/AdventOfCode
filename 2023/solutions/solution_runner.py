@@ -6,6 +6,7 @@ from solutions.day10.Day10Pt1 import Day10Pt1Solution
 from solutions.day10.Day10Pt2 import Day10Pt2Solution
 from solutions.day21.Day21Pt1_1 import Day21Pt1_1Solution
 from solutions.day21.Day21Pt2_3 import Day21Pt2_3Solution
+from solutions.day24.Day24Pt2_1 import Day24Pt2_1Solution
 
 SOLUTIONS_DIR = os.path.dirname(os.path.abspath(__file__))
 RESOURCES_DIR = os.path.join(os.path.dirname(SOLUTIONS_DIR), "resources")
@@ -16,6 +17,7 @@ solution_map: dict[str, Solution] = {
     "day10pt2": Day10Pt2Solution(),
     "day21pt1.1": Day21Pt1_1Solution(),
     "day21pt2.3": Day21Pt2_3Solution(),
+    "day24pt2.1": Day24Pt2_1Solution()
 }
 
 def find_legacy_solution(day: str, part: str) -> LegacyScriptSolution | None:
