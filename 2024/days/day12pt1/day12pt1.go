@@ -14,16 +14,19 @@ type Pos2D struct {
 }
 
 func Run() {
-	lines := utils.ReadLinesFromFile("resources/day12_test3.txt")
+	lines := utils.ReadLinesFromFile("resources/day12_input.txt")
 	grid := parseGrid(lines)
 	printGrid(grid)
 
 	regions := findRegions(grid)
+	total := 0
 
 	for _, region := range regions {
-		regionVal := grid[region[0].Y][region[0].X]
-		fmt.Printf("%c: %d\n", regionVal, len(region))
+		price := fencePrice(grid, region)
+		total += price
 	}
+
+	fmt.Printf("\nTotal: %d\n", total)
 }
 
 func parseGrid(lines []string) Grid {
@@ -84,6 +87,36 @@ func findRegions(grid Grid) [][]Pos2D {
 	}
 
 	return regions
+}
+
+func fencePrice(grid Grid, region []Pos2D) int {
+	area := len(region)
+	perim := perimiter(grid, region)
+	return area * perim
+}
+
+func perimiter(grid Grid, region []Pos2D) int {
+	// We can consider each position to have 4 fences lines on its permiter.
+	// Then subtract N neighbors for each position.
+	perim := 4 * len(region)
+	regionVal := grid[region[0].Y][region[0].X]
+
+	for _, pos := range region {
+		if pos.Y > 0 && grid[pos.Y-1][pos.X] == regionVal {
+			perim -= 1
+		}
+		if pos.Y < len(grid)-1 && grid[pos.Y+1][pos.X] == regionVal {
+			perim -= 1
+		}
+		if pos.X > 0 && grid[pos.Y][pos.X-1] == regionVal {
+			perim -= 1
+		}
+		if pos.X < len(grid[0])-1 && grid[pos.Y][pos.X+1] == regionVal {
+			perim -= 1
+		}
+	}
+
+	return perim
 }
 
 func printGrid(grid Grid) {
